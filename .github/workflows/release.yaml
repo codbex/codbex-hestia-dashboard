@@ -1,0 +1,35 @@
+name: Release - Application
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-version:
+        description: Release Version
+        required: true
+        default: 1.0.0
+
+run-name: 'version set to ${{ inputs.release-version }} for release'
+
+jobs:
+  main:
+    uses: codbex/codbex-infra/.github/workflows/application-release.yaml@main
+    with:
+      application-name: codbex-hestia
+      release-version: ${{ inputs.release-version }}
+      release-content: |
+        ## codbex-hestia - ${{ github.event.inputs.releaseVersion }}
+  
+        Property Management Application
+  
+        ## Deployment
+  
+        ```
+        docker run --name codbex-hestia \
+        --rm -p 8080:8080 -p 8081:8081 \
+        ghcr.io/codbex/codbex-hestia:${{ inputs.release-version }}
+        ```
+  
+        ## Access points:
+  
+        - [/services/web/codbex-hestia/gen/](http://localhost:8080/services/web/codbex-hestia/gen/) - Admin Panel
+    secrets: inherit
