@@ -17,7 +17,7 @@ jobs:
       application-name: codbex-hestia
       release-version: ${{ inputs.release-version }}
       release-content: |
-        ## codbex-hestia - ${{ github.event.inputs.release-version }}
+        ## codbex-hestia - ${{ inputs.release-version }}
   
         Property Management Application
   
