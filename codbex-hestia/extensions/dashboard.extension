@@ -1,0 +1,5 @@
+{
+    "module": "codbex-hestia/services/dashboard.js",
+    "extensionPoint": "ide-view",
+    "description": "Dashboard View"
+}

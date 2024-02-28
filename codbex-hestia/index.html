@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<!--
+  ~ Copyright (c) 2010-2023 SAP and others.
+  ~ All rights reserved. This program and the accompanying materials
+  ~ are made available under the terms of the Eclipse Public License v2.0
+  ~ which accompanies this distribution, and is available at
+  ~ http://www.eclipse.org/legal/epl-v20.html
+  ~ Contributors:
+  ~ SAP - initial API and implementation
+  -->
+<html lang="en" ng-app="launchpad" ng-controller="LaunchpadViewController" xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title dg-brand-title></title>
+		<link rel="icon" href="data:;base64,iVBORw0KGgo=" dg-brand-icon />
+		<script type="text/javascript" src="services/navigation.js"></script>
+		<theme></theme>
+		<script type="text/javascript"
+			src="/services/js/resources-core/services/loader.js?id=application-perspective-js">
+		</script>
+		<link type="text/css" rel="stylesheet"
+			href="/services/js/resources-core/services/loader.js?id=application-perspective-css" />
+		<script type="text/javascript" src="js/navigation.js"></script>
+
+	</head>
+
+	<body>
+		<ide-header menu-ext-id="codbex-hestia-menu"></ide-header>
+		<ide-contextmenu></ide-contextmenu>
+		<div class="dg-hbox dg-fill-parent">
+			<fd-vertical-nav can-scroll="true" class="dg-border-right"
+				style="box-shadow:none;max-height:calc(100vh - 4.375rem)">
+				<!-- If there is no status bar, use calc(100vh - 2.75rem) instead -->
+				<fd-vertical-nav-main-section aria-label="main navigation">
+					<fd-list>
+						<fd-list-navigation-item ng-click="switchView('dashboard')">
+							<fd-list-navigation-item-icon glyph="sap-icon--home">
+							</fd-list-navigation-item-icon>
+							<span fd-list-navigation-item-text>Dashboard</span>
+						</fd-list-navigation-item>
+						<fd-list-navigation-group-header>Settings</fd-list-navigation-group-header>
+						<fd-list-navigation-item ng-init="folderExpanded = false" expandable="true"
+							ng-click="folderExpanded = !folderExpanded" is-expanded="folderExpanded">
+							<fd-list-navigation-item-icon glyph="sap-icon--folder">
+							</fd-list-navigation-item-icon>
+							<span fd-list-navigation-item-text>Partners</span>
+							<fd-list-navigation-item-arrow aria-label="expand submenu" is-expanded="folderExpanded">
+							</fd-list-navigation-item-arrow>
+							<fd-list>
+								<fd-list-navigation-item ng-click="switchView('customers', $event)">
+									<span fd-list-navigation-item-text>Customers</span>
+								</fd-list-navigation-item>
+							</fd-list>
+						</fd-list-navigation-item>
+					</fd-list>
+				</fd-vertical-nav-main-section>
+			</fd-vertical-nav>
+			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-dashboard" dg-type="normal"
+				ng-show="currentViewId === 'dashboard'">
+			</embedded-view>
+			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-customers" dg-type="subview"
+				ng-show="currentViewId === 'customers'">
+			</embedded-view>
+		</div>
+
+		<ide-dialogs></ide-dialogs>
+		<ide-status-bar></ide-status-bar><!-- Remove this if a status bar is not needed -->
+	</body>
+
+</html>
