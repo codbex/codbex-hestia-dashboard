@@ -1,2 +1,2 @@
 # codbex-hestia
-Property Management Application
+Warehouse Management Application
