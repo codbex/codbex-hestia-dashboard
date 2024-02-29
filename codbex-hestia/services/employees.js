@@ -1,8 +1,8 @@
 const viewData = {
-    id: "codbex-hestia-dashboard",
-    label: "Dashboard",
+    id: "codbex-hestia-employees",
+    label: "Employees",
     lazyLoad: true,
-    link: "/services/web/codbex-hestia/subviews/dashboard.html"
+    link: "/services/web/codbex-employees/gen/ui/Employees/index.html?embedded"
 };
 if (typeof exports !== 'undefined') {
     exports.getView = function () {

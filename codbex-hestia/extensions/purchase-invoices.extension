@@ -1,0 +1,5 @@
+{
+    "module": "codbex-hestia/services/purchase-invoices.js",
+    "extensionPoint": "ide-subview",
+    "description": "Purchase Invoices Subview"
+}

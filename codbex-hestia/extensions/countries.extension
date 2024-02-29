@@ -1,0 +1,5 @@
+{
+    "module": "codbex-hestia/services/countries.js",
+    "extensionPoint": "ide-subview",
+    "description": "Countries Subview"
+}

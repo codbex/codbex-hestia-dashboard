@@ -1,8 +1,8 @@
 const viewData = {
-    id: "codbex-hestia-dashboard",
-    label: "Dashboard",
+    id: "codbex-hestia-countries",
+    label: "Countries",
     lazyLoad: true,
-    link: "/services/web/codbex-hestia/subviews/dashboard.html"
+    link: "/services/web/codbex-countries/gen/ui/Countries/index.html?embedded"
 };
 if (typeof exports !== 'undefined') {
     exports.getView = function () {

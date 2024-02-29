@@ -1,0 +1,5 @@
+{
+    "module": "codbex-hestia/services/cities.js",
+    "extensionPoint": "ide-subview",
+    "description": "Cities Subview"
+}

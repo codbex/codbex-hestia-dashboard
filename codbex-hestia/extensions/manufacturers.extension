@@ -1,0 +1,5 @@
+{
+    "module": "codbex-hestia/services/manufacturers.js",
+    "extensionPoint": "ide-subview",
+    "description": "Manufacturers Subview"
+}

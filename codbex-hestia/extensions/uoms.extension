@@ -1,0 +1,5 @@
+{
+    "module": "codbex-hestia/services/uoms.js",
+    "extensionPoint": "ide-subview",
+    "description": "UoMs Subview"
+}

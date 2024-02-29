@@ -1,0 +1,5 @@
+{
+    "module": "codbex-hestia/services/dimensions.js",
+    "extensionPoint": "ide-subview",
+    "description": "Dimensions Subview"
+}
