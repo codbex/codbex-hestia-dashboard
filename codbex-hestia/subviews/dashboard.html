@@ -1,25 +1,142 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app="dashboard" ng-controller="DashboardController">
 
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=">
-        <title dg-view-title></title>
-        <script type="text/javascript" src="../services/dashboard.js"></script>
-        <theme></theme>
-        <script type="text/javascript" src="/services/js/resources-core/services/loader.js?id=application-view-js">
-        </script>
-        <link type="text/css" rel="stylesheet"
-            href="/services/js/resources-core/services/loader.js?id=application-view-css" />
-        </script>
-        <script type="text/javascript" src="dashboard.js"></script>
-    </head>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=">
+    <title dg-view-title></title>
+    <script type="text/javascript" src="../services/dashboard.js"></script>
+    <theme></theme>
+    <script type="text/javascript" src="/services/js/resources-core/services/loader.js?id=application-view-js">
+    </script>
+    <link type="text/css" rel="stylesheet"
+          href="/services/js/resources-core/services/loader.js?id=application-view-css" />
+    </script>
+    <script type="text/javascript" src="dashboard.js"></script>
+</head>
 
-    <body fd-scrollbar class="dg-vbox">
+<body fd-scrollbar>
+<fd-busy-indicator-extended class="dg-fill-parent" ng-hide="state.error || !state.isBusy" dg-size="l">
+    {{state.busyText}}
+</fd-busy-indicator-extended>
+
+<div class='fd-container'>
+    <div class='fd-row'>
         <h1>Welcome to Hestia Dashboard</h1>
-        <h4>Tiles go here...</h4>
-    </body>
-
+    </div>
+    <div class='fd-row'>
+        <div class='fd-col fd-col--6'>
+            <div class="dg-vbox dg-fill-parent" ng-show="!state.error && !state.isBusy">
+                <div class="fd-card fd-card--analytical" card-type="standard">
+                    <a class="fd-card__header" tabindex="0" interactive="false">
+                        <div class="fd-card__header-text">
+                            <div class="fd-card__title-area">
+                                <div class="fd-card__title">Total Payables</div>
+                            </div>
+                            <div class="fd-card__subtitle-area" style="margin-bottom: 10px;">
+                                <div class="fd-card__subtitle">Total Unpaid Bills</div>
+                            </div>
+                            <fd-card-content>
+                                <table class="fd-table" style="border-collapse: collapse; width: 100%;">
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div>
+                                                <svg height="20" width="100%">
+                                                    <rect
+                                                            width="{{ (200000.00 / (200000.00 + 5000.00)) * 100 }}%"
+                                                            height="20" style="fill: #2c8ff6;"></rect>
+                                                    <rect
+                                                            x="{{ (200000.00 / (200000.00 + 5000.00)) * 100 }}%"
+                                                            width="{{ (5000.00 / (200000.00 + 5000.00)) * 100 }}%"
+                                                            height="20" style="fill: #ff6347;"></rect>
+                                                </svg>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style=" border: 1px solid #ccc; padding: 10px;" width="50%">
+                                            <div>
+                                                <h6 class="fd-title fd-title--h6" style="color: #2c8ff6;">
+                                                    CURRENT</h6>
+                                                <h4 class="fd-title fd-title--h6">200000.00</h4>
+                                            </div>
+                                        </td>
+                                        <td style="border: 1px solid #ccc; padding: 10px;">
+                                            <div>
+                                                <h6 class="fd-title fd-title--h6" style="color: #ff6347;">
+                                                    OVERDUE</h6>
+                                                <h4 class="fd-title fd-title--h6">5000.00</h4>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </fd-card-content>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class='fd-col fd-col--6'>
+            <div class="dg-vbox dg-fill-parent" ng-show="!state.error && !state.isBusy">
+                <div class="fd-card fd-card--analytical" card-type="standard">
+                    <a class="fd-card__header" tabindex="0" interactive="false">
+                        <div class="fd-card__header-text">
+                            <div class="fd-card__title-area">
+                                <div class="fd-card__title">Total Receivables</div>
+                            </div>
+                            <div class="fd-card__subtitle-area" style="margin-bottom: 10px;">
+                                <div class="fd-card__subtitle">Total Unpaid Invoices</div>
+                            </div>
+                            <fd-card-content>
+                                <table class="fd-table" style="border-collapse: collapse; width: 100%;">
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div>
+                                                <svg height="20" width="100%">
+                                                    <rect
+                                                            width="{{ (500000.00 / (500000.00 + 0.00)) * 100 }}%"
+                                                            height="20" style="fill: #2c8ff6;"></rect>
+                                                    <rect x="{{ (500000.00 / (500000.00 + 0.00)) * 100 }}%"
+                                                          width="{{ (0.00 / (500000.00 + 0.00)) * 100 }}%"
+                                                          height="20" style="fill: #ff6347;"></rect>
+                                                </svg>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style=" border: 1px solid #ccc; padding: 10px;" width="50%">
+                                            <div>
+                                                <h6 class="fd-title fd-title--h6" style="color: #2c8ff6;">
+                                                    CURRENT</h6>
+                                                <h4 class="fd-title fd-title--h6">500000.00</h4>
+                                            </div>
+                                        </td>
+                                        <td style="border: 1px solid #ccc; padding: 10px;">
+                                            <div>
+                                                <h6 class="fd-title fd-title--h6" style="color: #ff6347;">
+                                                    OVERDUE</h6>
+                                                <h4 class="fd-title fd-title--h6">0.00</h4>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </fd-card-content>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <fd-message-page glyph="sap-icon--error" ng-if="state.error">
+        <fd-message-page-title>Dashboard encounterd an error!</fd-message-page-title>
+        <fd-message-page-subtitle>{{errorMessage}}</fd-message-page-subtitle>
+    </fd-message-page>
+</div>
+</body>
 </html>
