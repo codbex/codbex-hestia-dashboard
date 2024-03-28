@@ -211,6 +211,9 @@
 								<fd-list-navigation-item ng-click="switchView('uoms', $event)">
 									<span fd-list-navigation-item-text>Units of Measures</span>
 								</fd-list-navigation-item>
+								<fd-list-navigation-item ng-click="switchView('methods', $event)">
+									<span fd-list-navigation-item-text>Methods</span>
+								</fd-list-navigation-item>
 							</fd-list>
 						</fd-list-navigation-item>
 					</fd-list>
@@ -272,6 +275,9 @@
 			</embedded-view>
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-goods-issues" dg-type="subview"
 				ng-show="currentViewId === 'goods-issues'">
+			</embedded-view>
+			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-methods" dg-type="subview"
+				ng-show="currentViewId === 'methods'">
 			</embedded-view>
 		</div>
 
