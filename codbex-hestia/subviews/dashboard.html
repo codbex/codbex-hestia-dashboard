@@ -16,6 +16,21 @@
     </script>
     <script type="text/javascript" src="dashboard.js"></script>
     <script type="text/javascript" src="/webjars/chart.js/4.4.2/dist/chart.umd.js"></script>
+    <style>
+        .fd-table__cell {
+            text-align: center;
+            /* Center align text */
+            padding: 10px;
+        }
+
+        .fd-card-box__header,
+        .fd-card-box__content {
+            text-align: center;
+            font-size: 30px;
+            /* Center align text inside card boxes */
+        }
+
+    </style>
 </head>
 
 <body fd-scrollbar>
@@ -28,7 +43,41 @@
         <h1>Welcome to Hestia Dashboard</h1>
     </div>
     <div class='fd-row'>
-        <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--4 fd-col-xl--3">
+        <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--8 fd-col-xl--4">
+            <div class="fd-card fd-card--analytical" card-type="standard">
+                <div class="fd-card__header">
+                    <div class="fd-card__title">Sales Activity</div>
+                </div>
+                <div class="fd-card__content">
+                    <table
+                            class="fd-table fd-table--no-horizontal-borders fd-table--no-outer-border fd-table--top-border">
+                        <tbody class="fd-table__body">
+                        <tr class="fd-table__row">
+                            <td class="fd-table__cell" width="25%">
+                                <h4 class="fd-title fd-title--h4">1000</h4>
+                                <h6 class="fd-title fd-title--h6">To be packed</h6>
+                            </td>
+                            <td class="fd-table__cell" width="25%">
+                                <h4 class="fd-title fd-title--h4">200</h4>
+                                <h6 class="fd-title fd-title--h6">To be shipped</h6>
+                            </td>
+                            <td class="fd-table__cell" width="25%">
+                                <h4 class="fd-title fd-title--h4">50</h4>
+                                <h6 class="fd-title fd-title--h6">To be delivered</h6>
+                            </td>
+                            <td class="fd-table__cell" width="25%">
+                                <h4 class="fd-title fd-title--h4">25</h4>
+                                <h6 class="fd-title fd-title--h6">To be invoiced</h6>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='fd-row'>
+        <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--4 fd-col-xl--4">
             <div class="fd-card fd-card--analytical" card-type="standard">
                 <a class="fd-card__header" tabindex="0" interactive="false">
                     <div class="fd-card__header-text">
@@ -85,7 +134,7 @@
                 </a>
             </div>
         </div>
-        <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--4 fd-col-xl--3">
+        <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--4 fd-col-xl--4">
             <div class=" fd-card fd-card--analytical" card-type="standard">
                 <a class="fd-card__header" tabindex="0" interactive="false">
                     <div class="fd-card__header-text">
@@ -144,7 +193,7 @@
         </div>
     </div>
     <div class="fd-row">
-        <div class="fd-col fd-col--12 fd-col-md--12 fd-col-lg--8 fd-col-xl--6">
+        <div class="fd-col fd-col--12 fd-col-md--12 fd-col-lg--8 fd-col-xl--8">
             <div class="dg-vbox dg-fill-parent" ng-show="!state.error && !state.isBusy">
                 <div class="fd-card fd-card--analytical" card-type="standard">
 
@@ -223,7 +272,6 @@
                 </div>
             </div>
         </div>
-
         <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--2 fd-col-xl--2">
             <div class="fd-card" role="button">
                 <div class="fd-card__header" role="group" aria-roledescription="Card Header"
@@ -235,15 +283,48 @@
                                     <div class="fd-card__title-area">
                                         <div class="fd-card__title" id="numeric-card-title-1" role="heading"
                                              aria-level="3">
-                                            New
-                                            Sales Orders</div>
+                                            Inventory Accuracy</div>
                                     </div>
                                     <fd-card-content>
                                         <div class="fd-card__numeric-container">
                                             <div class="fd-numeric-content fd-card__numeric-content">
                                                 <div class="fd-numeric-content__kpi-container">
                                                     <div class="fd-numeric-content__kpi">
-                                                        {{OrderData.SalesOrdersToday}}
+                                                        100%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fd-card-content>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fd-card__header-row">
+                            <label class="fd-form-label">Today: {{ today | date:'dd-MM-yyyy' }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--2 fd-col-xl--2">
+            <div class="fd-card" role="button">
+                <div class="fd-card__header" role="group" aria-roledescription="Card Header"
+                     aria-labelledby="numeric-card-title-1">
+                    <div class="fd-card__header-numeric" role="group" aria-roledescription="Numeric content">
+                        <div class="fd-card__header-row">
+                            <div class="fd-card__header-main-container">
+                                <div class="fd-card__header-text">
+                                    <div class="fd-card__title-area">
+                                        <div class="fd-card__title" id="numeric-card-title-1" role="heading"
+                                             aria-level="3">
+                                            Total Sales</div>
+                                    </div>
+                                    <fd-card-content>
+                                        <div class="fd-card__numeric-container">
+                                            <div class="fd-numeric-content fd-card__numeric-content">
+                                                <div class="fd-numeric-content__kpi-container">
+                                                    <div class="fd-numeric-content__kpi">
+                                                        0
                                                     </div>
                                                 </div>
                                             </div>
@@ -260,7 +341,76 @@
             </div>
         </div>
     </div>
-
+    <div class='fd-row'>
+        <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--4 fd-col-xl--4">
+            <div class="fd-card" role="button">
+                <div class="fd-card__header" role="group" aria-roledescription="Card Header"
+                     aria-labelledby="numeric-card-title-1">
+                    <div class="fd-card__header-numeric" role="group" aria-roledescription="Numeric content">
+                        <div class="fd-card__header-row">
+                            <div class="fd-card__header-main-container">
+                                <div class="fd-card__header-text">
+                                    <div class="fd-card__title-area">
+                                        <div class="fd-card__title" id="numeric-card-title-1" role="heading"
+                                             aria-level="3">
+                                            Total Sales</div>
+                                    </div>
+                                    <fd-card-content>
+                                        <div class="fd-card__numeric-container">
+                                            <div class="fd-numeric-content fd-card__numeric-content">
+                                                <div class="fd-numeric-content__kpi-container">
+                                                    <div class="fd-numeric-content__kpi">
+                                                        100%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fd-card-content>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fd-card__header-row">
+                            <label class="fd-form-label">Today: {{ today | date:'dd-MM-yyyy' }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--4 fd-col-xl--4">
+            <div class="fd-card" role="button">
+                <div class="fd-card__header" role="group" aria-roledescription="Card Header"
+                     aria-labelledby="numeric-card-title-1">
+                    <div class="fd-card__header-numeric" role="group" aria-roledescription="Numeric content">
+                        <div class="fd-card__header-row">
+                            <div class="fd-card__header-main-container">
+                                <div class="fd-card__header-text">
+                                    <div class="fd-card__title-area">
+                                        <div class="fd-card__title" id="numeric-card-title-1" role="heading"
+                                             aria-level="3">
+                                            Total Sales</div>
+                                    </div>
+                                    <fd-card-content>
+                                        <div class="fd-card__numeric-container">
+                                            <div class="fd-numeric-content fd-card__numeric-content">
+                                                <div class="fd-numeric-content__kpi-container">
+                                                    <div class="fd-numeric-content__kpi">
+                                                        100%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fd-card-content>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fd-card__header-row">
+                            <label class="fd-form-label">Today: {{ today | date:'dd-MM-yyyy' }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     // Sample data for cash flow over one year (monthly)
