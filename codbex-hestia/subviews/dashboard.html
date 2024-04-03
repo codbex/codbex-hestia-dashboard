@@ -1,142 +1,463 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app="dashboard" ng-controller="DashboardController">
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=">
-    <title dg-view-title></title>
-    <script type="text/javascript" src="../services/dashboard.js"></script>
-    <theme></theme>
-    <script type="text/javascript" src="/services/js/resources-core/services/loader.js?id=application-view-js">
-    </script>
-    <link type="text/css" rel="stylesheet"
-          href="/services/js/resources-core/services/loader.js?id=application-view-css" />
-    </script>
-    <script type="text/javascript" src="dashboard.js"></script>
-</head>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=">
+        <title dg-view-title></title>
+        <script type="text/javascript" src="../services/dashboard.js"></script>
+        <theme></theme>
+        <script type="text/javascript" src="/services/js/resources-core/services/loader.js?id=application-view-js">
+        </script>
+        <link type="text/css" rel="stylesheet"
+            href="/services/js/resources-core/services/loader.js?id=application-view-css" />
+        </script>
+        <script type="text/javascript" src="dashboard.js"></script>
+        <script type="text/javascript" src="/webjars/chart.js/4.4.2/dist/chart.umd.js"></script>
+        <style>
+            .fd-table__cell {
+                text-align: center;
+                /* Center align text */
+                padding: 10px;
+            }
 
-<body fd-scrollbar>
-<fd-busy-indicator-extended class="dg-fill-parent" ng-hide="state.error || !state.isBusy" dg-size="l">
-    {{state.busyText}}
-</fd-busy-indicator-extended>
+            .fd-card-box__header,
+            .fd-card-box__content {
+                text-align: center;
+                font-size: 30px;
+                /* Center align text inside card boxes */
+            }
 
-<div class='fd-container'>
-    <div class='fd-row'>
-        <h1>Welcome to Hestia Dashboard</h1>
-    </div>
-    <div class='fd-row'>
-        <div class='fd-col fd-col--6'>
-            <div class="dg-vbox dg-fill-parent" ng-show="!state.error && !state.isBusy">
-                <div class="fd-card fd-card--analytical" card-type="standard">
-                    <a class="fd-card__header" tabindex="0" interactive="false">
-                        <div class="fd-card__header-text">
-                            <div class="fd-card__title-area">
-                                <div class="fd-card__title">Total Payables</div>
-                            </div>
-                            <div class="fd-card__subtitle-area" style="margin-bottom: 10px;">
-                                <div class="fd-card__subtitle">Total Unpaid Bills</div>
-                            </div>
-                            <fd-card-content>
-                                <table class="fd-table" style="border-collapse: collapse; width: 100%;">
-                                    <tbody>
-                                    <tr>
-                                        <td colspan="2">
-                                            <div>
-                                                <svg height="20" width="100%">
-                                                    <rect
-                                                            width="{{ (200000.00 / (200000.00 + 5000.00)) * 100 }}%"
-                                                            height="20" style="fill: #2c8ff6;"></rect>
-                                                    <rect
-                                                            x="{{ (200000.00 / (200000.00 + 5000.00)) * 100 }}%"
-                                                            width="{{ (5000.00 / (200000.00 + 5000.00)) * 100 }}%"
-                                                            height="20" style="fill: #ff6347;"></rect>
-                                                </svg>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style=" border: 1px solid #ccc; padding: 10px;" width="50%">
-                                            <div>
-                                                <h6 class="fd-title fd-title--h6" style="color: #2c8ff6;">
-                                                    CURRENT</h6>
-                                                <h4 class="fd-title fd-title--h6">200000.00</h4>
-                                            </div>
-                                        </td>
-                                        <td style="border: 1px solid #ccc; padding: 10px;">
-                                            <div>
-                                                <h6 class="fd-title fd-title--h6" style="color: #ff6347;">
-                                                    OVERDUE</h6>
-                                                <h4 class="fd-title fd-title--h6">5000.00</h4>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </fd-card-content>
+        </style>
+    </head>
+
+    <body fd-scrollbar>
+        <fd-busy-indicator-extended class="dg-fill-parent" ng-hide="state.error || !state.isBusy" dg-size="l">
+            {{state.busyText}}
+        </fd-busy-indicator-extended>
+
+        <div class='fd-container'>
+            <div class='fd-row'>
+                <h1>Welcome to Hestia Dashboard</h1>
+            </div>
+            <div class='fd-row'>
+                <div class="fd-col fd-col--12 fd-col-md--12 fd-col-lg--12 fd-col-xl--12">
+                    <div class="fd-card fd-card--analytical" card-type="standard">
+                        <div class="fd-card__header">
+                            <div class="fd-card__title">Sales Activity</div>
                         </div>
-                    </a>
+                        <div class="fd-card__content">
+                            <table
+                                class="fd-table fd-table--no-horizontal-borders fd-table--no-outer-border fd-table--top-border">
+                                <tbody class="fd-table__body">
+                                    <tr class="fd-table__row">
+                                        <td class="fd-table__cell" width="25%">
+                                            <h4 class="fd-title fd-title--h4">1000</h4>
+                                            <h6 class="fd-title fd-title--h6">To be packed</h6>
+                                        </td>
+                                        <td class="fd-table__cell" width="25%">
+                                            <h4 class="fd-title fd-title--h4">200</h4>
+                                            <h6 class="fd-title fd-title--h6">To be shipped</h6>
+                                        </td>
+                                        <td class="fd-table__cell" width="25%">
+                                            <h4 class="fd-title fd-title--h4">50</h4>
+                                            <h6 class="fd-title fd-title--h6">To be delivered</h6>
+                                        </td>
+                                        <td class="fd-table__cell" width="25%">
+                                            <h4 class="fd-title fd-title--h4">25</h4>
+                                            <h6 class="fd-title fd-title--h6">To be invoiced</h6>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='fd-row'>
+                <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--6 fd-col-xl--6">
+                    <div class="fd-card fd-card--analytical" card-type="standard">
+                        <a class="fd-card__header" tabindex="0" interactive="false">
+                            <div class="fd-card__header-text">
+                                <div class="fd-card__title-area">
+                                    <div class="fd-card__title">Total Payables</div>
+                                </div>
+                                <div class="fd-card__subtitle-area" style="margin-bottom: 10px;">
+                                    <div class="fd-card__subtitle">Total Unpaid Bills:
+                                        {{OrderData.UnpaidSalesOrders}}
+                                    </div>
+                                </div>
+                                <fd-card-content>
+                                    <table class="fd-table" style="border-collapse: collapse; width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div>
+                                                        <svg height="20" width="100%">
+                                                            <rect
+                                                                width="{{ (OrderData.ReceivableCurrent / (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue)) * 100 }}%"
+                                                                height="20" style="fill: #2c8ff6;"></rect>
+                                                            <rect
+                                                                x="{{ (OrderData.ReceivableCurrent / (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue)) * 100 }}%"
+                                                                width="{{ (OrderData.ReceivableOverdue / (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue)) * 100 }}%"
+                                                                height="20" style="fill: #ff6347;"></rect>
+                                                        </svg>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style=" border: 1px solid #ccc; padding: 10px;" width="50%">
+                                                    <div>
+                                                        <h6 class="fd-title fd-title--h6" style="color: #2c8ff6;">
+                                                            CURRENT</h6>
+                                                        <h4 class="fd-title fd-title--h6">
+                                                            {{OrderData.ReceivableCurrent}}
+                                                        </h4>
+                                                    </div>
+                                                </td>
+                                                <td style="border: 1px solid #ccc; padding: 10px;">
+                                                    <div>
+                                                        <h6 class="fd-title fd-title--h6" style="color: #ff6347;">
+                                                            OVERDUE</h6>
+                                                        <h4 class="fd-title fd-title--h6">
+                                                            {{OrderData.ReceivableOverdue}}
+                                                        </h4>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </fd-card-content>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--6 fd-col-xl--6">
+                    <div class=" fd-card fd-card--analytical" card-type="standard">
+                        <a class="fd-card__header" tabindex="0" interactive="false">
+                            <div class="fd-card__header-text">
+                                <div class="fd-card__title-area">
+                                    <div class="fd-card__title">Total Receivables</div>
+                                </div>
+                                <div class="fd-card__subtitle-area" style="margin-bottom: 10px;">
+                                    <div class="fd-card__subtitle">Total Unpaid Invoices:
+                                        {{InvoiceData.UnpaidSalesInvoices}}
+                                    </div>
+                                </div>
+                                <fd-card-content>
+                                    <table class="fd-table" style="border-collapse: collapse; width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div>
+                                                        <svg height="20" width="100%">
+                                                            <rect
+                                                                width="{{ (InvoiceData.ReceivableCurrent / (InvoiceData.ReceivableCurrent + InvoiceData.ReceivableOverdue)) * 100 }}%"
+                                                                height="20" style="fill: #2c8ff6;"></rect>
+                                                            <rect
+                                                                x="{{ (InvoiceData.ReceivableCurrent / (InvoiceData.ReceivableCurrent + InvoiceData.ReceivableOverdue)) * 100 }}%"
+                                                                width="{{ (InvoiceData.ReceivableOverdue / (InvoiceData.ReceivableCurrent + InvoiceData.ReceivableOverdue)) * 100 }}%"
+                                                                height="20" style="fill: #ff6347;"></rect>
+                                                        </svg>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style=" border: 1px solid #ccc; padding: 10px;" width="50%">
+                                                    <div>
+                                                        <h6 class="fd-title fd-title--h6" style="color: #2c8ff6;">
+                                                            CURRENT</h6>
+                                                        <h4 class="fd-title fd-title--h6">
+                                                            {{InvoiceData.ReceivableCurrent}}
+                                                        </h4>
+                                                    </div>
+                                                </td>
+                                                <td style="border: 1px solid #ccc; padding: 10px;">
+                                                    <div>
+                                                        <h6 class="fd-title fd-title--h6" style="color: #ff6347;">
+                                                            OVERDUE</h6>
+                                                        <h4 class="fd-title fd-title--h6">
+                                                            {{InvoiceData.ReceivableOverdue}}
+                                                        </h4>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </fd-card-content>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="fd-row">
+                <div class="fd-col fd-col--12 fd-col-md--12 fd-col-lg--12 fd-col-xl--12">
+                    <div class="dg-vbox dg-fill-parent" ng-show="!state.error && !state.isBusy">
+                        <div class="fd-card fd-card--analytical" card-type="standard">
+
+                            <canvas id="cashFlowChart" width="800" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='fd-row'>
+                <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
+                    <div class="fd-card" role="button">
+                        <div class="fd-card__header" role="group" aria-roledescription="Card Header"
+                            aria-labelledby="numeric-card-title-1">
+                            <div class="fd-card__header-numeric" role="group" aria-roledescription="Numeric content">
+                                <div class="fd-card__header-row">
+                                    <div class="fd-card__header-main-container">
+                                        <div class="fd-card__header-text">
+                                            <div class="fd-card__title-area">
+                                                <div class="fd-card__title" id="numeric-card-title-1" role="heading"
+                                                    aria-level="3">
+                                                    Gross Profit</div>
+                                            </div>
+                                            <fd-card-content>
+                                                <div class="fd-card__numeric-container">
+                                                    <div class="fd-numeric-content fd-card__numeric-content">
+                                                        <div class="fd-numeric-content__kpi-container">
+                                                            <div class="fd-numeric-content__kpi">
+                                                                {{GrossProfit}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fd-card-content>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fd-card__header-row">
+                                    <label class="fd-form-label">BGN</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
+                    <div class="fd-card" role="button">
+                        <div class="fd-card__header" role="group" aria-roledescription="Card Header"
+                            aria-labelledby="numeric-card-title-1">
+                            <div class="fd-card__header-numeric" role="group" aria-roledescription="Numeric content">
+                                <div class="fd-card__header-row">
+                                    <div class="fd-card__header-main-container">
+                                        <div class="fd-card__header-text">
+                                            <div class="fd-card__title-area">
+                                                <div class="fd-card__title" id="numeric-card-title-1" role="heading"
+                                                    aria-level="3">
+                                                    New
+                                                    Sales Orders</div>
+                                            </div>
+                                            <fd-card-content>
+                                                <div class="fd-card__numeric-container">
+                                                    <div class="fd-numeric-content fd-card__numeric-content">
+                                                        <div class="fd-numeric-content__kpi-container">
+                                                            <div class="fd-numeric-content__kpi">
+                                                                {{OrderData.SalesOrdersToday}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fd-card-content>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fd-card__header-row">
+                                    <label class="fd-form-label">Today: {{ today | date:'dd-MM-yyyy' }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
+                    <div class="fd-card" role="button">
+                        <div class="fd-card__header" role="group" aria-roledescription="Card Header"
+                            aria-labelledby="numeric-card-title-1">
+                            <div class="fd-card__header-numeric" role="group" aria-roledescription="Numeric content">
+                                <div class="fd-card__header-row">
+                                    <div class="fd-card__header-main-container">
+                                        <div class="fd-card__header-text">
+                                            <div class="fd-card__title-area">
+                                                <div class="fd-card__title" id="numeric-card-title-1" role="heading"
+                                                    aria-level="3">
+                                                    Inventory Accuracy</div>
+                                            </div>
+                                            <fd-card-content>
+                                                <div class="fd-card__numeric-container">
+                                                    <div class="fd-numeric-content fd-card__numeric-content">
+                                                        <div class="fd-numeric-content__kpi-container">
+                                                            <div class="fd-numeric-content__kpi">
+                                                                100%
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fd-card-content>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fd-card__header-row">
+                                    <label class="fd-form-label">Today: {{ today | date:'dd-MM-yyyy' }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
+                    <div class="fd-card" role="button">
+                        <div class="fd-card__header" role="group" aria-roledescription="Card Header"
+                            aria-labelledby="numeric-card-title-1">
+                            <div class="fd-card__header-numeric" role="group" aria-roledescription="Numeric content">
+                                <div class="fd-card__header-row">
+                                    <div class="fd-card__header-main-container">
+                                        <div class="fd-card__header-text">
+                                            <div class="fd-card__title-area">
+                                                <div class="fd-card__title" id="numeric-card-title-1" role="heading"
+                                                    aria-level="3">
+                                                    Total Sales</div>
+                                            </div>
+                                            <fd-card-content>
+                                                <div class="fd-card__numeric-container">
+                                                    <div class="fd-numeric-content fd-card__numeric-content">
+                                                        <div class="fd-numeric-content__kpi-container">
+                                                            <div class="fd-numeric-content__kpi">
+                                                                0
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fd-card-content>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fd-card__header-row">
+                                    <label class="fd-form-label">Today: {{ today | date:'dd-MM-yyyy' }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='fd-row'>
+                <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--6 fd-col-xl--6">
+                    <div class="fd-card" role="button">
+                        <div class="fd-card__header" role="group" aria-roledescription="Card Header"
+                            aria-labelledby="numeric-card-title-1">
+                            <div class="fd-card__header-numeric" role="group" aria-roledescription="Numeric content">
+                                <div class="fd-card__header-row">
+                                    <div class="fd-card__header-main-container">
+                                        <div class="fd-card__header-text">
+                                            <div class="fd-card__title-area">
+                                                <div class="fd-card__title" id="numeric-card-title-1" role="heading"
+                                                    aria-level="3">
+                                                    Total Sales</div>
+                                            </div>
+                                            <fd-card-content>
+                                                <div class="fd-card__numeric-container">
+                                                    <div class="fd-numeric-content fd-card__numeric-content">
+                                                        <div class="fd-numeric-content__kpi-container">
+                                                            <div class="fd-numeric-content__kpi">
+                                                                100%
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fd-card-content>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fd-card__header-row">
+                                    <label class="fd-form-label">Today: {{ today | date:'dd-MM-yyyy' }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--6 fd-col-xl--6">
+                    <div class="fd-card" role="button">
+                        <div class="fd-card__header" role="group" aria-roledescription="Card Header"
+                            aria-labelledby="numeric-card-title-1">
+                            <div class="fd-card__header-numeric" role="group" aria-roledescription="Numeric content">
+                                <div class="fd-card__header-row">
+                                    <div class="fd-card__header-main-container">
+                                        <div class="fd-card__header-text">
+                                            <div class="fd-card__title-area">
+                                                <div class="fd-card__title" id="numeric-card-title-1" role="heading"
+                                                    aria-level="3">
+                                                    Total Sales</div>
+                                            </div>
+                                            <fd-card-content>
+                                                <div class="fd-card__numeric-container">
+                                                    <div class="fd-numeric-content fd-card__numeric-content">
+                                                        <div class="fd-numeric-content__kpi-container">
+                                                            <div class="fd-numeric-content__kpi">
+                                                                100%
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fd-card-content>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fd-card__header-row">
+                                    <label class="fd-form-label">Today: {{ today | date:'dd-MM-yyyy' }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class='fd-col fd-col--6'>
-            <div class="dg-vbox dg-fill-parent" ng-show="!state.error && !state.isBusy">
-                <div class="fd-card fd-card--analytical" card-type="standard">
-                    <a class="fd-card__header" tabindex="0" interactive="false">
-                        <div class="fd-card__header-text">
-                            <div class="fd-card__title-area">
-                                <div class="fd-card__title">Total Receivables</div>
-                            </div>
-                            <div class="fd-card__subtitle-area" style="margin-bottom: 10px;">
-                                <div class="fd-card__subtitle">Total Unpaid Invoices</div>
-                            </div>
-                            <fd-card-content>
-                                <table class="fd-table" style="border-collapse: collapse; width: 100%;">
-                                    <tbody>
-                                    <tr>
-                                        <td colspan="2">
-                                            <div>
-                                                <svg height="20" width="100%">
-                                                    <rect
-                                                            width="{{ (500000.00 / (500000.00 + 0.00)) * 100 }}%"
-                                                            height="20" style="fill: #2c8ff6;"></rect>
-                                                    <rect x="{{ (500000.00 / (500000.00 + 0.00)) * 100 }}%"
-                                                          width="{{ (0.00 / (500000.00 + 0.00)) * 100 }}%"
-                                                          height="20" style="fill: #ff6347;"></rect>
-                                                </svg>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style=" border: 1px solid #ccc; padding: 10px;" width="50%">
-                                            <div>
-                                                <h6 class="fd-title fd-title--h6" style="color: #2c8ff6;">
-                                                    CURRENT</h6>
-                                                <h4 class="fd-title fd-title--h6">500000.00</h4>
-                                            </div>
-                                        </td>
-                                        <td style="border: 1px solid #ccc; padding: 10px;">
-                                            <div>
-                                                <h6 class="fd-title fd-title--h6" style="color: #ff6347;">
-                                                    OVERDUE</h6>
-                                                <h4 class="fd-title fd-title--h6">0.00</h4>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </fd-card-content>
-                        </div>
-                    </a>
-                </div>
-            </div>
+        <script>
+            // Sample data for cash flow over one year (monthly)
+    var cashFlowData = {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+            label: "Cash Flow",
+            data: [15000, 18000, 20000, 22000, 19000, 25000, 23000, 28000, 26000, 24000, 21000, 20000],
+            borderColor: 'rgb(75, 192, 192)',
+            fill: false
+        }]
+    };
+
+    // Get the canvas element
+    var ctx = document.getElementById('cashFlowChart').getContext('2d');
+
+    // Create the chart
+    var cashFlowChart = new Chart(ctx, {
+        type: 'line',
+        data: cashFlowData,
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Months'
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Cash Flow'
+                    }
+                }
+            }
+        }
+    });
+        </script>
+
+        <fd-message-page glyph="sap-icon--error" ng-if="state.error">
+            <fd-message-page-title>Dashboard encounterd an error!</fd-message-page-title>
+            <fd-message-page-subtitle>{{errorMessage}}</fd-message-page-subtitle>
+        </fd-message-page>
         </div>
-    </div>
-    <fd-message-page glyph="sap-icon--error" ng-if="state.error">
-        <fd-message-page-title>Dashboard encounterd an error!</fd-message-page-title>
-        <fd-message-page-subtitle>{{errorMessage}}</fd-message-page-subtitle>
-    </fd-message-page>
-</div>
-</body>
+    </body>
+
 </html>
