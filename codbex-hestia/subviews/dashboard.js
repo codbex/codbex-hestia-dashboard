@@ -28,6 +28,12 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
             calculateGrossProfit();
         });
 
+    const productServiceUrl = "/services/ts/codbex-hestia/api/ProductService.ts/productData";
+    $http.get(productServiceUrl)
+        .then(function (response) {
+            $scope.ProductData = response.data;
+        });
+
     const orderServiceUrl = "/services/ts/codbex-hestia/api/OrderService.ts/orderData";
     $http.get(orderServiceUrl)
         .then(function (response) {
