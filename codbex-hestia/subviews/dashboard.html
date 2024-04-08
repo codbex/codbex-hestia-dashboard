@@ -185,8 +185,17 @@
         <div class="fd-col fd-col--12 fd-col-md--12 fd-col-lg--12 fd-col-xl--12">
             <div class="dg-vbox dg-fill-parent" ng-show="!state.error && !state.isBusy">
                 <div class="fd-card fd-card--analytical" card-type="standard">
-
-                    <canvas id="cashFlowChart" width="800" height="400"></canvas>
+                    <div class="fd-card__header">
+                        <div class="fd-card__title">Cash Flow</div>
+                    </div>
+                    <div class="fd-row">
+                        <div class="fd-col fd-col--9 fd-col-md--9 fd-col-lg--9 fd-col-xl--9">
+                            <canvas id="cashFlowChart"></canvas>
+                        </div>
+                        <div class="fd-col fd-col--3 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
+                            <!-- Add your legend content here -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -351,7 +360,8 @@
                                     <div class="fd-list-group__item"
                                          style="display: flex; justify-content: space-between; align-items: center; font-size: 18px; margin-bottom: 20px;">
                                         <span class="fd-list-group__title">Item Groups</span>
-                                        <span class="fd-list-group__text">10</span>
+                                        <span
+                                                class="fd-list-group__text">{{ProductData.ActiveCategories}}</span>
                                     </div>
                                     <div class="fd-list-group__item"
                                          style="display: flex; justify-content: space-between; align-items: center; font-size: 18px; margin-bottom: 20px;">
