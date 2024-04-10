@@ -20,6 +20,8 @@ class OrderService {
         let purchaseOrderTotal: number = 0.0;
         let totalNotDue: number = 0;
         let totalDue: number = 0;
+        let paidSalesOrders: number = 0;
+        let newSalesOrders: number = 0;
 
         const currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
@@ -65,13 +67,24 @@ class OrderService {
             purchaseOrderTotal += purchaseOrder.Total;
         });
 
+        salesOrders.forEach(salesOrder => {
+            if(salesOrder.SalesOrderStatus == 6){
+                paidSalesOrders++;
+            }
+            if(salesOrder.SalesOrderStatus == 1){
+                newSalesOrders++;
+            }
+        })
+
         return {
             "UnpaidSalesOrders": unpaidSalesOrders,
             "SalesOrdersToday": salesOrdersToday,
             "SalesOrderTotal": salesOrderTotal,
             "PurchaseOrderTotal": purchaseOrderTotal,
             "ReceivableCurrent": totalNotDue,
-            'ReceivableOverdue': totalDue
+            'ReceivableOverdue': totalDue,
+            "PaidSalesOrders": paidSalesOrders,
+            "NewSalesOrders": newSalesOrders
         };
     }
 }

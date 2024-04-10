@@ -35,6 +35,12 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
             calculateGrossProfit();
         });
 
+    const productServiceUrl = "/services/ts/codbex-hestia/api/ProductService.ts/productData";
+    $http.get(productServiceUrl)
+        .then(function (response) {
+            $scope.ProductData = response.data;
+        });
+
     function calculateGrossProfit() {
         if ($scope.InvoiceData && $scope.OrderData) {
             $scope.GrossProfit = ($scope.InvoiceData.SalesInvoiceTotal + $scope.OrderData.SalesOrderTotal) - ($scope.InvoiceData.PurchaseInvoiceTotal + $scope.OrderData.PurchaseOrderTotal);
