@@ -7,17 +7,89 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
         busyText: "Loading...",
     };
 
-    $scope.loadContents = function () {
-        $scope.state.isBusy = false;
-        //         $scope.state.error = true;
-        // $scope.errorMessage = "The 'file' data parameter is missing.";
+    // Sample data for cash flow over one year (monthly)
+    const cashFlowData = {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+            label: "Cash Flow",
+            data: [15000, 18000, 20000, 22000, 19000, 25000, 23000, 28000, 26000, 24000, 21000, 20000],
+            borderColor: 'rgb(75, 192, 192)',
+            fill: false
+        }]
+    };
+
+    // Doughnut Chart Data
+    const doughnutData = {
+        labels: ['Active Products', 'Inactive Products'],
+        datasets: [{
+            data: [75, 25], // Example data, replace with actual data
+            backgroundColor: ['#36a2eb', '#ff6384']
+        }]
+    };
+
+    // Doughnut Chart Configuration
+    const doughnutOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            position: 'bottom'
+        },
+        title: {
+            display: true,
+            text: 'Product Status'
+        },
+        animation: {
+            animateScale: true,
+            animateRotate: true
+        }
     };
 
     angular.element($document[0]).ready(function () {
+        // Get the canvas element
+        const cashFlowChartCtx = $document[0].getElementById('cashFlowChart').getContext('2d');
+
+        // Create the chart
+        const cashFlowChart = new Chart(cashFlowChartCtx, {
+            type: 'line',
+            data: cashFlowData,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Months'
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Cash Flow'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Initialize Doughnut Chart
+        const doughnutChartCtx = $document[0].getElementById('doughnutChart').getContext('2d');
+        const doughnutChart = new Chart(doughnutChartCtx, {
+            type: 'doughnut',
+            data: doughnutData,
+            options: doughnutOptions
+        });
         $scope.$apply(function () {
-            $scope.loadContents();
+            $scope.state.isBusy = false;
         });
     });
+
+    $scope.openPerspective = function (perspective) {
+        if (perspective === 'sales-orders') {
+            messageHub.postMessage('launchpad.switch.perspective', { perspectiveId: 'sales-orders' }, true);
+        }
+    };
 
     $scope.today = new Date();
 
