@@ -85,6 +85,12 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
         });
     });
 
+    $scope.openPerspective = function (perspective) {
+        if (perspective === 'sales-orders') {
+            messageHub.postMessage('launchpad.switch.perspective', { perspectiveId: 'sales-orders' }, true);
+        }
+    };
+
     $scope.today = new Date();
 
     const invoiceServiceUrl = "/services/ts/codbex-hestia/api/InvoiceService.ts/invoiceData";
