@@ -89,6 +89,9 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
         if (perspective === 'sales-orders') {
             messageHub.postMessage('launchpad.switch.perspective', { perspectiveId: 'sales-orders' }, true);
         }
+        if (perspective === 'goods-issues') {
+            messageHub.postMessage('launchpad.switch.perspective', { perspectiveId: 'goods-issues' }, true);
+        }
     };
 
     $scope.today = new Date();
