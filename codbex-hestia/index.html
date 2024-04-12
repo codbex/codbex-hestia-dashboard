@@ -137,6 +137,25 @@
 								</fd-list-navigation-item>
 							</fd-list>
 						</fd-list-navigation-item>
+						<fd-list-navigation-group-header>Products</fd-list-navigation-group-header>
+						<fd-list-navigation-item ng-init="productExpanded = false" expandable="true"
+							ng-click="productExpanded = !productExpanded" is-expanded="productExpanded">
+							<fd-list-navigation-item-icon glyph="sap-icon--folder">
+							</fd-list-navigation-item-icon>
+							<span fd-list-navigation-item-text>Products</span>
+							<fd-list-navigation-item-arrow aria-label="expand submenu" is-expanded="productExpanded">
+							</fd-list-navigation-item-arrow>
+							<fd-list>
+								<fd-list-navigation-item ng-click="switchView('products', $event)">
+									<span fd-list-navigation-item-text>Products</span>
+								</fd-list-navigation-item>
+							</fd-list>
+							<fd-list>
+								<fd-list-navigation-item ng-click="switchView('categories', $event)">
+									<span fd-list-navigation-item-text>Categories</span>
+								</fd-list-navigation-item>
+							</fd-list>
+						</fd-list-navigation-item>
 						<fd-list-navigation-group-header>People</fd-list-navigation-group-header>
 						<fd-list-navigation-item ng-init="peopleExpanded = false" expandable="true"
 							ng-click="peopleExpanded = !peopleExpanded" is-expanded="peopleExpanded">
@@ -278,6 +297,12 @@
 			</embedded-view>
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-methods" dg-type="subview"
 				ng-show="currentViewId === 'methods'">
+			</embedded-view>
+			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-products" dg-type="subview"
+				ng-show="currentViewId === 'products'">
+			</embedded-view>
+			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-categories" dg-type="subview"
+				ng-show="currentViewId === 'categories'">
 			</embedded-view>
 		</div>
 
