@@ -8,15 +8,15 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
     };
 
     // Sample data for cash flow over one year (monthly)
-    const cashFlowData = {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-            label: "Cash Flow",
-            data: [15000, 18000, 20000, 22000, 19000, 25000, 23000, 28000, 26000, 24000, 21000, 20000],
-            borderColor: 'rgb(75, 192, 192)',
-            fill: false
-        }]
-    };
+    // const cashFlowData = {
+    //     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    //     datasets: [{
+    //         label: "Cash Flow",
+    //         data: [15000, 18000, 20000, 22000, 19000, 25000, 23000, 28000, 26000, 24000, 21000, 20000],
+    //         borderColor: 'rgb(75, 192, 192)',
+    //         fill: false
+    //     }]
+    // };
 
     // Doughnut Chart Data
     const doughnutData = {
@@ -46,32 +46,32 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
 
     angular.element($document[0]).ready(function () {
         // Get the canvas element
-        const cashFlowChartCtx = $document[0].getElementById('cashFlowChart').getContext('2d');
+        // const cashFlowChartCtx = $document[0].getElementById('cashFlowChart').getContext('2d');
 
         // Create the chart
-        const cashFlowChart = new Chart(cashFlowChartCtx, {
-            type: 'line',
-            data: cashFlowData,
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        display: true,
-                        title: {
-                            display: true,
-                            text: 'Months'
-                        }
-                    },
-                    y: {
-                        display: true,
-                        title: {
-                            display: true,
-                            text: 'Cash Flow'
-                        }
-                    }
-                }
-            }
-        });
+        // const cashFlowChart = new Chart(cashFlowChartCtx, {
+        //     type: 'line',
+        //     data: cashFlowData,
+        //     options: {
+        //         responsive: true,
+        //         scales: {
+        //             x: {
+        //                 display: true,
+        //                 title: {
+        //                     display: true,
+        //                     text: 'Months'
+        //                 }
+        //             },
+        //             y: {
+        //                 display: true,
+        //                 title: {
+        //                     display: true,
+        //                     text: 'Cash Flow'
+        //                 }
+        //             }
+        //         }
+        //     }
+        // });
 
         // Initialize Doughnut Chart
         const doughnutChartCtx = $document[0].getElementById('doughnutChart').getContext('2d');
