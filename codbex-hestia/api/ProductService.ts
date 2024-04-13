@@ -16,32 +16,22 @@ class ProductService {
 
     @Get("/productData")
     public productData() {
-        let lowStockProducts: number = 0;
-        let activeProducts: number = 0;
-        let activeCategories: number = 0;
-
         const currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
 
-        const products = this.productDao.findAll();
-        const categories = this.categoryDao.findAll();
+        const allProducts = this.productDao.findAll();
 
-        products.forEach(product => {
-            if (product.Enabled == true) {
-                activeProducts++;
-            }
-        })
+        const activeProducts = allProducts.filter(product => product.Enabled === true).length;
+        const inactiveProducts = allProducts.filter(product => product.Enabled === false).length;
 
-        categories.forEach(category => {
-            if (category.Enabled == true) {
-                activeCategories++;
-            }
-        })
+
+        const activeCategories: number = this.categoryDao.count();
 
         return {
             "ActiveProducts": activeProducts,
-            "ActiveCategories": activeCategories,
-            "LowStockProducts": lowStockProducts
+            "InactiveProducts": inactiveProducts,
+            "AllProducts": allProducts.length,
+            "ActiveCategories": activeCategories
         }
     }
 }

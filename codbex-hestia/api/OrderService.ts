@@ -28,15 +28,13 @@ class OrderService {
 
         let salesOrdersToday = this.salesOrderDao.findAll({
             $filter: {
-                greaterThanOrEqual: {
+                equals: {
                     Date: currentDate
                 }
             }
         });
 
-        if (!salesOrdersToday || salesOrdersToday.length === 0) {
-            salesOrdersToday = 0;
-        }
+        const salesOrderTodayLength: number = !salesOrdersToday || salesOrdersToday.length === 0 ? 0 : salesOrdersToday.length;
 
         const purchaseOrders = this.purchaseOrderDao.findAll();
         const salesOrders = this.salesOrderDao.findAll();
@@ -68,17 +66,17 @@ class OrderService {
         });
 
         salesOrders.forEach(salesOrder => {
-            if(salesOrder.SalesOrderStatus == 6){
+            if (salesOrder.SalesOrderStatus == 6) {
                 paidSalesOrders++;
             }
-            if(salesOrder.SalesOrderStatus == 1){
+            if (salesOrder.SalesOrderStatus == 1) {
                 newSalesOrders++;
             }
         })
 
         return {
             "UnpaidSalesOrders": unpaidSalesOrders,
-            "SalesOrdersToday": salesOrdersToday,
+            "SalesOrdersToday": salesOrderTodayLength,
             "SalesOrderTotal": salesOrderTotal,
             "PurchaseOrderTotal": purchaseOrderTotal,
             "ReceivableCurrent": totalNotDue,
