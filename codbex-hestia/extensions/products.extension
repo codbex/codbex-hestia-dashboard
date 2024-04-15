@@ -1,0 +1,5 @@
+{
+    "module": "codbex-hestia/services/products.js",
+    "extensionPoint": "ide-subview",
+    "description": "Products Subview"
+}

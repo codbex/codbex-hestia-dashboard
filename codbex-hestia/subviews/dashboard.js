@@ -7,72 +7,33 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
         busyText: "Loading...",
     };
 
-    // Sample data for cash flow over one year (monthly)
-    const cashFlowData = {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-            label: "Cash Flow",
-            data: [15000, 18000, 20000, 22000, 19000, 25000, 23000, 28000, 26000, 24000, 21000, 20000],
-            borderColor: 'rgb(75, 192, 192)',
-            fill: false
-        }]
-    };
+    angular.element($document[0]).ready(async function () {
+        const productData = await getProductData();
+        // Doughnut Chart Data
+        const doughnutData = {
+            labels: ['Active Products', 'Inactive Products'],
+            datasets: [{
+                data: [productData.ActiveProducts, productData.InactiveProducts],
+                backgroundColor: ['#36a2eb', '#ff6384']
+            }]
+        };
 
-    // Doughnut Chart Data
-    const doughnutData = {
-        labels: ['Active Products', 'Inactive Products'],
-        datasets: [{
-            data: [75, 25], // Example data, replace with actual data
-            backgroundColor: ['#36a2eb', '#ff6384']
-        }]
-    };
-
-    // Doughnut Chart Configuration
-    const doughnutOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-            position: 'bottom'
-        },
-        title: {
-            display: true,
-            text: 'Product Status'
-        },
-        animation: {
-            animateScale: true,
-            animateRotate: true
-        }
-    };
-
-    angular.element($document[0]).ready(function () {
-        // Get the canvas element
-        const cashFlowChartCtx = $document[0].getElementById('cashFlowChart').getContext('2d');
-
-        // Create the chart
-        const cashFlowChart = new Chart(cashFlowChartCtx, {
-            type: 'line',
-            data: cashFlowData,
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        display: true,
-                        title: {
-                            display: true,
-                            text: 'Months'
-                        }
-                    },
-                    y: {
-                        display: true,
-                        title: {
-                            display: true,
-                            text: 'Cash Flow'
-                        }
-                    }
-                }
+        // Doughnut Chart Configuration
+        const doughnutOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                position: 'bottom'
+            },
+            title: {
+                display: true,
+                text: 'Product Status'
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
             }
-        });
-
+        };
         // Initialize Doughnut Chart
         const doughnutChartCtx = $document[0].getElementById('doughnutChart').getContext('2d');
         const doughnutChart = new Chart(doughnutChartCtx, {
@@ -88,6 +49,8 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
     $scope.openPerspective = function (perspective) {
         if (perspective === 'sales-orders') {
             messageHub.postMessage('launchpad.switch.perspective', { perspectiveId: 'sales-orders' }, true);
+        } else if (perspective === 'products') {
+            messageHub.postMessage('launchpad.switch.perspective', { perspectiveId: 'products' }, true);
         }
         if (perspective === 'goods-issues') {
             messageHub.postMessage('launchpad.switch.perspective', { perspectiveId: 'goods-issues' }, true);
@@ -116,9 +79,18 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
             $scope.ProductData = response.data;
         });
 
+    async function getProductData() {
+        try {
+            const response = await $http.get("/services/ts/codbex-hestia/api/ProductService.ts/productData");
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching product data:', error);
+        }
+    }
+
     function calculateGrossProfit() {
         if ($scope.InvoiceData && $scope.OrderData) {
-            $scope.GrossProfit = ($scope.InvoiceData.SalesInvoiceTotal + $scope.OrderData.SalesOrderTotal) - ($scope.InvoiceData.PurchaseInvoiceTotal + $scope.OrderData.PurchaseOrderTotal);
+            $scope.GrossProfit = (($scope.InvoiceData.SalesInvoiceTotal + $scope.OrderData.SalesOrderTotal) - ($scope.InvoiceData.PurchaseInvoiceTotal + $scope.OrderData.PurchaseOrderTotal)).toFixed(2);
         }
     }
 }]);
