@@ -107,6 +107,16 @@
 								is-expanded="financeReportsExpanded">
 							</fd-list-navigation-item-arrow>
 							<fd-list>
+								<fd-list-navigation-item ng-click="switchView('sales-orders-report', $event)">
+									<span fd-list-navigation-item-text>Sales Orders</span>
+								</fd-list-navigation-item>
+							</fd-list>
+							<fd-list>
+								<fd-list-navigation-item ng-click="switchView('sales-orders-total-report', $event)">
+									<span fd-list-navigation-item-text>Sales Orders Total</span>
+								</fd-list-navigation-item>
+							</fd-list>
+							<!-- <fd-list>
 								<fd-list-navigation-item ng-click="switchView('accounts-payable', $event)">
 									<span fd-list-navigation-item-text>Accounts Payable</span>
 								</fd-list-navigation-item>
@@ -120,9 +130,9 @@
 								<fd-list-navigation-item ng-click="switchView('balance-sheet', $event)">
 									<span fd-list-navigation-item-text>Balance Sheet</span>
 								</fd-list-navigation-item>
-							</fd-list>
+							</fd-list> -->
 						</fd-list-navigation-item>
-						<fd-list-navigation-item ng-init="inventoryReportsExpanded = false" expandable="true"
+						<!-- <fd-list-navigation-item ng-init="inventoryReportsExpanded = false" expandable="true"
 							ng-click="inventoryReportsExpanded = !inventoryReportsExpanded"
 							is-expanded="inventoryReportsExpanded">
 							<fd-list-navigation-item-icon glyph="sap-icon--folder">
@@ -136,7 +146,7 @@
 									<span fd-list-navigation-item-text>SKU Listing</span>
 								</fd-list-navigation-item>
 							</fd-list>
-						</fd-list-navigation-item>
+						</fd-list-navigation-item> -->
 						<fd-list-navigation-group-header>Products</fd-list-navigation-group-header>
 						<fd-list-navigation-item ng-init="productExpanded = false" expandable="true"
 							ng-click="productExpanded = !productExpanded" is-expanded="productExpanded">
@@ -303,6 +313,19 @@
 			</embedded-view>
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-categories" dg-type="subview"
 				ng-show="currentViewId === 'categories'">
+			</embedded-view>
+			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-customer-payments" dg-type="subview"
+				ng-show="currentViewId === 'customer-payments'">
+			</embedded-view>
+			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-supplier-payments" dg-type="subview"
+				ng-show="currentViewId === 'supplier-payments'">
+			</embedded-view>
+			<!-- Reports -->
+			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-sales-orders-report" dg-type="subview"
+				ng-show="currentViewId === 'sales-orders-report'">
+			</embedded-view>
+			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-sales-orders-total-report" dg-type="subview"
+				ng-show="currentViewId === 'sales-orders-total-report'">
 			</embedded-view>
 		</div>
 
