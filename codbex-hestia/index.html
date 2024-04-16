@@ -116,6 +116,16 @@
 									<span fd-list-navigation-item-text>Sales Orders Total</span>
 								</fd-list-navigation-item>
 							</fd-list>
+							<fd-list>
+								<fd-list-navigation-item ng-click="switchView('purchase-orders-report', $event)">
+									<span fd-list-navigation-item-text>Purchase Orders</span>
+								</fd-list-navigation-item>
+							</fd-list>
+							<fd-list>
+								<fd-list-navigation-item ng-click="switchView('purchase-orders-total-report', $event)">
+									<span fd-list-navigation-item-text>Purchase Orders Total</span>
+								</fd-list-navigation-item>
+							</fd-list>
 							<!-- <fd-list>
 								<fd-list-navigation-item ng-click="switchView('accounts-payable', $event)">
 									<span fd-list-navigation-item-text>Accounts Payable</span>
@@ -326,6 +336,12 @@
 			</embedded-view>
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-sales-orders-total-report" dg-type="subview"
 				ng-show="currentViewId === 'sales-orders-total-report'">
+			</embedded-view>
+			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-purchase-orders-report" dg-type="subview"
+						   ng-show="currentViewId === 'purchase-orders-report'">
+			</embedded-view>
+			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-purchase-orders-total-report" dg-type="subview"
+						   ng-show="currentViewId === 'purchase-orders-total-report'">
 			</embedded-view>
 		</div>
 
