@@ -77,9 +77,9 @@ class OrderService {
 
         const today = new Date();
         const lastMonthStartDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-        const salesOrdersLastMonth = salesOrders.filter(order => order.date >= lastMonthStartDate && order.date < today);
-        const totalPriceLastMonth = salesOrdersLastMonth.reduce((total, order) => total + order.price, 0);
-        avgSalesOrderPrice = totalPriceLastMonth / salesOrdersLastMonth.length;
+        const salesOrdersLastMonth = salesOrders.filter(order => order.Date >= lastMonthStartDate && order.Date < today);
+        const totalPriceLastMonth = salesOrdersLastMonth.reduce((total, order) => total + order.Gross, 0);
+        avgSalesOrderPrice = (totalPriceLastMonth / salesOrdersLastMonth.length).toFixed(2);
 
 
 
