@@ -48,46 +48,49 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
 
     $scope.openPerspective = function (perspective) {
         if (perspective === 'sales-orders') {
-            messageHub.postMessage('launchpad.switch.perspective', { perspectiveId: 'sales-orders' }, true);
+            messageHub.postMessage('launchpad.switch.perspective', {perspectiveId: 'sales-orders'}, true);
         } else if (perspective === 'products') {
-            messageHub.postMessage('launchpad.switch.perspective', { perspectiveId: 'products' }, true);
+            messageHub.postMessage('launchpad.switch.perspective', {perspectiveId: 'products'}, true);
+        } else if (perspective === 'sales-invoices') {
+            messageHub.postMessage('launchpad.switch.perspective', {perspectiveId: 'sales-invoices'}, true);
         }
-    };
-
-    $scope.today = new Date();
-
-    const invoiceServiceUrl = "/services/ts/codbex-hestia/api/InvoiceService.ts/invoiceData";
-    $http.get(invoiceServiceUrl)
-        .then(function (response) {
-            $scope.InvoiceData = response.data;
-            calculateGrossProfit();
-        });
-
-    const orderServiceUrl = "/services/ts/codbex-hestia/api/OrderService.ts/orderData";
-    $http.get(orderServiceUrl)
-        .then(function (response) {
-            $scope.OrderData = response.data;
-            calculateGrossProfit();
-        });
-
-    const productServiceUrl = "/services/ts/codbex-hestia/api/ProductService.ts/productData";
-    $http.get(productServiceUrl)
-        .then(function (response) {
-            $scope.ProductData = response.data;
-        });
-
-    async function getProductData() {
-        try {
-            const response = await $http.get("/services/ts/codbex-hestia/api/ProductService.ts/productData");
-            return response.data;
-        } catch (error) {
-            console.error('Error fetching product data:', error);
-        }
+        ;
     }
 
-    function calculateGrossProfit() {
-        if ($scope.InvoiceData && $scope.OrderData) {
-            $scope.GrossProfit = (($scope.InvoiceData.SalesInvoiceTotal + $scope.OrderData.SalesOrderTotal) - ($scope.InvoiceData.PurchaseInvoiceTotal + $scope.OrderData.PurchaseOrderTotal)).toFixed(2);
+        $scope.today = new Date();
+
+        const invoiceServiceUrl = "/services/ts/codbex-hestia/api/InvoiceService.ts/invoiceData";
+        $http.get(invoiceServiceUrl)
+            .then(function (response) {
+                $scope.InvoiceData = response.data;
+                calculateGrossProfit();
+            });
+
+        const orderServiceUrl = "/services/ts/codbex-hestia/api/OrderService.ts/orderData";
+        $http.get(orderServiceUrl)
+            .then(function (response) {
+                $scope.OrderData = response.data;
+                calculateGrossProfit();
+            });
+
+        const productServiceUrl = "/services/ts/codbex-hestia/api/ProductService.ts/productData";
+        $http.get(productServiceUrl)
+            .then(function (response) {
+                $scope.ProductData = response.data;
+            });
+
+        async function getProductData() {
+            try {
+                const response = await $http.get("/services/ts/codbex-hestia/api/ProductService.ts/productData");
+                return response.data;
+            } catch (error) {
+                console.error('Error fetching product data:', error);
+            }
         }
-    }
-}]);
+
+        function calculateGrossProfit() {
+            if ($scope.InvoiceData && $scope.OrderData) {
+                $scope.GrossProfit = (($scope.InvoiceData.SalesInvoiceTotal + $scope.OrderData.SalesOrderTotal) - ($scope.InvoiceData.PurchaseInvoiceTotal + $scope.OrderData.PurchaseOrderTotal)).toFixed(2);
+            }
+        }
+    }]);
