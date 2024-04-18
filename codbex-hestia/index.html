@@ -23,7 +23,6 @@
 		<div class="dg-hbox dg-fill-parent">
 			<fd-vertical-nav can-scroll="true" class="dg-border-right"
 				style="box-shadow:none;max-height:calc(100vh - 4.375rem)">
-				<!-- If there is no status bar, use calc(100vh - 2.75rem) instead -->
 				<fd-vertical-nav-main-section aria-label="main navigation">
 					<fd-list>
 						<fd-list-navigation-item ng-click="switchView('dashboard')">
@@ -345,8 +344,8 @@
 			</embedded-view>
 		</div>
 
-		<ide-dialogs></ide-dialogs>
-		<ide-status-bar></ide-status-bar><!-- Remove this if a status bar is not needed -->
+		<ide-dialogs extension-points="::extraExtensionPoints"></ide-dialogs>
+		<ide-status-bar></ide-status-bar>
 	</body>
 
 </html>
