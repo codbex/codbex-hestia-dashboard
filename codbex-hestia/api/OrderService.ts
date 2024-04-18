@@ -22,6 +22,7 @@ class OrderService {
         let totalDue: number = 0;
         let paidSalesOrders: number = 0;
         let newSalesOrders: number = 0;
+        let avgSalesOrderPrice: number = 0;
 
         const currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
@@ -74,6 +75,15 @@ class OrderService {
             }
         })
 
+        const today = new Date();
+        const lastMonthStartDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        const salesOrdersLastMonth = salesOrders.filter(order => order.date >= lastMonthStartDate && order.date < today);
+        const totalPriceLastMonth = salesOrdersLastMonth.reduce((total, order) => total + order.price, 0);
+        avgSalesOrderPrice = totalPriceLastMonth / salesOrdersLastMonth.length;
+
+
+
+
         return {
             "UnpaidSalesOrders": unpaidSalesOrders,
             "SalesOrdersToday": salesOrderTodayLength,
@@ -82,7 +92,8 @@ class OrderService {
             "ReceivableCurrent": totalNotDue,
             'ReceivableOverdue': totalDue,
             "PaidSalesOrders": paidSalesOrders,
-            "NewSalesOrders": newSalesOrders
+            "NewSalesOrders": newSalesOrders,
+            "AverageSalesOrderPrice": avgSalesOrderPrice
         };
     }
 }
