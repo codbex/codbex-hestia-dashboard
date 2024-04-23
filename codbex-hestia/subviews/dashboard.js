@@ -120,36 +120,46 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
     }
 
     angular.element($document[0]).ready(async function () {
-        const orderData = await getOrderData();
-        const topSalesOrders = orderData.TopSalesOrders;
+        try {
+            const orderData = await getOrderData();
+            const topSalesOrders = orderData.TopSalesOrders;
 
-        console.log(topSalesOrders); // Log topSalesOrders to the console
+            console.log(topSalesOrders); // Log topSalesOrders to the console
 
-        // Get the table body element using jQuery
-        const $tableBody = $('#top_sales');
+            const tableBody = document.getElementById('top_sales');
+            const rows = [];
 
-        // Clear any existing rows
-        $tableBody.empty();
+            for (const order of topSalesOrders) {
+                rows.push(
+                    (async () => {
+                        try {
+                            const customer = await getCustomerById(order.Customer);
+                            console.log(customer);
 
-        for (const order of topSalesOrders) {
-            try {
-                const customer = await getCustomerById(order.Customer);
-                console.log(customer);
-
-                // Create a new table row
-                const $row = $('<tr>');
-                // Insert order details into table cells
-                $row.html(`
-                <td class="fd-table__cell"><a class="fd-link"><span class="fd-link__content">${order.Number}</span></a></td>
-                <td class="fd-table__cell">${customer.Name}</td>
-                <td class="fd-table__cell">${order.Gross}</td>
-            `);
-                // Append the row to the table body
-                $tableBody.append($row);
-            } catch (error) {
-                console.error("Error fetching customer:", error);
-                // Handle error
+                            // Create a new table row
+                            const $row = $('<tr>');
+                            // Insert order details into table cells
+                            $row.html(`
+                            <td class="fd-table__cell"><a class="fd-link"><span class="fd-link__content">${order.Number}</span></a></td>
+                            <td class="fd-table__cell">${customer.Name}</td>
+                            <td class="fd-table__cell">${order.Gross}</td>
+                        `);
+                            // Append the row to the table body
+                            $(tableBody).append($row);
+                        } catch (error) {
+                            console.error("Error fetching customer:", error);
+                            // Handle error
+                        }
+                    })()
+                );
             }
+
+            // Wait for all promises to resolve
+            await Promise.all(rows);
+        } catch (error) {
+            console.error("Error fetching order data:", error);
+            // Handle error
         }
     });
+
 }]);
