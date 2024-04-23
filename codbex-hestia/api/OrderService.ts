@@ -91,6 +91,8 @@ class OrderService {
         const totalPriceLastMonth = salesOrdersLastMonth.reduce((total, order) => total + order.Gross, 0);
         avgSalesOrderPrice = (totalPriceLastMonth / salesOrdersLastMonth.length);
 
+        const mostExpensiveSalesOrders = salesOrders.slice().sort((a, b) => b.Gross - a.Gross).slice(0, 5);
+
         return {
             "UnpaidSalesOrders": unpaidSalesOrders,
             "UnpaidPurchaseOrders": unpaidPurchaseOrders,
@@ -103,7 +105,8 @@ class OrderService {
             'PayablesOverdue': purchaseTotalDue,
             "PaidSalesOrders": paidSalesOrders,
             "NewSalesOrders": newSalesOrders,
-            "AverageSalesOrderPrice": avgSalesOrderPrice
-    };
+            "AverageSalesOrderPrice": avgSalesOrderPrice,
+            "TopSalesOrders": mostExpensiveSalesOrders
+        };
     }
 }

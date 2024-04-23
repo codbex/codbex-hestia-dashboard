@@ -48,49 +48,108 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
 
     $scope.openPerspective = function (perspective) {
         if (perspective === 'sales-orders') {
-            messageHub.postMessage('launchpad.switch.perspective', {perspectiveId: 'sales-orders'}, true);
+            messageHub.postMessage('launchpad.switch.perspective', { perspectiveId: 'sales-orders' }, true);
         } else if (perspective === 'products') {
-            messageHub.postMessage('launchpad.switch.perspective', {perspectiveId: 'products'}, true);
+            messageHub.postMessage('launchpad.switch.perspective', { perspectiveId: 'products' }, true);
         } else if (perspective === 'sales-invoices') {
-            messageHub.postMessage('launchpad.switch.perspective', {perspectiveId: 'sales-invoices'}, true);
+            messageHub.postMessage('launchpad.switch.perspective', { perspectiveId: 'sales-invoices' }, true);
         }
         ;
     }
 
-        $scope.today = new Date();
+    $scope.today = new Date();
 
-        const invoiceServiceUrl = "/services/ts/codbex-hestia/api/InvoiceService.ts/invoiceData";
-        $http.get(invoiceServiceUrl)
-            .then(function (response) {
-                $scope.InvoiceData = response.data;
-                calculateGrossProfit();
-            });
+    const invoiceServiceUrl = "/services/ts/codbex-hestia/api/InvoiceService.ts/invoiceData";
+    $http.get(invoiceServiceUrl)
+        .then(function (response) {
+            $scope.InvoiceData = response.data;
+            calculateGrossProfit();
+        });
 
-        const orderServiceUrl = "/services/ts/codbex-hestia/api/OrderService.ts/orderData";
-        $http.get(orderServiceUrl)
-            .then(function (response) {
-                $scope.OrderData = response.data;
-                calculateGrossProfit();
-            });
+    const orderServiceUrl = "/services/ts/codbex-hestia/api/OrderService.ts/orderData";
+    $http.get(orderServiceUrl)
+        .then(function (response) {
+            $scope.OrderData = response.data;
+            calculateGrossProfit();
+        });
 
-        const productServiceUrl = "/services/ts/codbex-hestia/api/ProductService.ts/productData";
-        $http.get(productServiceUrl)
-            .then(function (response) {
-                $scope.ProductData = response.data;
-            });
+    const productServiceUrl = "/services/ts/codbex-hestia/api/ProductService.ts/productData";
+    $http.get(productServiceUrl)
+        .then(function (response) {
+            $scope.ProductData = response.data;
+        });
 
-        async function getProductData() {
+    // const partnerServiceUrl = "/services/ts/codbex-hestia/api/PartnerService.ts/partnerData";
+    // $http.get(partnerServiceUrl)
+    //     .then(function (response) {
+    //         $scope.PartnerData = response.data;
+    //     });
+
+    async function getProductData() {
+        try {
+            const response = await $http.get("/services/ts/codbex-hestia/api/ProductService.ts/productData");
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching product data:', error);
+        }
+    }
+
+    function calculateGrossProfit() {
+        if ($scope.InvoiceData && $scope.OrderData) {
+            $scope.GrossProfit = (($scope.InvoiceData.SalesInvoiceTotal + $scope.OrderData.SalesOrderTotal) - ($scope.InvoiceData.PurchaseInvoiceTotal + $scope.OrderData.PurchaseOrderTotal)).toFixed(2);
+        }
+    }
+
+    async function getOrderData() {
+        try {
+            const response = await $http.get("/services/ts/codbex-hestia/api/OrderService.ts/orderData");
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching order data:', error);
+        }
+    }
+
+    async function getCustomerById(customerId) {
+        try {
+            const response = await $http.get(`/services/ts/codbex-hestia/api/PartnerService.ts/partnerData/customers/${customerId}`); // Making a GET request to the endpoint
+            return response; // Returning the fetched data
+        } catch (error) {
+            console.error("Error fetching customer:", error);
+            throw error; // Rethrow the error to be handled by the caller
+        }
+    }
+
+    angular.element($document[0]).ready(async function () {
+        const orderData = await getOrderData();
+        const topSalesOrders = orderData.TopSalesOrders;
+
+        console.log(topSalesOrders); // Log topSalesOrders to the console
+
+        // Get the table body element using jQuery
+        const $tableBody = $('#top_sales');
+
+        // Clear any existing rows
+        $tableBody.empty();
+
+        for (const order of topSalesOrders) {
             try {
-                const response = await $http.get("/services/ts/codbex-hestia/api/ProductService.ts/productData");
-                return response.data;
-            } catch (error) {
-                console.error('Error fetching product data:', error);
-            }
-        }
+                const customer = await getCustomerById(order.Customer);
+                console.log(customer);
 
-        function calculateGrossProfit() {
-            if ($scope.InvoiceData && $scope.OrderData) {
-                $scope.GrossProfit = (($scope.InvoiceData.SalesInvoiceTotal + $scope.OrderData.SalesOrderTotal) - ($scope.InvoiceData.PurchaseInvoiceTotal + $scope.OrderData.PurchaseOrderTotal)).toFixed(2);
+                // Create a new table row
+                const $row = $('<tr>');
+                // Insert order details into table cells
+                $row.html(`
+                <td class="fd-table__cell"><a class="fd-link"><span class="fd-link__content">${order.Number}</span></a></td>
+                <td class="fd-table__cell">${customer.Name}</td>
+                <td class="fd-table__cell">${order.Gross}</td>
+            `);
+                // Append the row to the table body
+                $tableBody.append($row);
+            } catch (error) {
+                console.error("Error fetching customer:", error);
+                // Handle error
             }
         }
-    }]);
+    });
+}]);
