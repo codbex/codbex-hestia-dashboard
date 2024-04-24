@@ -18,10 +18,13 @@ class OrderService {
     public orderData() {
         let salesOrderTotal: number = 0.0;
         let purchaseOrderTotal: number = 0.0;
-        let totalNotDue: number = 0;
-        let totalDue: number = 0;
+        let salesTotalNotDue: number = 0;
+        let salesTotalDue: number = 0;
+        let purchaseTotalNotDue: number = 0;
+        let purchaseTotalDue: number = 0;
         let paidSalesOrders: number = 0;
         let newSalesOrders: number = 0;
+        let avgSalesOrderPrice: number = 0;
 
         const currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
@@ -46,23 +49,31 @@ class OrderService {
                 }
             }
         });
-
-        salesOrders.forEach(salesOrder => {
-            if (salesOrder.Due && new Date(salesOrder.Due) > new Date()) {
-                totalNotDue += salesOrder.Total;
-            } else {
-                totalDue += salesOrder.Total;
+        const unpaidPurchaseOrders = this.purchaseOrderDao.count({
+            $filter: {
+                notEquals: {
+                    //All orders that don't have the status 'Paid'
+                    PurchaseOrderStatus: 6
+                }
             }
-            salesOrderTotal += salesOrder.Total;
         });
 
-        purchaseOrders.forEach(purchaseOrder => {
-            if (purchaseOrder.Due && new Date(purchaseOrder.Due) > new Date()) {
-                totalNotDue += purchaseOrder.Total;
+        salesOrders.forEach(order => {
+            if (order.Due && new Date(order.Due) > new Date()) {
+                salesTotalNotDue += order.Total;
             } else {
-                totalDue += purchaseOrder.Total;
+                salesTotalDue += order.Total;
             }
-            purchaseOrderTotal += purchaseOrder.Total;
+            salesOrderTotal += order.Total;
+        });
+
+        purchaseOrders.forEach(order => {
+            if (order.Due && new Date(order.Due) > new Date()) {
+                purchaseTotalNotDue += order.Total;
+            } else {
+                purchaseTotalDue += order.Total;
+            }
+            purchaseOrderTotal += order.Total;
         });
 
         salesOrders.forEach(salesOrder => {
@@ -74,15 +85,28 @@ class OrderService {
             }
         })
 
+        const today = new Date();
+        const lastMonthStartDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        const salesOrdersLastMonth = salesOrders.filter(order => order.Date >= lastMonthStartDate && order.Date < today);
+        const totalPriceLastMonth = salesOrdersLastMonth.reduce((total, order) => total + order.Gross, 0);
+        avgSalesOrderPrice = (totalPriceLastMonth / salesOrdersLastMonth.length);
+
+        const mostExpensiveSalesOrders = salesOrders.slice().sort((a, b) => b.Gross - a.Gross).slice(0, 5);
+
         return {
             "UnpaidSalesOrders": unpaidSalesOrders,
+            "UnpaidPurchaseOrders": unpaidPurchaseOrders,
             "SalesOrdersToday": salesOrderTodayLength,
             "SalesOrderTotal": salesOrderTotal,
             "PurchaseOrderTotal": purchaseOrderTotal,
-            "ReceivableCurrent": totalNotDue,
-            'ReceivableOverdue': totalDue,
+            "ReceivableCurrent": salesTotalNotDue,
+            'ReceivableOverdue': salesTotalDue,
+            "PayablesCurrent": purchaseTotalNotDue,
+            'PayablesOverdue': purchaseTotalDue,
             "PaidSalesOrders": paidSalesOrders,
-            "NewSalesOrders": newSalesOrders
+            "NewSalesOrders": newSalesOrders,
+            "AverageSalesOrderPrice": avgSalesOrderPrice,
+            "TopSalesOrders": mostExpensiveSalesOrders
         };
     }
 }

@@ -23,7 +23,6 @@
 		<div class="dg-hbox dg-fill-parent">
 			<fd-vertical-nav can-scroll="true" class="dg-border-right"
 				style="box-shadow:none;max-height:calc(100vh - 4.375rem)">
-				<!-- If there is no status bar, use calc(100vh - 2.75rem) instead -->
 				<fd-vertical-nav-main-section aria-label="main navigation">
 					<fd-list>
 						<fd-list-navigation-item ng-click="switchView('dashboard')">
@@ -114,6 +113,16 @@
 							<fd-list>
 								<fd-list-navigation-item ng-click="switchView('sales-orders-total-report', $event)">
 									<span fd-list-navigation-item-text>Sales Orders Total</span>
+								</fd-list-navigation-item>
+							</fd-list>
+							<fd-list>
+								<fd-list-navigation-item ng-click="switchView('purchase-orders-report', $event)">
+									<span fd-list-navigation-item-text>Purchase Orders</span>
+								</fd-list-navigation-item>
+							</fd-list>
+							<fd-list>
+								<fd-list-navigation-item ng-click="switchView('purchase-orders-total-report', $event)">
+									<span fd-list-navigation-item-text>Purchase Orders Total</span>
 								</fd-list-navigation-item>
 							</fd-list>
 							<!-- <fd-list>
@@ -327,10 +336,16 @@
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-sales-orders-total-report" dg-type="subview"
 				ng-show="currentViewId === 'sales-orders-total-report'">
 			</embedded-view>
+			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-purchase-orders-report" dg-type="subview"
+						   ng-show="currentViewId === 'purchase-orders-report'">
+			</embedded-view>
+			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-purchase-orders-total-report" dg-type="subview"
+						   ng-show="currentViewId === 'purchase-orders-total-report'">
+			</embedded-view>
 		</div>
 
-		<ide-dialogs></ide-dialogs>
-		<ide-status-bar></ide-status-bar><!-- Remove this if a status bar is not needed -->
+		<ide-dialogs extension-points="::extraExtensionPoints"></ide-dialogs>
+		<ide-status-bar></ide-status-bar>
 	</body>
 
 </html>
