@@ -38,9 +38,9 @@
     <div class="fd-row">
         <div class="fd-col fd-col--12">
             <div style="display: flex; align-items: center; justify-content: center;">
-                <hr style="width: 45%; height: 1px; background-color: #ccc; margin-right: 10px;">
-                <h3>Sales Orders</h3>
-                <hr style="width: 45%; height: 1px; background-color: #ccc; margin-left: 10px;">
+                <hr style="width: 48%; height: 1px; background-color: #ccc; margin-right: 10px;">
+                <h3>Orders</h3>
+                <hr style="width: 48%; height: 1px; background-color: #ccc; margin-left: 10px;">
             </div>
         </div>
     </div>
@@ -90,6 +90,54 @@
                 </div>
             </div>
         </div>
+        <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
+            <div role="button" tabindex="0" class="fd-tile fd-tile--feed tile-auto-layout"
+                 ng-click="openPerspective('sales-orders')">
+                <div class="fd-tile__header tile-auto-layout">
+                    <div class="fd-tile__title">Average Purchase Order Price</div>
+                </div>
+                <fd-card-subtitle>last month
+                </fd-card-subtitle>
+                <div class="fd-tile__content tile-auto-layout">
+                    <div class="fd-tile__section">
+                        <div class="fd-numeric-content">
+                            <div class="fd-numeric-content__kpi-container">
+                                <div class="fd-numeric-content__kpi">
+                                    {{OrderData.AveragePurchaseOrderPrice | number:2 }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fd-tile__footer tile-auto-layout">
+                    <span class="fd-tile__footer-text">BGN</span>
+                </div>
+            </div>
+        </div>
+        <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
+            <div role="button" tabindex="0" class="fd-tile fd-tile--feed tile-auto-layout"
+                 ng-click="openPerspective('sales-orders')">
+                <div class="fd-tile__header tile-auto-layout">
+                    <div class="fd-tile__title">Unpaid Purchase Orders</div>
+                </div>
+                <fd-card-subtitle><br>
+                </fd-card-subtitle>
+                <div class="fd-tile__content tile-auto-layout">
+                    <div class="fd-tile__section">
+                        <div class="fd-numeric-content">
+                            <div class="fd-numeric-content__kpi-container">
+                                <div class="fd-numeric-content__kpi">
+                                    {{OrderData.UnpaidPurchaseOrders }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fd-tile__footer tile-auto-layout">
+                    <span class="fd-tile__footer-text">Today: {{ today | date:'dd-MM-yyyy' }}</span>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="fd-row">
         <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--6 fd-col-xl--6">
@@ -107,6 +155,26 @@
                         </tr>
                         </thead>
                         <tbody class="fd-table__body" id="top_sales">
+                        </tbody>
+                    </table>
+                </fd-card-content>
+            </fd-card>
+        </div>
+        <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--6 fd-col-xl--6">
+            <fd-card card-type="table">
+                <fd-card-header ng-click="openPerspective('purchase-orders')">
+                    <fd-card-title>Top Purchase Orders</fd-card-title>
+                </fd-card-header>
+                <fd-card-content>
+                    <table class="fd-table fd-table--no-horizontal-borders fd-table--no-vertical-borders">
+                        <thead class="fd-table__header">
+                        <tr class="fd-table__row">
+                            <th class="fd-table__cell" scope="col">Order</th>
+                            <th class="fd-table__cell" scope="col">Supplier</th>
+                            <th class="fd-table__cell" scope="col">Revenue</th>
+                        </tr>
+                        </thead>
+                        <tbody class="fd-table__body" id="top_purchase">
                         </tbody>
                     </table>
                 </fd-card-content>

@@ -109,18 +109,6 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
         }
     }
 
-    // async function getCustomerById(customerId) {
-    //     try {
-    //         const response = await $http.get(`/services/ts/codbex-hestia/api/PartnerService.ts/partnerData/customers/${customerId}`);
-    //         const data = response.data;
-    //         console.log("Customer data:", data);
-    //         return data;
-    //     } catch (error) {
-    //         console.error("Error fetching customer:", error);
-    //         throw error;
-    //     }
-    // }
-
     angular.element($document[0]).ready(async function () {
         const orderData = await getOrderData();
         const topSalesOrders = orderData.TopSalesOrders;
@@ -140,6 +128,37 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
                 row.innerHTML = `
                     <td class="fd-table__cell"><a class="fd-link"><span class="fd-link__content">${order.Number}</span></a></td>
                     <td class="fd-table__cell">${order.Customer}</td>
+                    <td class="fd-table__cell">${order.Gross}</td>
+                `;
+
+                // Append the row to the table body
+                tableBody.appendChild(row);
+            } catch (error) {
+                console.error("Error fetching customer:", error);
+                // Handle error
+            }
+        }
+    });
+
+    angular.element($document[0]).ready(async function () {
+        const orderData = await getOrderData();
+        const topPurchaseOrders = orderData.TopPurchaseOrders;
+
+        console.log(topPurchaseOrders);
+
+        const tableBody = document.getElementById('top_purchase');
+
+        for (const order of topPurchaseOrders) {
+
+            try {
+
+                // Create a new table row
+                const row = document.createElement('tr');
+
+                // Insert order details into table cells
+                row.innerHTML = `
+                    <td class="fd-table__cell"><a class="fd-link"><span class="fd-link__content">${order.Number}</span></a></td>
+                    <td class="fd-table__cell">${order.Supplier}</td>
                     <td class="fd-table__cell">${order.Gross}</td>
                 `;
 
