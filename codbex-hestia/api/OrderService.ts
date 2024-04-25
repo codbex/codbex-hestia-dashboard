@@ -1,5 +1,6 @@
 import { SalesOrderRepository as SalesOrderDao } from "codbex-orders/gen/dao/SalesOrder/SalesOrderRepository";
 import { PurchaseOrderRepository as PurchaseOrderDao } from "codbex-orders/gen/dao/PurchaseOrder/PurchaseOrderRepository";
+import { CustomerRepository as CustomerDao } from "codbex-partners/gen/dao/Customers/CustomerRepository";
 
 import { Controller, Get } from "sdk/http";
 
@@ -8,10 +9,12 @@ class OrderService {
 
     private readonly salesOrderDao;
     private readonly purchaseOrderDao;
+    private readonly customerDao;
 
     constructor() {
         this.salesOrderDao = new SalesOrderDao();
         this.purchaseOrderDao = new PurchaseOrderDao();
+        this.customerDao = new CustomerDao();
     }
 
     @Get("/orderData")
@@ -91,7 +94,31 @@ class OrderService {
         const totalPriceLastMonth = salesOrdersLastMonth.reduce((total, order) => total + order.Gross, 0);
         avgSalesOrderPrice = (totalPriceLastMonth / salesOrdersLastMonth.length);
 
-        const mostExpensiveSalesOrders = salesOrders.slice().sort((a, b) => b.Gross - a.Gross).slice(0, 5);
+        const mostExpensiveSalesOrders = salesOrders
+            .slice()
+            .sort((a, b) => b.Gross - a.Gross)
+            .slice(0, 5)
+            .map(order => ({
+                Number: order.Number,
+                Customer: order.Customer,
+                Gross: order.Gross
+            }));
+        const customerIds = mostExpensiveSalesOrders.map(order => order.Customer);
+        const customers = this.customerDao.findAll({
+            $filter: {
+                equals: {
+                    Id: customerIds
+                }
+            }
+        });
+        const salesOrdersWithNames = mostExpensiveSalesOrders.map(order => {
+            const customer = customers.find(c => c.Id === order.Customer);
+            return {
+                Number: order.Number,
+                Customer: customer ? customer.Name : "Unknown",
+                Gross: order.Gross
+            };
+        });
 
         return {
             "UnpaidSalesOrders": unpaidSalesOrders,
@@ -106,7 +133,7 @@ class OrderService {
             "PaidSalesOrders": paidSalesOrders,
             "NewSalesOrders": newSalesOrders,
             "AverageSalesOrderPrice": avgSalesOrderPrice,
-            "TopSalesOrders": mostExpensiveSalesOrders
+            "TopSalesOrders": salesOrdersWithNames
         };
     }
 }

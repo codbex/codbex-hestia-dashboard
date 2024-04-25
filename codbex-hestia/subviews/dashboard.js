@@ -109,57 +109,46 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
         }
     }
 
-    async function getCustomerById(customerId) {
-        try {
-            const response = await $http.get(`/services/ts/codbex-hestia/api/PartnerService.ts/partnerData/customers/${customerId}`); // Making a GET request to the endpoint
-            return response; // Returning the fetched data
-        } catch (error) {
-            console.error("Error fetching customer:", error);
-            throw error; // Rethrow the error to be handled by the caller
-        }
-    }
+    // async function getCustomerById(customerId) {
+    //     try {
+    //         const response = await $http.get(`/services/ts/codbex-hestia/api/PartnerService.ts/partnerData/customers/${customerId}`);
+    //         const data = response.data;
+    //         console.log("Customer data:", data);
+    //         return data;
+    //     } catch (error) {
+    //         console.error("Error fetching customer:", error);
+    //         throw error;
+    //     }
+    // }
 
     angular.element($document[0]).ready(async function () {
-        try {
-            const orderData = await getOrderData();
-            const topSalesOrders = orderData.TopSalesOrders;
+        const orderData = await getOrderData();
+        const topSalesOrders = orderData.TopSalesOrders;
 
-            console.log(topSalesOrders); // Log topSalesOrders to the console
+        console.log(topSalesOrders); // Log topSalesOrders to the console
 
-            const tableBody = document.getElementById('top_sales');
-            const rows = [];
+        const tableBody = document.getElementById('top_sales');
 
-            for (const order of topSalesOrders) {
-                rows.push(
-                    (async () => {
-                        try {
-                            const customer = await getCustomerById(order.Customer);
-                            console.log(customer);
+        for (const order of topSalesOrders) {
 
-                            // Create a new table row
-                            const $row = $('<tr>');
-                            // Insert order details into table cells
-                            $row.html(`
-                            <td class="fd-table__cell"><a class="fd-link"><span class="fd-link__content">${order.Number}</span></a></td>
-                            <td class="fd-table__cell">${customer.Name}</td>
-                            <td class="fd-table__cell">${order.Gross}</td>
-                        `);
-                            // Append the row to the table body
-                            $(tableBody).append($row);
-                        } catch (error) {
-                            console.error("Error fetching customer:", error);
-                            // Handle error
-                        }
-                    })()
-                );
+            try {
+
+                // Create a new table row
+                const row = document.createElement('tr');
+
+                // Insert order details into table cells
+                row.innerHTML = `
+                    <td class="fd-table__cell"><a class="fd-link"><span class="fd-link__content">${order.Number}</span></a></td>
+                    <td class="fd-table__cell">${order.Customer}</td>
+                    <td class="fd-table__cell">${order.Gross}</td>
+                `;
+
+                // Append the row to the table body
+                tableBody.appendChild(row);
+            } catch (error) {
+                console.error("Error fetching customer:", error);
+                // Handle error
             }
-
-            // Wait for all promises to resolve
-            await Promise.all(rows);
-        } catch (error) {
-            console.error("Error fetching order data:", error);
-            // Handle error
         }
     });
-
 }]);
