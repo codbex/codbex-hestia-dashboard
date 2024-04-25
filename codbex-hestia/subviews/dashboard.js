@@ -79,12 +79,6 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
             $scope.ProductData = response.data;
         });
 
-    // const partnerServiceUrl = "/services/ts/codbex-hestia/api/PartnerService.ts/partnerData";
-    // $http.get(partnerServiceUrl)
-    //     .then(function (response) {
-    //         $scope.PartnerData = response.data;
-    //     });
-
     async function getProductData() {
         try {
             const response = await $http.get("/services/ts/codbex-hestia/api/ProductService.ts/productData");
@@ -112,30 +106,23 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
     angular.element($document[0]).ready(async function () {
         const orderData = await getOrderData();
         const topSalesOrders = orderData.TopSalesOrders;
-
-        console.log(topSalesOrders); // Log topSalesOrders to the console
-
         const tableBody = document.getElementById('top_sales');
 
         for (const order of topSalesOrders) {
 
             try {
 
-                // Create a new table row
                 const row = document.createElement('tr');
 
-                // Insert order details into table cells
                 row.innerHTML = `
                     <td class="fd-table__cell"><a class="fd-link"><span class="fd-link__content">${order.Number}</span></a></td>
                     <td class="fd-table__cell">${order.Customer}</td>
                     <td class="fd-table__cell">${order.Gross}</td>
                 `;
 
-                // Append the row to the table body
                 tableBody.appendChild(row);
             } catch (error) {
                 console.error("Error fetching customer:", error);
-                // Handle error
             }
         }
     });
@@ -143,30 +130,23 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
     angular.element($document[0]).ready(async function () {
         const orderData = await getOrderData();
         const topPurchaseOrders = orderData.TopPurchaseOrders;
-
-        console.log(topPurchaseOrders);
-
         const tableBody = document.getElementById('top_purchase');
 
         for (const order of topPurchaseOrders) {
 
             try {
 
-                // Create a new table row
                 const row = document.createElement('tr');
 
-                // Insert order details into table cells
                 row.innerHTML = `
                     <td class="fd-table__cell"><a class="fd-link"><span class="fd-link__content">${order.Number}</span></a></td>
                     <td class="fd-table__cell">${order.Supplier}</td>
                     <td class="fd-table__cell">${order.Gross}</td>
                 `;
 
-                // Append the row to the table body
                 tableBody.appendChild(row);
             } catch (error) {
                 console.error("Error fetching customer:", error);
-                // Handle error
             }
         }
     });
