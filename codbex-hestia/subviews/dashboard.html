@@ -39,14 +39,33 @@
         <div class="fd-col fd-col--12">
             <div style="display: flex; align-items: center; justify-content: center;">
                 <hr style="width: 45%; height: 1px; background-color: #ccc; margin-right: 10px;">
-                <span class="fd-info-label fd-info-label--accent-color-6">
-                            <span class="fd-info-label__text">Sales Orders</span>
-                        </span>
+                <h3>Sales Orders</h3>
                 <hr style="width: 45%; height: 1px; background-color: #ccc; margin-left: 10px;">
             </div>
         </div>
     </div>
     <div class="fd-row">
+        <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
+            <div role="button" tabindex="0" class="fd-tile fd-tile--feed tile-auto-layout"
+                 ng-click="openPerspective('sales-orders')">
+                <div class="fd-tile__header tile-auto-layout">
+                    <div class="fd-tile__title">New Sales Orders</div>
+                </div>
+                <fd-card-subtitle><br></fd-card-subtitle>
+                <div class="fd-tile__content tile-auto-layout">
+                    <div class="fd-tile__section">
+                        <div class="fd-numeric-content">
+                            <div class="fd-numeric-content__kpi-container">
+                                <div class="fd-numeric-content__kpi">{{OrderData.SalesOrdersToday}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fd-tile__footer tile-auto-layout">
+                    <span class="fd-tile__footer-text">Today: {{ today | date:'dd-MM-yyyy' }}</span>
+                </div>
+            </div>
+        </div>
         <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
             <div role="button" tabindex="0" class="fd-tile fd-tile--feed tile-auto-layout"
                  ng-click="openPerspective('sales-orders')">
@@ -68,27 +87,6 @@
                 </div>
                 <div class="fd-tile__footer tile-auto-layout">
                     <span class="fd-tile__footer-text">BGN</span>
-                </div>
-            </div>
-        </div>
-        <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
-            <div role="button" tabindex="0" class="fd-tile fd-tile--feed tile-auto-layout"
-                 ng-click="openPerspective('sales-orders')">
-                <div class="fd-tile__header tile-auto-layout">
-                    <div class="fd-tile__title">New Sales Orders</div>
-                </div>
-                <fd-card-subtitle><br></fd-card-subtitle>
-                <div class="fd-tile__content tile-auto-layout">
-                    <div class="fd-tile__section">
-                        <div class="fd-numeric-content">
-                            <div class="fd-numeric-content__kpi-container">
-                                <div class="fd-numeric-content__kpi">{{OrderData.SalesOrdersToday}}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="fd-tile__footer tile-auto-layout">
-                    <span class="fd-tile__footer-text">Today: {{ today | date:'dd-MM-yyyy' }}</span>
                 </div>
             </div>
         </div>
@@ -119,9 +117,7 @@
         <div class="fd-col fd-col--12">
             <div style="display: flex; align-items: center; justify-content: center;">
                 <hr style="width: 48%; height: 1px; background-color: #ccc; margin-right: 10px;">
-                <span class="fd-info-label fd-info-label--accent-color-6">
-                            <span class="fd-info-label__text">Invoices</span>
-                        </span>
+                <h3>Invoices</h3>
                 <hr style="width: 48%; height: 1px; background-color: #ccc; margin-left: 10px;">
             </div>
         </div>
@@ -267,9 +263,7 @@
         <div class="fd-col fd-col--12">
             <div style="display: flex; align-items: center; justify-content: center;">
                 <hr style="width: 48%; height: 1px; background-color: #ccc; margin-right: 10px;">
-                <span class="fd-info-label fd-info-label--accent-color-6">
-                            <span class="fd-info-label__text">Products</span>
-                        </span>
+                <h3>Products</h3>
                 <hr style="width: 48%; height: 1px; background-color: #ccc; margin-left: 10px;">
             </div>
         </div>
