@@ -36,6 +36,97 @@
     <h2 fd-title header-size="2" class="fd-margin-top--sm fd-margin-bottom--tiny">Welcome to Hestia Dashboard
     </h2>
     <div class="fd-row">
+        <div class="fd-col fd-col--12">
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <hr style="width: 45%; height: 1px; background-color: #ccc; margin-right: 10px;">
+                <span class="fd-info-label fd-info-label--accent-color-6">
+                            <span class="fd-info-label__text">Sales Orders</span>
+                        </span>
+                <hr style="width: 45%; height: 1px; background-color: #ccc; margin-left: 10px;">
+            </div>
+        </div>
+    </div>
+    <div class="fd-row">
+        <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
+            <div role="button" tabindex="0" class="fd-tile fd-tile--feed tile-auto-layout"
+                 ng-click="openPerspective('sales-orders')">
+                <div class="fd-tile__header tile-auto-layout">
+                    <div class="fd-tile__title">Average Sales Order Price</div>
+                </div>
+                <fd-card-subtitle>last month
+                </fd-card-subtitle>
+                <div class="fd-tile__content tile-auto-layout">
+                    <div class="fd-tile__section">
+                        <div class="fd-numeric-content">
+                            <div class="fd-numeric-content__kpi-container">
+                                <div class="fd-numeric-content__kpi">
+                                    {{OrderData.AverageSalesOrderPrice | number:2 }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fd-tile__footer tile-auto-layout">
+                    <span class="fd-tile__footer-text">BGN</span>
+                </div>
+            </div>
+        </div>
+        <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
+            <div role="button" tabindex="0" class="fd-tile fd-tile--feed tile-auto-layout"
+                 ng-click="openPerspective('sales-orders')">
+                <div class="fd-tile__header tile-auto-layout">
+                    <div class="fd-tile__title">New Sales Orders</div>
+                </div>
+                <fd-card-subtitle><br></fd-card-subtitle>
+                <div class="fd-tile__content tile-auto-layout">
+                    <div class="fd-tile__section">
+                        <div class="fd-numeric-content">
+                            <div class="fd-numeric-content__kpi-container">
+                                <div class="fd-numeric-content__kpi">{{OrderData.SalesOrdersToday}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fd-tile__footer tile-auto-layout">
+                    <span class="fd-tile__footer-text">Today: {{ today | date:'dd-MM-yyyy' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fd-row">
+        <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--6 fd-col-xl--6">
+            <fd-card card-type="table">
+                <fd-card-header ng-click="openPerspective('sales-orders')">
+                    <fd-card-title>Top Sales Orders</fd-card-title>
+                </fd-card-header>
+                <fd-card-content>
+                    <table class="fd-table fd-table--no-horizontal-borders fd-table--no-vertical-borders">
+                        <thead class="fd-table__header">
+                        <tr class="fd-table__row">
+                            <th class="fd-table__cell" scope="col">Order</th>
+                            <th class="fd-table__cell" scope="col">Customer</th>
+                            <th class="fd-table__cell" scope="col">Revenue</th>
+                        </tr>
+                        </thead>
+                        <tbody class="fd-table__body" id="top_sales">
+                        </tbody>
+                    </table>
+                </fd-card-content>
+            </fd-card>
+        </div>
+    </div>
+    <div class="fd-row" style="margin-top: 20px;">
+        <div class="fd-col fd-col--12">
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <hr style="width: 48%; height: 1px; background-color: #ccc; margin-right: 10px;">
+                <span class="fd-info-label fd-info-label--accent-color-6">
+                            <span class="fd-info-label__text">Invoices</span>
+                        </span>
+                <hr style="width: 48%; height: 1px; background-color: #ccc; margin-left: 10px;">
+            </div>
+        </div>
+    </div>
+    <div class="fd-row">
         <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--6 fd-col-xl--6">
             <fd-card>
                 <fd-card-header interactive="false">
@@ -109,7 +200,6 @@
             </fd-card>
         </div>
     </div>
-
     <div class="fd-row">
         <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
             <div role="button" tabindex="0" class="fd-tile fd-tile--feed tile-auto-layout">
@@ -132,34 +222,16 @@
         </div>
         <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
             <div role="button" tabindex="0" class="fd-tile fd-tile--feed tile-auto-layout"
-                 ng-click="openPerspective('sales-orders')">
+                 ng-click="openPerspective('sales-invoices')">
                 <div class="fd-tile__header tile-auto-layout">
-                    <div class="fd-tile__title">New Sales Orders</div>
+                    <div class="fd-tile__title">Unpaid Sales Invoices</div>
                 </div>
                 <div class="fd-tile__content tile-auto-layout">
                     <div class="fd-tile__section">
                         <div class="fd-numeric-content">
                             <div class="fd-numeric-content__kpi-container">
-                                <div class="fd-numeric-content__kpi">{{OrderData.SalesOrdersToday}}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="fd-tile__footer tile-auto-layout">
-                    <span class="fd-tile__footer-text">Today: {{ today | date:'dd-MM-yyyy' }}</span>
-                </div>
-            </div>
-        </div>
-        <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
-            <div role="button" tabindex="0" class="fd-tile fd-tile--feed tile-auto-layout">
-                <div class="fd-tile__header tile-auto-layout">
-                    <div class="fd-tile__title">Inventory Accuracy</div>
-                </div>
-                <div class="fd-tile__content tile-auto-layout">
-                    <div class="fd-tile__section">
-                        <div class="fd-numeric-content">
-                            <div class="fd-numeric-content__kpi-container">
-                                <div class="fd-numeric-content__kpi">100%</div>
+                                <div class="fd-numeric-content__kpi">{{InvoiceData.UnpaidSalesInvoices}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -188,6 +260,17 @@
                 <div class="fd-tile__footer tile-auto-layout">
                     <span class="fd-tile__footer-text">BGN</span>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="fd-row" style="margin-top: 20px;">
+        <div class="fd-col fd-col--12">
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <hr style="width: 48%; height: 1px; background-color: #ccc; margin-right: 10px;">
+                <span class="fd-info-label fd-info-label--accent-color-6">
+                            <span class="fd-info-label__text">Products</span>
+                        </span>
+                <hr style="width: 48%; height: 1px; background-color: #ccc; margin-left: 10px;">
             </div>
         </div>
     </div>
@@ -227,44 +310,16 @@
                 </fd-card-content>
             </fd-card>
         </div>
-    </div>
-    <div class="fd-row">
         <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
-            <div role="button" tabindex="0" class="fd-tile fd-tile--feed tile-auto-layout"
-                 ng-click="openPerspective('sales-orders')">
+            <div role="button" tabindex="0" class="fd-tile fd-tile--feed tile-auto-layout">
                 <div class="fd-tile__header tile-auto-layout">
-                    <div class="fd-tile__title">Average Sales Order Price</div>
+                    <div class="fd-tile__title">Inventory Accuracy</div>
                 </div>
-                <fd-card-subtitle>last month
-                </fd-card-subtitle>
                 <div class="fd-tile__content tile-auto-layout">
                     <div class="fd-tile__section">
                         <div class="fd-numeric-content">
                             <div class="fd-numeric-content__kpi-container">
-                                <div class="fd-numeric-content__kpi">
-                                    {{OrderData.AverageSalesOrderPrice | number:2 }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="fd-tile__footer tile-auto-layout">
-                    <span class="fd-tile__footer-text">BGN</span>
-                </div>
-            </div>
-        </div>
-        <div class="fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3">
-            <div role="button" tabindex="0" class="fd-tile fd-tile--feed tile-auto-layout"
-                 ng-click="openPerspective('sales-invoices')">
-                <div class="fd-tile__header tile-auto-layout">
-                    <div class="fd-tile__title">Unpaid Sales Invoices</div>
-                </div>
-                <fd-card-subtitle><br></fd-card-subtitle>
-                <div class="fd-tile__content tile-auto-layout">
-                    <div class="fd-tile__section">
-                        <div class="fd-numeric-content">
-                            <div class="fd-numeric-content__kpi-container">
-                                <div class="fd-numeric-content__kpi">{{InvoiceData.UnpaidSalesInvoices}}</div>
+                                <div class="fd-numeric-content__kpi">100%</div>
                             </div>
                         </div>
                     </div>
@@ -273,28 +328,6 @@
                     <span class="fd-tile__footer-text">Today: {{ today | date:'dd-MM-yyyy' }}</span>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="fd-row">
-        <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--6 fd-col-xl--6">
-            <fd-card card-type="table">
-                <fd-card-header ng-click="openPerspective('sales-orders')">
-                    <fd-card-title>Top Sales Orders</fd-card-title>
-                </fd-card-header>
-                <fd-card-content>
-                    <table class="fd-table fd-table--no-horizontal-borders fd-table--no-vertical-borders">
-                        <thead class="fd-table__header">
-                        <tr class="fd-table__row">
-                            <th class="fd-table__cell" scope="col">Order</th>
-                            <th class="fd-table__cell" scope="col">Customer</th>
-                            <th class="fd-table__cell" scope="col">Revenue</th>
-                        </tr>
-                        </thead>
-                        <tbody class="fd-table__body" id="top_sales">
-                        </tbody>
-                    </table>
-                </fd-card-content>
-            </fd-card>
         </div>
     </div>
 </div>
