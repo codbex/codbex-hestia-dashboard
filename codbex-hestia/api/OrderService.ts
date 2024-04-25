@@ -1,6 +1,7 @@
 import { SalesOrderRepository as SalesOrderDao } from "codbex-orders/gen/dao/SalesOrder/SalesOrderRepository";
 import { PurchaseOrderRepository as PurchaseOrderDao } from "codbex-orders/gen/dao/PurchaseOrder/PurchaseOrderRepository";
 import { CustomerRepository as CustomerDao } from "codbex-partners/gen/dao/Customers/CustomerRepository";
+import { SupplierRepository as SupplierDao } from "codbex-partners/gen/dao/Suppliers/SupplierRepository";
 
 import { Controller, Get } from "sdk/http";
 
@@ -10,11 +11,14 @@ class OrderService {
     private readonly salesOrderDao;
     private readonly purchaseOrderDao;
     private readonly customerDao;
+    private readonly supplierDao;
+
 
     constructor() {
         this.salesOrderDao = new SalesOrderDao();
         this.purchaseOrderDao = new PurchaseOrderDao();
         this.customerDao = new CustomerDao();
+        this.supplierDao = new SupplierDao();
     }
 
     @Get("/orderData")
@@ -28,6 +32,7 @@ class OrderService {
         let paidSalesOrders: number = 0;
         let newSalesOrders: number = 0;
         let avgSalesOrderPrice: number = 0;
+        let avgPurchaseOrderPrice: number = 0;
 
         const currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
@@ -91,8 +96,12 @@ class OrderService {
         const today = new Date();
         const lastMonthStartDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
         const salesOrdersLastMonth = salesOrders.filter(order => order.Date >= lastMonthStartDate && order.Date < today);
-        const totalPriceLastMonth = salesOrdersLastMonth.reduce((total, order) => total + order.Gross, 0);
-        avgSalesOrderPrice = (totalPriceLastMonth / salesOrdersLastMonth.length);
+        const totalSalesPriceLastMonth = salesOrdersLastMonth.reduce((total, order) => total + order.Gross, 0);
+        avgSalesOrderPrice = (totalSalesPriceLastMonth / salesOrdersLastMonth.length);
+
+        const purchaseOrdersLastMonth = purchaseOrders.filter(order => order.Date >= lastMonthStartDate && order.Date < today);
+        const totalPurchasePriceLastMonth = salesOrdersLastMonth.reduce((total, order) => total + order.Gross, 0);
+        avgPurchaseOrderPrice = (totalPurchasePriceLastMonth / purchaseOrdersLastMonth.length);
 
         const mostExpensiveSalesOrders = salesOrders
             .slice()
@@ -120,6 +129,32 @@ class OrderService {
             };
         });
 
+        const mostExpensivePurchaseOrders = purchaseOrders
+            .slice()
+            .sort((a, b) => b.Gross - a.Gross)
+            .slice(0, 5)
+            .map(order => ({
+                Number: order.Number,
+                Supplier: order.Supplier,
+                Gross: order.Gross
+            }));
+        const supplierIds = mostExpensivePurchaseOrders.map(order => order.Supplier);
+        const suppliers = this.supplierDao.findAll({
+            $filter: {
+                equals: {
+                    Id: supplierIds
+                }
+            }
+        });
+        const purchaseOrdersWithNames = mostExpensivePurchaseOrders.map(order => {
+            const supplier = suppliers.find(s => s.Id === order.Supplier);
+            return {
+                Number: order.Number,
+                Supplier: supplier ? supplier.Name : "Unknown",
+                Gross: order.Gross
+            };
+        });
+
         return {
             "UnpaidSalesOrders": unpaidSalesOrders,
             "UnpaidPurchaseOrders": unpaidPurchaseOrders,
@@ -133,7 +168,9 @@ class OrderService {
             "PaidSalesOrders": paidSalesOrders,
             "NewSalesOrders": newSalesOrders,
             "AverageSalesOrderPrice": avgSalesOrderPrice,
-            "TopSalesOrders": salesOrdersWithNames
+            "AveragePurchaseOrderPrice": avgPurchaseOrderPrice,
+            "TopSalesOrders": salesOrdersWithNames,
+            "TopPurchaseOrders": purchaseOrdersWithNames
         };
     }
 }
