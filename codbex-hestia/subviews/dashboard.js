@@ -105,26 +105,7 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
 
     angular.element($document[0]).ready(async function () {
         const orderData = await getOrderData();
-        const topSalesOrders = orderData.TopSalesOrders;
-        const tableBody = document.getElementById('top_sales');
-
-        for (const order of topSalesOrders) {
-
-            try {
-
-                const row = document.createElement('tr');
-
-                row.innerHTML = `
-                    <td class="fd-table__cell"><a class="fd-link"><span class="fd-link__content">${order.Number}</span></a></td>
-                    <td class="fd-table__cell">${order.Customer}</td>
-                    <td class="fd-table__cell">${order.Gross}</td>
-                `;
-
-                tableBody.appendChild(row);
-            } catch (error) {
-                console.error("Error fetching customer:", error);
-            }
-        }
+        $scope.topSalesOrders = orderData.TopSalesOrders;
     });
 
     angular.element($document[0]).ready(async function () {

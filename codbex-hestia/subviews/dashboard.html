@@ -151,10 +151,19 @@
                                             <tr class="fd-table__row">
                                                 <th class="fd-table__cell" scope="col">Order</th>
                                                 <th class="fd-table__cell" scope="col">Customer</th>
-                                                <th class="fd-table__cell" scope="col">Revenue</th>
+                                                <th class="fd-table__cell" scope="col" style="text-align:right">Revenue
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody class="fd-table__body" id="top_sales">
+                                            <tr ng-repeat="next in topSalesOrders">
+                                                <td class="fd-table__cell"><a class="fd-link"><span
+                                                            class="fd-link__content">{{next.Number}}</span></a></td>
+                                                <td class="fd-table__cell">{{next.Customer}}</td>
+                                                <td class="fd-table__cell" style="text-align:right">
+                                                    {{next.Gross | number : 2}}
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </fd-card-content>
