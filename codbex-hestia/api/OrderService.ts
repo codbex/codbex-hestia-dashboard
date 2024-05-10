@@ -198,7 +198,6 @@ class OrderService {
             $sort: 'Gross',
             $order: "desc",
             $limit: limit,
-            $offset: 0,
             $select: ['Number', 'Customer', 'Gross']
         });
 
@@ -227,7 +226,6 @@ class OrderService {
             $sort: 'Gross',
             $order: "desc",
             $limit: limit,
-            $offset: 0,
             $select: ['Number', 'Supplier', 'Gross']
         });
 

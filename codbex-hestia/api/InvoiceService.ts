@@ -14,34 +14,6 @@ class InvoiceService {
         this.purchaseInvoiceDao = new PurchaseInvoiceDao();
     }
 
-    processInvoices(invoiceDao, totalNotDue, totalDue, invoiceType) {
-        const invoicesNotDue = invoiceDao.findAll({
-            $filter: {
-                [invoiceType]: {
-                    greaterThanOrEqual: currentDate
-                }
-            }
-        });
-
-        const invoicesDue = invoiceDao.findAll({
-            $filter: {
-                [invoiceType]: {
-                    lessThan: currentDate
-                }
-            }
-        });
-
-        invoicesNotDue.forEach(invoice => {
-            totalNotDue += invoice.Total;
-            invoiceTotal += invoice.Total;
-        });
-
-        invoicesDue.forEach(invoice => {
-            totalDue += invoice.Total;
-            invoiceTotal += invoice.Total;
-        });
-    }
-
     @Get("/invoiceData")
     public invoiceData() {
         let salesInvoiceTotal: number = 0.0;
