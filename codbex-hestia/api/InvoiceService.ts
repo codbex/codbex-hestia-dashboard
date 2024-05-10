@@ -14,15 +14,94 @@ class InvoiceService {
         this.purchaseInvoiceDao = new PurchaseInvoiceDao();
     }
 
+    processInvoices(invoiceDao, totalNotDue, totalDue, invoiceType) {
+        const invoicesNotDue = invoiceDao.findAll({
+            $filter: {
+                [invoiceType]: {
+                    greaterThanOrEqual: currentDate
+                }
+            }
+        });
+
+        const invoicesDue = invoiceDao.findAll({
+            $filter: {
+                [invoiceType]: {
+                    lessThan: currentDate
+                }
+            }
+        });
+
+        invoicesNotDue.forEach(invoice => {
+            totalNotDue += invoice.Total;
+            invoiceTotal += invoice.Total;
+        });
+
+        invoicesDue.forEach(invoice => {
+            totalDue += invoice.Total;
+            invoiceTotal += invoice.Total;
+        });
+    }
+
     @Get("/invoiceData")
     public invoiceData() {
         let salesInvoiceTotal: number = 0.0;
         let purchaseInvoiceTotal: number = 0.0;
         let totalNotDue: number = 0;
         let totalDue: number = 0;
+        const currentDate = new Date();
 
-        const purchaseInvoices = this.purchaseInvoiceDao.findAll();
-        const salesInvoices = this.salesInvoiceDao.findAll();
+        const salesInvoicesNotDue = this.salesInvoiceDao.findAll({
+            $filter: {
+                greaterThanOrEqual: {
+                    Due: currentDate
+                }
+            }
+        });
+
+        salesInvoicesNotDue.forEach(salesInvoice => {
+            totalNotDue += salesInvoice.Total;
+            salesInvoiceTotal += salesInvoice.Total;
+        });
+
+        const salesInvoicesDue = this.salesInvoiceDao.findAll({
+            $filter: {
+                lessThan: {
+                    Due: currentDate
+                }
+            }
+        });
+
+        salesInvoicesDue.forEach(salesInvoice => {
+            totalDue += salesInvoice.Total;
+            salesInvoiceTotal += salesInvoice.Total;
+        });
+
+        const purchaseInvoicesNotDue = this.purchaseInvoiceDao.findAll({
+            $filter: {
+                greaterThanOrEqual: {
+                    Due: currentDate
+                }
+            }
+        });
+
+        purchaseInvoicesNotDue.forEach(purchaseInvoice => {
+            totalNotDue += purchaseInvoice.Total;
+            purchaseInvoiceTotal += purchaseInvoice.Total;
+        });
+
+        const purchaseInvoicesDue = this.purchaseInvoiceDao.findAll({
+            $filter: {
+                lessThan: {
+                    Due: currentDate
+                }
+            }
+        });
+
+        purchaseInvoicesDue.forEach(purchaseInvoice => {
+            totalDue += purchaseInvoice.Total;
+            purchaseInvoiceTotal += purchaseInvoice.Total;
+        });
+
         const unpaidSalesInvoices = this.salesInvoiceDao.count({
             $filter: {
                 notEquals: {
@@ -30,24 +109,6 @@ class InvoiceService {
                     SalesInvoiceStatus: 6
                 }
             }
-        });
-
-        salesInvoices.forEach(salesInvoice => {
-            if (salesInvoice.Due && new Date(salesInvoice.Due) > new Date()) {
-                totalNotDue += salesInvoice.Total;
-            } else {
-                totalDue += salesInvoice.Total;
-            }
-            salesInvoiceTotal += salesInvoice.Total;
-        });
-
-        purchaseInvoices.forEach(purchaseInvoice => {
-            if (purchaseInvoice.Due && new Date(purchaseInvoice.Due) > new Date()) {
-                totalNotDue += purchaseInvoice.Total;
-            } else {
-                totalDue += purchaseInvoice.Total;
-            }
-            purchaseInvoiceTotal += purchaseInvoice.Total;
         });
 
         return {

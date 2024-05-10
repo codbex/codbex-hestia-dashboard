@@ -23,16 +23,8 @@ class OrderService {
 
     @Get("/orderData")
     public orderData() {
-        let salesOrderTotal: number = 0.0;
-        let purchaseOrderTotal: number = 0.0;
-        let salesTotalNotDue: number = 0;
-        let salesTotalDue: number = 0;
-        let purchaseTotalNotDue: number = 0;
-        let purchaseTotalDue: number = 0;
         let paidSalesOrders: number = 0;
         let newSalesOrders: number = 0;
-        let avgSalesOrderPrice: number = 0;
-        let avgPurchaseOrderPrice: number = 0;
 
         const currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
@@ -47,8 +39,6 @@ class OrderService {
 
         const salesOrderTodayLength: number = !salesOrdersToday || salesOrdersToday.length === 0 ? 0 : salesOrdersToday.length;
 
-        const purchaseOrders = this.purchaseOrderDao.findAll();
-        const salesOrders = this.salesOrderDao.findAll();
         const unpaidSalesOrders = this.salesOrderDao.count({
             $filter: {
                 notEquals: {
@@ -66,52 +56,152 @@ class OrderService {
             }
         });
 
-        salesOrders.forEach(order => {
-            if (order.Due && new Date(order.Due) > new Date()) {
-                salesTotalNotDue += order.Total;
-            } else {
-                salesTotalDue += order.Total;
+        const salesOrderDueCalculations = this.salesOrderDueDateCalculations(currentDate);
+        const purchaseOrderDueCalculations = this.purchaseOrderDueDateCalculations(currentDate);
+
+        const lastMonthStartDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+        const avgSalesOrderPrice = this.avgSalesOrderPrice(lastMonthStartDate, currentDate);
+        const avgPurchaseOrderPrice = this.avgPurchaseOrderPrice(lastMonthStartDate, currentDate);
+
+        const topSalesOrders = this.topSalesOrders(5);
+        const topPurchaseOrders = this.topPurchaseOrders(5);
+
+        return {
+            "UnpaidSalesOrders": unpaidSalesOrders,
+            "UnpaidPurchaseOrders": unpaidPurchaseOrders,
+            "SalesOrdersToday": salesOrderTodayLength,
+            "SalesOrderTotal": salesOrderDueCalculations.salesOrderTotal,
+            "PurchaseOrderTotal": purchaseOrderDueCalculations.purchaseOrderTotal,
+            "ReceivableCurrent": salesOrderDueCalculations.salesTotalNotDue,
+            'ReceivableOverdue': salesOrderDueCalculations.salesTotalDue,
+            "PayablesCurrent": purchaseOrderDueCalculations.purchaseTotalNotDue,
+            'PayablesOverdue': purchaseOrderDueCalculations.purchaseTotalDue,
+            "PaidSalesOrders": paidSalesOrders,
+            "NewSalesOrders": newSalesOrders,
+            "AverageSalesOrderPrice": avgSalesOrderPrice,
+            "AveragePurchaseOrderPrice": avgPurchaseOrderPrice,
+            "TopSalesOrders": topSalesOrders,
+            "TopPurchaseOrders": topPurchaseOrders
+        };
+    }
+
+    private salesOrderDueDateCalculations(currentDate: Date) {
+        let salesOrderTotal: number = 0.0;
+        let salesTotalNotDue: number = 0;
+        let salesTotalDue: number = 0;
+
+        const salesOrdersNotDue = this.salesOrderDao.findAll({
+            $filter: {
+                greaterThanOrEqual: {
+                    Due: currentDate
+                }
             }
-            salesOrderTotal += order.Total;
         });
 
-        purchaseOrders.forEach(order => {
-            if (order.Due && new Date(order.Due) > new Date()) {
-                purchaseTotalNotDue += order.Total;
-            } else {
-                purchaseTotalDue += order.Total;
-            }
-            purchaseOrderTotal += order.Total;
+        salesOrdersNotDue.forEach(salesOrder => {
+            salesTotalNotDue += salesOrder.Total;
+            salesOrderTotal += salesOrder.Total;
         });
 
-        salesOrders.forEach(salesOrder => {
-            if (salesOrder.SalesOrderStatus == 6) {
-                paidSalesOrders++;
+        const salesOrdersDue = this.salesOrderDao.findAll({
+            $filter: {
+                lessThan: {
+                    Due: currentDate
+                }
             }
-            if (salesOrder.SalesOrderStatus == 1) {
-                newSalesOrders++;
-            }
-        })
+        });
 
-        const today = new Date();
-        const lastMonthStartDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-        const salesOrdersLastMonth = salesOrders.filter(order => order.Date >= lastMonthStartDate && order.Date < today);
+        salesOrdersDue.forEach(salesOrder => {
+            salesTotalDue += salesOrder.Total;
+            salesOrderTotal += salesOrder.Total;
+        });
+
+        return {
+            "salesOrderTotal": salesOrderTotal,
+            "salesTotalNotDue": salesTotalNotDue,
+            "salesTotalDue": salesTotalDue
+        }
+    }
+
+    private purchaseOrderDueDateCalculations(currentDate: Date) {
+        let purchaseOrderTotal: number = 0.0;
+        let purchaseTotalNotDue: number = 0;
+        let purchaseTotalDue: number = 0;
+
+        const purchaseOrdersNotDue = this.purchaseOrderDao.findAll({
+            $filter: {
+                greaterThanOrEqual: {
+                    Due: currentDate
+                }
+            }
+        });
+
+        purchaseOrdersNotDue.forEach(purchaseOrder => {
+            purchaseTotalNotDue += purchaseOrder.Total;
+            purchaseOrderTotal += purchaseOrder.Total;
+        });
+
+        const purchaseOrdersDue = this.purchaseOrderDao.findAll({
+            $filter: {
+                lessThan: {
+                    Due: currentDate
+                }
+            }
+        });
+
+        purchaseOrdersDue.forEach(purchaseOrder => {
+            purchaseTotalDue += purchaseOrder.Total;
+            purchaseOrderTotal += purchaseOrder.Total;
+        });
+
+        return {
+            "purchaseOrderTotal": purchaseOrderTotal,
+            "purchaseTotalNotDue": purchaseTotalNotDue,
+            "purchaseTotalDue": purchaseTotalDue
+        }
+    }
+
+    private avgSalesOrderPrice(lastMonthStartDate: Date, currentDate: Date) {
+        const salesOrdersLastMonth = this.salesOrderDao.findAll({
+            $filter: {
+                greaterThanOrEqual: {
+                    Date: lastMonthStartDate
+                },
+                lessThan: {
+                    Date: currentDate
+                }
+            }
+        });
+
         const totalSalesPriceLastMonth = salesOrdersLastMonth.reduce((total, order) => total + order.Gross, 0);
-        avgSalesOrderPrice = (totalSalesPriceLastMonth / salesOrdersLastMonth.length);
+        return totalSalesPriceLastMonth / salesOrdersLastMonth.length;
+    }
 
-        const purchaseOrdersLastMonth = purchaseOrders.filter(order => order.Date >= lastMonthStartDate && order.Date < today);
-        const totalPurchasePriceLastMonth = salesOrdersLastMonth.reduce((total, order) => total + order.Gross, 0);
-        avgPurchaseOrderPrice = (totalPurchasePriceLastMonth / purchaseOrdersLastMonth.length);
+    private avgPurchaseOrderPrice(lastMonthStartDate: Date, currentDate: Date) {
+        const purchaseOrdersLastMonth = this.purchaseOrderDao.findAll({
+            $filter: {
+                greaterThanOrEqual: {
+                    Date: lastMonthStartDate
+                },
+                lessThan: {
+                    Date: currentDate
+                }
+            }
+        });
 
-        const mostExpensiveSalesOrders = salesOrders
-            .slice()
-            .sort((a, b) => b.Gross - a.Gross)
-            .slice(0, 5)
-            .map(order => ({
-                Number: order.Number,
-                Customer: order.Customer,
-                Gross: order.Gross
-            }));
+        const totalPurchasePriceLastMonth = purchaseOrdersLastMonth.reduce((total, order) => total + order.Gross, 0);
+        return totalPurchasePriceLastMonth / purchaseOrdersLastMonth.length;
+    }
+
+    private topSalesOrders(limit: number) {
+        const mostExpensiveSalesOrders = this.salesOrderDao.findAll({
+            $sort: 'Gross',
+            $order: "desc",
+            $limit: limit,
+            $offset: 0,
+            $select: ['Number', 'Customer', 'Gross']
+        });
+
         const customerIds = mostExpensiveSalesOrders.map(order => order.Customer);
         const customers = this.customerDao.findAll({
             $filter: {
@@ -129,15 +219,18 @@ class OrderService {
             };
         });
 
-        const mostExpensivePurchaseOrders = purchaseOrders
-            .slice()
-            .sort((a, b) => b.Gross - a.Gross)
-            .slice(0, 5)
-            .map(order => ({
-                Number: order.Number,
-                Supplier: order.Supplier,
-                Gross: order.Gross
-            }));
+        return salesOrdersWithNames;
+    }
+
+    private topPurchaseOrders(limit: number) {
+        const mostExpensivePurchaseOrders = this.purchaseOrderDao.findAll({
+            $sort: 'Gross',
+            $order: "desc",
+            $limit: limit,
+            $offset: 0,
+            $select: ['Number', 'Supplier', 'Gross']
+        });
+
         const supplierIds = mostExpensivePurchaseOrders.map(order => order.Supplier);
         const suppliers = this.supplierDao.findAll({
             $filter: {
@@ -155,22 +248,6 @@ class OrderService {
             };
         });
 
-        return {
-            "UnpaidSalesOrders": unpaidSalesOrders,
-            "UnpaidPurchaseOrders": unpaidPurchaseOrders,
-            "SalesOrdersToday": salesOrderTodayLength,
-            "SalesOrderTotal": salesOrderTotal,
-            "PurchaseOrderTotal": purchaseOrderTotal,
-            "ReceivableCurrent": salesTotalNotDue,
-            'ReceivableOverdue': salesTotalDue,
-            "PayablesCurrent": purchaseTotalNotDue,
-            'PayablesOverdue': purchaseTotalDue,
-            "PaidSalesOrders": paidSalesOrders,
-            "NewSalesOrders": newSalesOrders,
-            "AverageSalesOrderPrice": avgSalesOrderPrice,
-            "AveragePurchaseOrderPrice": avgPurchaseOrderPrice,
-            "TopSalesOrders": salesOrdersWithNames,
-            "TopPurchaseOrders": purchaseOrdersWithNames
-        };
+        return purchaseOrdersWithNames;
     }
 }
