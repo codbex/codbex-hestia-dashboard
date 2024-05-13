@@ -94,6 +94,11 @@
 									<span fd-list-navigation-item-text>Goods Issues</span>
 								</fd-list-navigation-item>
 							</fd-list>
+							<fd-list>
+								<fd-list-navigation-item ng-click="switchView('stock-adjustments', $event)">
+									<span fd-list-navigation-item-text>Stock Adjustments</span>
+								</fd-list-navigation-item>
+							</fd-list>
 						</fd-list-navigation-item>
 						<fd-list-navigation-group-header>Reports</fd-list-navigation-group-header>
 						<fd-list-navigation-item ng-init="financeReportsExpanded = false" expandable="true"
@@ -314,6 +319,9 @@
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-goods-issues" dg-type="subview"
 				ng-show="currentViewId === 'goods-issues'">
 			</embedded-view>
+			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-stock-adjustments" dg-type="subview"
+				ng-show="currentViewId === 'stock-adjustments'">
+			</embedded-view>
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-methods" dg-type="subview"
 				ng-show="currentViewId === 'methods'">
 			</embedded-view>
@@ -337,10 +345,10 @@
 				ng-show="currentViewId === 'sales-orders-total-report'">
 			</embedded-view>
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-purchase-orders-report" dg-type="subview"
-						   ng-show="currentViewId === 'purchase-orders-report'">
+				ng-show="currentViewId === 'purchase-orders-report'">
 			</embedded-view>
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-purchase-orders-total-report" dg-type="subview"
-						   ng-show="currentViewId === 'purchase-orders-total-report'">
+				ng-show="currentViewId === 'purchase-orders-total-report'">
 			</embedded-view>
 		</div>
 
