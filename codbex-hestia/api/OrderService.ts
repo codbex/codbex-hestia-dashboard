@@ -65,6 +65,7 @@ class OrderService {
 
         const topSalesOrders = this.topSalesOrders(5);
         const topPurchaseOrders = this.topPurchaseOrders(5);
+        const topCustomers = this.topCustomers(5);
 
         return {
             "UnpaidSalesOrders": unpaidSalesOrders,
@@ -81,7 +82,8 @@ class OrderService {
             "AverageSalesOrderPrice": avgSalesOrderPrice,
             "AveragePurchaseOrderPrice": avgPurchaseOrderPrice,
             "TopSalesOrders": topSalesOrders,
-            "TopPurchaseOrders": topPurchaseOrders
+            "TopPurchaseOrders": topPurchaseOrders,
+            "TopCustomers": topCustomers
         };
     }
 
@@ -248,4 +250,53 @@ class OrderService {
 
         return purchaseOrdersWithNames;
     }
+
+    private topCustomers(limit: number) {
+        const salesOrders = this.salesOrderDao.findAll({
+            $select: ['Customer', 'Total']
+        });
+
+        const customerData: Map<number, { orderCount: number, totalRevenue: number }> = new Map();
+
+        salesOrders.forEach(order => {
+            const customerId = order.Customer;
+            const total = order.Total; // Assuming Total is a string representing a number
+
+            if (!customerData.has(customerId)) {
+                customerData.set(customerId, { orderCount: 0, totalRevenue: 0 });
+            }
+
+            const data = customerData.get(customerId);
+            customerData.set(customerId, {
+                orderCount: data.orderCount + 1,
+                totalRevenue: data.totalRevenue + total
+            });
+        });
+
+        const sortedCustomers = Array.from(customerData.entries())
+            .sort(([, dataA], [, dataB]) => dataB.totalRevenue - dataA.totalRevenue) // Sort by total revenue
+            .slice(0, limit);
+
+        const customerIds = sortedCustomers.map(([customerId]) => customerId);
+
+        const customers = this.customerDao.findAll({
+            $filter: {
+                equals: {
+                    Id: customerIds
+                }
+            }
+        });
+
+        const topCustomers = sortedCustomers.map(([customerId, data]) => {
+            const customer = customers.find(c => c.Id === customerId);
+            return {
+                Customer: customer ? customer.Name : "Unknown",
+                OrderCount: data.orderCount,
+                TotalRevenue: data.totalRevenue.toFixed(2)
+            };
+        });
+
+        return topCustomers;
+    }
+
 }
