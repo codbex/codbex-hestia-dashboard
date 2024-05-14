@@ -24,7 +24,6 @@ class ProductService {
         currentDate.setHours(0, 0, 0, 0);
 
         const allProducts = this.productDao.findAll();
-        const allSalesInvoiceItems = this.salesInvoiceItemDao.findAll();
 
         const activeProducts = allProducts.filter(product => product.Enabled === true).length;
         const inactiveProducts = allProducts.filter(product => product.Enabled === false).length;
