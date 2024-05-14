@@ -24,41 +24,13 @@ class ProductService {
         currentDate.setHours(0, 0, 0, 0);
 
         const allProducts = this.productDao.findAll();
+        const allSalesInvoiceItems = this.salesInvoiceItemDao.findAll();
 
         const activeProducts = allProducts.filter(product => product.Enabled === true).length;
         const inactiveProducts = allProducts.filter(product => product.Enabled === false).length;
 
         const activeCategories: number = this.categoryDao.count();
-
-        const allSalesInvoiceItems = this.salesInvoiceItemDao.findAll();
-        const productMap = new Map<string, { quantity: number, revenue: number }>();
-
-        // Aggregate sales data
-        allSalesInvoiceItems.forEach(item => {
-            const productId = item.Product; // Assuming productId is the ID of the product
-            const name = this.productDao.findById(productId).Name;
-            const quantity = item.Quantity;
-            const unitPrice: number = item.Price;
-            const revenue: number = quantity * unitPrice;
-
-            if (productMap.has(name)) {
-                // Product already exists, update quantity and revenue
-                const existingData = productMap.get(name);
-                productMap.set(name, {
-                    quantity: existingData.quantity + quantity,
-                    revenue: existingData.revenue + revenue
-                });
-            } else {
-                // New product, add to map
-                productMap.set(name, { quantity, revenue });
-            }
-        });
-
-        // Convert map to array and sort by revenue in descending order
-        const topProducts = Array.from(productMap.entries())
-            .sort((a, b) => b[1].quantity - a[1].quantity)
-            .slice(0, 5)
-            .map(([product, data]) => ({ product, quantity: data.quantity, revenue: data.revenue.toFixed(2) }));
+        const topProducts = this.topProducts(5);
 
         return {
             "ActiveProducts": activeProducts,
@@ -67,5 +39,38 @@ class ProductService {
             "ActiveCategories": activeCategories,
             "TopProducts": topProducts
         }
+    }
+
+    private topProducts(limit: number) {
+        const items = this.salesInvoiceItemDao.findAll({
+            $sort: 'Product',
+            $select: ['Product', 'Quantity', 'Gross']
+        });
+        const productMap = new Map<string, { quantity: number, revenue: number }>();
+
+        items.forEach(item => {
+            const productId = item.Product;
+            const name = this.productDao.findById(productId).Name;
+            const quantity: number = item.Quantity;
+            const unitPrice: number = item.Gross;
+            const revenue: number = quantity * unitPrice;
+
+            if (productMap.has(name)) {
+                const existingData = productMap.get(name);
+                productMap.set(name, {
+                    quantity: existingData.quantity + quantity,
+                    revenue: existingData.revenue + revenue
+                });
+            } else {
+                productMap.set(name, { quantity, revenue });
+            }
+        });
+
+        const topProducts = Array.from(productMap.entries())
+            .sort((a, b) => b[1].quantity - a[1].quantity)
+            .slice(0, 5)
+            .map(([product, data]) => ({ product, quantity: data.quantity, revenue: data.revenue.toFixed(2) }));
+
+        return topProducts;
     }
 }

@@ -134,25 +134,6 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
 
     angular.element($document[0]).ready(async function () {
         const productData = await getProductData();
-        const topProducts = productData.TopProducts;
-        const tableBody = document.getElementById('top_products');
-
-        for (const product of topProducts) {
-
-            try {
-
-                const row = document.createElement('tr');
-
-                row.innerHTML = `
-                <td class="fd-table__cell"><a class="fd-link"><span class="fd-link__content">${product.product}</span></a></td>
-                <td class="fd-table__cell">${product.quantity}</td>
-                <td class="fd-table__cell">${product.revenue}</td>
-            `;
-
-                tableBody.appendChild(row);
-            } catch (error) {
-                console.error("Error fetching customer:", error);
-            }
-        }
+        $scope.topProducts = productData.TopProducts;
     });
 }]);
