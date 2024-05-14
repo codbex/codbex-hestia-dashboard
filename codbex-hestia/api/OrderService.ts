@@ -260,7 +260,7 @@ class OrderService {
 
         salesOrders.forEach(order => {
             const customerId = order.Customer;
-            const total = order.Total; // Assuming Total is a string representing a number
+            const total = order.Total;
 
             if (!customerData.has(customerId)) {
                 customerData.set(customerId, { orderCount: 0, totalRevenue: 0 });
