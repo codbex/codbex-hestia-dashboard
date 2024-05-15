@@ -181,10 +181,19 @@
                                 <tr class="fd-table__row">
                                     <th class="fd-table__cell" scope="col">Order</th>
                                     <th class="fd-table__cell" scope="col">Supplier</th>
-                                    <th class="fd-table__cell" scope="col">Revenue</th>
+                                    <th class="fd-table__cell" scope="col" style="text-align:right">Revenue
+                                    </th>
                                 </tr>
                                 </thead>
-                                <tbody class="fd-table__body" id="top_purchase">
+                                <tbody class="fd-table__body" id="top_sales">
+                                <tr ng-repeat="next in topPurchaseOrders">
+                                    <td class="fd-table__cell"><a class="fd-link"><span
+                                            class="fd-link__content">{{next.Number}}</span></a></td>
+                                    <td class="fd-table__cell">{{next.Supplier}}</td>
+                                    <td class="fd-table__cell" style="text-align:right">
+                                        {{next.Gross | number : 2}}
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </fd-card-content>
@@ -194,7 +203,7 @@
             <div class="fd-row" style="margin: 0.5em">
                 <div class="fd-col fd-col--12 fd-col-md--6 fd-col-lg--6 fd-col-xl--6">
                     <fd-card card-type="table">
-                        <fd-card-header ng-click="openPerspective('sales-orders')">
+                        <fd-card-header ng-click="openPerspective('customers')">
                             <fd-card-title>Top Customers</fd-card-title>
                         </fd-card-header>
                         <fd-card-content>
@@ -204,17 +213,18 @@
                                 <tr class="fd-table__row">
                                     <th class="fd-table__cell" scope="col">Customer</th>
                                     <th class="fd-table__cell" scope="col">Orders</th>
-                                    <th class="fd-table__cell" scope="col">Revenue
+                                    <th class="fd-table__cell" scope="col" style="text-align:right">Revenue
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody class="fd-table__body" id="top_customers">
                                 <tr ng-repeat="next in topCustomers">
                                     <td class="fd-table__cell"><a class="fd-link"><span
-                                            class="fd-link__content">{{next.Customer}}</span></a></td>
-                                    <td class="fd-table__cell">{{next.OrderCount}}</td>
+                                            class="fd-link__content">{{next.Name}}</span></a>
+                                    </td>
+                                    <td class="fd-table__cell">{{next.Orders}}</td>
                                     <td class="fd-table__cell" style="text-align:right">
-                                        {{next.TotalRevenue | number : 2}}
+                                        {{next.Revenue}}
                                     </td>
                                 </tr>
                                 </tbody>
@@ -432,10 +442,11 @@
                                 <tbody class="fd-table__body" id="top_products">
                                 <tr ng-repeat="next in topProducts">
                                     <td class="fd-table__cell"><a class="fd-link"><span
-                                            class="fd-link__content">{{next.product}}</span></a></td>
-                                    <td class="fd-table__cell">{{next.quantity}}</td>
+                                            class="fd-link__content">{{next.productName}}</span></a>
+                                    </td>
+                                    <td class="fd-table__cell">{{next.orderCount}}</td>
                                     <td class="fd-table__cell">
-                                        {{next.revenue | number : 2}}
+                                        {{next.revenue}}
                                     </td>
                                 </tr>
                                 </tbody>

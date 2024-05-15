@@ -4,6 +4,8 @@ import { CustomerRepository as CustomerDao } from "codbex-partners/gen/dao/Custo
 import { SupplierRepository as SupplierDao } from "codbex-partners/gen/dao/Suppliers/SupplierRepository";
 
 import { Controller, Get } from "sdk/http";
+import { query } from "sdk/db";
+import { response } from "sdk/http";
 
 @Controller
 class OrderService {
@@ -252,50 +254,14 @@ class OrderService {
     }
 
     private topCustomers(limit: number) {
-        const salesOrders = this.salesOrderDao.findAll({
-            $select: ['Customer', 'Total']
-        });
+        const sql = "SELECT c.CUSTOMER_NAME AS CUSTOMER, COUNT(so.SALESORDER_ID) AS ORDER_COUNT, SUM(so.SALESORDER_GROSS) AS REVENUE_SUM FROM CODBEX_CUSTOMER c LEFT JOIN CODBEX_SALESORDER so ON c.CUSTOMER_ID = so.SALESORDER_CUSTOMER GROUP BY c.CUSTOMER_ID, c.CUSTOMER_NAME ORDER BY ORDER_COUNT DESC LIMIT ?";
+        let resultset = query.execute(sql, [limit]);
 
-        const customerData: Map<number, { orderCount: number, totalRevenue: number }> = new Map();
-
-        salesOrders.forEach(order => {
-            const customerId = order.Customer;
-            const total = order.Total;
-
-            if (!customerData.has(customerId)) {
-                customerData.set(customerId, { orderCount: 0, totalRevenue: 0 });
-            }
-
-            const data = customerData.get(customerId);
-            customerData.set(customerId, {
-                orderCount: data.orderCount + 1,
-                totalRevenue: data.totalRevenue + total
-            });
-        });
-
-        const sortedCustomers = Array.from(customerData.entries())
-            .sort(([, dataA], [, dataB]) => dataB.totalRevenue - dataA.totalRevenue) // Sort by total revenue
-            .slice(0, limit);
-
-        const customerIds = sortedCustomers.map(([customerId]) => customerId);
-
-        const customers = this.customerDao.findAll({
-            $filter: {
-                equals: {
-                    Id: customerIds
-                }
-            }
-        });
-
-        const topCustomers = sortedCustomers.map(([customerId, data]) => {
-            const customer = customers.find(c => c.Id === customerId);
-            return {
-                Customer: customer ? customer.Name : "Unknown",
-                OrderCount: data.orderCount,
-                TotalRevenue: data.totalRevenue.toFixed(2)
-            };
-        });
-
+        const topCustomers = resultset.map(row => ({
+            Name: row.CUSTOMER,
+            Orders: row.ORDER_COUNT,
+            Revenue: row.REVENUE_SUM
+        }));
         return topCustomers;
     }
 

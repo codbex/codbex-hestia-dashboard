@@ -110,73 +110,20 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
 
     angular.element($document[0]).ready(async function () {
         const orderData = await getOrderData();
-        const topPurchaseOrders = orderData.TopPurchaseOrders;
-        const tableBody = document.getElementById('top_purchase');
-
-        for (const order of topPurchaseOrders) {
-
-            try {
-
-                const row = document.createElement('tr');
-
-                row.innerHTML = `
-                    <td class="fd-table__cell"><a class="fd-link"><span class="fd-link__content">${order.Number}</span></a></td>
-                    <td class="fd-table__cell">${order.Supplier}</td>
-                    <td class="fd-table__cell">${order.Gross}</td>
-                `;
-
-                tableBody.appendChild(row);
-            } catch (error) {
-                console.error("Error fetching order:", error);
-            }
-        }
-    });
-
-    angular.element($document[0]).ready(async function () {
-        const productData = await getProductData();
-        const topProducts = productData.TopProducts;
-        const tableBody = document.getElementById('top_products');
-
-        for (const product of topProducts) {
-
-            try {
-
-                const row = document.createElement('tr');
-
-                row.innerHTML = `
-                <td class="fd-table__cell"><a class="fd-link"><span class="fd-link__content">${product.product}</span></a></td>
-                <td class="fd-table__cell">${product.quantity}</td>
-                <td class="fd-table__cell">${product.revenue}</td>
-            `;
-
-                tableBody.appendChild(row);
-            } catch (error) {
-                console.error("Error fetching product:", error);
-            }
-        }
+        $scope.topPurchaseOrders = orderData.TopPurchaseOrders;
     });
 
     angular.element($document[0]).ready(async function () {
         const orderData = await getOrderData();
-        const topCustomers = orderData.TopCustomers;
-        const tableBody = document.getElementById('top_customers');
-
-        for (const customer of topCustomers) {
-
-            try {
-
-                const row = document.createElement('tr');
-
-                row.innerHTML = `
-                <td class="fd-table__cell"><a class="fd-link"><span class="fd-link__content">${customer.Customer}</span></a></td>
-                <td class="fd-table__cell">${customer.OrderCount}</td>
-                <td class="fd-table__cell">${customer.TotalRevenue}</td>
-            `;
-
-                tableBody.appendChild(row);
-            } catch (error) {
-                console.error("Error fetching customer:", error);
-            }
-        }
+        console.log(orderData);
+        $scope.$apply(function () {
+            $scope.topCustomers = orderData.TopCustomers;
+        });
     });
+
+    angular.element($document[0]).ready(async function () {
+        const productData = await getProductData();
+        $scope.topProducts = productData.TopProducts;
+    });
+
 }]);
