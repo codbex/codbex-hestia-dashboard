@@ -3,6 +3,8 @@ import { ProductCategoryRepository as CategoryDao } from "codbex-products/gen/da
 import { SalesInvoiceItemRepository as SalesInvoiceItemDao } from "codbex-invoices/gen/dao/salesinvoice/SalesInvoiceItemRepository";
 
 import { Controller, Get } from "sdk/http";
+import { query } from "sdk/db";
+import { response } from "sdk/http";
 
 @Controller
 class ProductService {
@@ -15,7 +17,6 @@ class ProductService {
         this.productDao = new ProductDao();
         this.categoryDao = new CategoryDao();
         this.salesInvoiceItemDao = new SalesInvoiceItemDao();
-
     }
 
     @Get("/productData")
@@ -24,12 +25,32 @@ class ProductService {
         currentDate.setHours(0, 0, 0, 0);
 
         const allProducts = this.productDao.findAll();
-
-        const activeProducts = allProducts.filter(product => product.Enabled === true).length;
-        const inactiveProducts = allProducts.filter(product => product.Enabled === false).length;
+        let activeProducts = this.productDao.findAll({
+            $filter: {
+                equals: {
+                    Enabled: true
+                }
+            }
+        }).length;
+        let inactiveProducts = this.productDao.findAll({
+            $filter: {
+                equals: {
+                    Enabled: false
+                }
+            }
+        }).length;
 
         const activeCategories: number = this.categoryDao.count();
-        const topProducts = this.topProducts(5);
+
+        const sql = "SELECT p.PRODUCT_NAME as name, COUNT(si.SALESINVOICEITEM_ID) AS order_count, SUM(si.SALESINVOICEITEM_GROSS) AS revenue_sum FROM CODBEX_PRODUCT p JOIN CODBEX_SALESINVOICEITEM si ON p.PRODUCT_ID = si.SALESINVOICEITEM_PRODUCT GROUP BY p.PRODUCT_ID, p.PRODUCT_NAME ORDER BY order_count DESC LIMIT 5";
+        let resultset = query.execute(sql);
+        response.println(JSON.stringify(resultset));
+
+        const topProducts = resultset.map(row => ({
+            productName: row.name,
+            orderCount: row.order_count,
+            revenue: row.revenue_sum
+        }));
 
         return {
             "ActiveProducts": activeProducts,
@@ -37,39 +58,6 @@ class ProductService {
             "AllProducts": allProducts.length,
             "ActiveCategories": activeCategories,
             "TopProducts": topProducts
-        }
-    }
-
-    private topProducts(limit: number) {
-        const items = this.salesInvoiceItemDao.findAll({
-            $sort: 'Product',
-            $select: ['Product', 'Quantity', 'Gross']
-        });
-        const productMap = new Map<string, { quantity: number, revenue: number }>();
-
-        items.forEach(item => {
-            const productId = item.Product;
-            const name = this.productDao.findById(productId).Name;
-            const quantity: number = item.Quantity;
-            const unitPrice: number = item.Gross;
-            const revenue: number = quantity * unitPrice;
-
-            if (productMap.has(name)) {
-                const existingData = productMap.get(name);
-                productMap.set(name, {
-                    quantity: existingData.quantity + quantity,
-                    revenue: existingData.revenue + revenue
-                });
-            } else {
-                productMap.set(name, { quantity, revenue });
-            }
-        });
-
-        const topProducts = Array.from(productMap.entries())
-            .sort((a, b) => b[1].quantity - a[1].quantity)
-            .slice(0, 5)
-            .map(([product, data]) => ({ product, quantity: data.quantity, revenue: data.revenue.toFixed(2) }));
-
-        return topProducts;
+        };
     }
 }
