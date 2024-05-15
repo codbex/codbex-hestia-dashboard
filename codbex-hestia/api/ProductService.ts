@@ -47,9 +47,9 @@ class ProductService {
         response.println(JSON.stringify(resultset));
 
         const topProducts = resultset.map(row => ({
-            productName: row.name,
-            orderCount: row.order_count,
-            revenue: row.revenue_sum
+            productName: row.NAME,
+            orderCount: row.ORDER_COUNT,
+            revenue: row.REVENUE_SUM
         }));
 
         return {
