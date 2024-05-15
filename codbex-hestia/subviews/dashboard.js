@@ -115,7 +115,6 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
 
     angular.element($document[0]).ready(async function () {
         const productData = await getProductData();
-        console.log(productData.TopProducts)
         $scope.topProducts = productData.TopProducts;
     });
 

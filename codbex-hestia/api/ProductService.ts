@@ -42,9 +42,8 @@ class ProductService {
 
         const activeCategories: number = this.categoryDao.count();
 
-        const sql = "SELECT p.PRODUCT_NAME as name, COUNT(si.SALESINVOICEITEM_ID) AS order_count, SUM(si.SALESINVOICEITEM_GROSS) AS revenue_sum FROM CODBEX_PRODUCT p JOIN CODBEX_SALESINVOICEITEM si ON p.PRODUCT_ID = si.SALESINVOICEITEM_PRODUCT GROUP BY p.PRODUCT_ID, p.PRODUCT_NAME ORDER BY order_count DESC LIMIT 5";
+        const sql = "SELECT p.PRODUCT_NAME as NAME, COUNT(si.SALESINVOICEITEM_ID) AS ORDER_COUNT, SUM(si.SALESINVOICEITEM_GROSS) AS REVENUE_SUM FROM CODBEX_PRODUCT p JOIN CODBEX_SALESINVOICEITEM si ON p.PRODUCT_ID = si.SALESINVOICEITEM_PRODUCT GROUP BY p.PRODUCT_ID, p.PRODUCT_NAME ORDER BY order_count DESC LIMIT 5";
         let resultset = query.execute(sql);
-        response.println(JSON.stringify(resultset));
 
         const topProducts = resultset.map(row => ({
             productName: row.NAME,
