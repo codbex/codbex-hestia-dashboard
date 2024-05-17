@@ -4,6 +4,8 @@ import { CustomerRepository as CustomerDao } from "codbex-partners/gen/dao/Custo
 import { SupplierRepository as SupplierDao } from "codbex-partners/gen/dao/Suppliers/SupplierRepository";
 
 import { Controller, Get } from "sdk/http";
+import { query } from "sdk/db";
+import { response } from "sdk/http";
 
 @Controller
 class OrderService {
@@ -65,6 +67,7 @@ class OrderService {
 
         const topSalesOrders = this.topSalesOrders(5);
         const topPurchaseOrders = this.topPurchaseOrders(5);
+        const topCustomers = this.topCustomers(5);
 
         return {
             "UnpaidSalesOrders": unpaidSalesOrders,
@@ -81,7 +84,8 @@ class OrderService {
             "AverageSalesOrderPrice": avgSalesOrderPrice,
             "AveragePurchaseOrderPrice": avgPurchaseOrderPrice,
             "TopSalesOrders": topSalesOrders,
-            "TopPurchaseOrders": topPurchaseOrders
+            "TopPurchaseOrders": topPurchaseOrders,
+            "TopCustomers": topCustomers
         };
     }
 
@@ -248,4 +252,17 @@ class OrderService {
 
         return purchaseOrdersWithNames;
     }
+
+    private topCustomers(limit: number) {
+        const sql = "SELECT c.CUSTOMER_NAME AS CUSTOMER, COUNT(so.SALESORDER_ID) AS ORDER_COUNT, SUM(so.SALESORDER_GROSS) AS REVENUE_SUM FROM CODBEX_CUSTOMER c LEFT JOIN CODBEX_SALESORDER so ON c.CUSTOMER_ID = so.SALESORDER_CUSTOMER GROUP BY c.CUSTOMER_ID, c.CUSTOMER_NAME ORDER BY ORDER_COUNT DESC LIMIT ?";
+        let resultset = query.execute(sql, [limit]);
+
+        const topCustomers = resultset.map(row => ({
+            Name: row.CUSTOMER,
+            Orders: row.ORDER_COUNT,
+            Revenue: row.REVENUE_SUM
+        }));
+        return topCustomers;
+    }
+
 }

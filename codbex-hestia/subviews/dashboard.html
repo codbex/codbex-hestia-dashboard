@@ -213,17 +213,18 @@
                                 <tr class="fd-table__row">
                                     <th class="fd-table__cell" scope="col">Customer</th>
                                     <th class="fd-table__cell" scope="col">Orders</th>
-                                    <th class="fd-table__cell" scope="col">Revenue
+                                    <th class="fd-table__cell" scope="col" style="text-align:right">Revenue
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody class="fd-table__body" id="top_customers">
                                 <tr ng-repeat="next in topCustomers">
                                     <td class="fd-table__cell"><a class="fd-link"><span
-                                            class="fd-link__content">{{next.Customer}}</span></a></td>
-                                    <td class="fd-table__cell">{{next.OrderCount}}</td>
+                                            class="fd-link__content">{{next.Name}}</span></a>
+                                    </td>
+                                    <td class="fd-table__cell">{{next.Orders}}</td>
                                     <td class="fd-table__cell" style="text-align:right">
-                                        {{next.TotalRevenue | number : 2}}
+                                        {{next.Revenue}}
                                     </td>
                                 </tr>
                                 </tbody>
