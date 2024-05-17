@@ -115,7 +115,6 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
 
     angular.element($document[0]).ready(async function () {
         const orderData = await getOrderData();
-        console.log(orderData);
         $scope.$apply(function () {
             $scope.topCustomers = orderData.TopCustomers;
         });
@@ -124,6 +123,7 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
     angular.element($document[0]).ready(async function () {
         const productData = await getProductData();
         $scope.topProducts = productData.TopProducts;
+
     });
 
 }]);
