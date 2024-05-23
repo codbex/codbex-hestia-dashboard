@@ -1,0 +1,5 @@
+{
+    "module": "codbex-hestia/services/catalogues.js",
+    "extensionPoint": "ide-subview",
+    "description": "Catalogues Subview"
+}

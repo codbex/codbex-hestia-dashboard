@@ -122,8 +122,24 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
 
     angular.element($document[0]).ready(async function () {
         const productData = await getProductData();
-        $scope.topProducts = productData.TopProducts;
-
+        console.log('Product Data:', productData); // Debug: Log the fetched data
+        $scope.$apply(function () {
+            $scope.topProductsByUnits = productData.TopProductsByUnits;
+            $scope.topProductsByRevenue = productData.TopProductsByRevenue;
+            $scope.displayedProducts = $scope.topProductsByUnits;  // Default to displaying by units
+            console.log('Top Products By Units:', $scope.topProductsByUnits); // Debug: Log the units data
+            console.log('Top Products By Revenue:', $scope.topProductsByRevenue); // Debug: Log the revenue data
+        });
     });
+
+    $scope.displayByUnits = function () {
+        $scope.displayedProducts = $scope.topProductsByUnits;
+        console.log('Displaying By Units:', $scope.displayedProducts); // Debug: Log the displayed products
+    };
+
+    $scope.displayByRevenue = function () {
+        $scope.displayedProducts = $scope.topProductsByRevenue;
+        console.log('Displaying By Revenue:', $scope.displayedProducts); // Debug: Log the displayed products
+    };
 
 }]);
