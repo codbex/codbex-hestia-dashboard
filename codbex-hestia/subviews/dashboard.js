@@ -127,19 +127,15 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
             $scope.topProductsByUnits = productData.TopProductsByUnits;
             $scope.topProductsByRevenue = productData.TopProductsByRevenue;
             $scope.displayedProducts = $scope.topProductsByUnits;
-            console.log('Top Products By Units:', $scope.topProductsByUnits);
-            console.log('Top Products By Revenue:', $scope.topProductsByRevenue);
         });
     });
 
     $scope.displayByUnits = function () {
         $scope.displayedProducts = $scope.topProductsByUnits;
-        console.log('Displaying By Units:', $scope.displayedProducts);
     };
 
     $scope.displayByRevenue = function () {
         $scope.displayedProducts = $scope.topProductsByRevenue;
-        console.log('Displaying By Revenue:', $scope.displayedProducts);
     };
 
 }]);
