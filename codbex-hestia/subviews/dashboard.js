@@ -125,7 +125,7 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
         $scope.$apply(function () {
             $scope.topProductsByUnits = productData.TopProductsByUnits;
             $scope.topProductsByRevenue = productData.TopProductsByRevenue;
-            $scope.displayedProducts = $scope.topProductsByUnits;
+            $scope.displayedProducts = $scope.topProductsByUnits; // Default display
         });
     });
 
