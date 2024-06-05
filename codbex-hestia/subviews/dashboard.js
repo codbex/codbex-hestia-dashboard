@@ -122,8 +122,19 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
 
     angular.element($document[0]).ready(async function () {
         const productData = await getProductData();
-        $scope.topProducts = productData.TopProducts;
-
+        $scope.$apply(function () {
+            $scope.topProductsByUnits = productData.TopProductsByUnits;
+            $scope.topProductsByRevenue = productData.TopProductsByRevenue;
+            $scope.displayedProducts = $scope.topProductsByUnits; // Default display
+        });
     });
+
+    $scope.displayByUnits = function () {
+        $scope.displayedProducts = $scope.topProductsByUnits;
+    };
+
+    $scope.displayByRevenue = function () {
+        $scope.displayedProducts = $scope.topProductsByRevenue;
+    };
 
 }]);
