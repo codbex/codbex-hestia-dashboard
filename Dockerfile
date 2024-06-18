@@ -6,4 +6,3 @@ FROM ghcr.io/codbex/codbex-atlas:0.36.0
 COPY codbex-hestia target/dirigible/repository/root/registry/public/codbex-hestia
 
 ENV DIRIGIBLE_HOME_URL=/services/web/codbex-hestia/index.html
-ch
