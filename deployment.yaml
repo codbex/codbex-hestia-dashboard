@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codbex-hestia
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: codbex-hestia
+  template:
+    metadata:
+      labels:
+        app: codbex-hestia
+    spec:
+      containers:
+        - name: codbex-hestia
+          image: ghcr.io/codbex/codbex-hestia:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
