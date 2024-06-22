@@ -25,6 +25,7 @@ jobs:
     with:
       application-name: codbex-hestia
       install-dependencies: true
+      release-create-branch: false
       release-version: ${{ inputs.release-version }}
       release-content: |
         ## codbex-hestia - ${{ inputs.release-version }}
