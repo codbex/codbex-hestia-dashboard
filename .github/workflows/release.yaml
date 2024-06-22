@@ -35,11 +35,11 @@ jobs:
   
         ```
         docker run --name codbex-hestia \
-        --rm -p 80:80 -p 8081:8081 \
+        --rm -p 80:80 \
         ghcr.io/codbex/codbex-hestia:${{ inputs.release-version }}
         ```
   
         ## Access points:
   
-        - [/services/web/codbex-hestia/gen/](http://localhost:8080/services/web/codbex-hestia/gen/) - Admin Panel
+        - [/services/web/codbex-hestia/gen/](http://localhost:80/services/web/codbex-hestia/gen/) - Admin Panel
     secrets: inherit
