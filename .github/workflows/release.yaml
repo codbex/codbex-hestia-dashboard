@@ -14,7 +14,7 @@ jobs:
   modules:
     uses: codbex/codbex-infra/.github/workflows/module-release.yaml@main
     with:
-      packages: codbex-hestia
+      packages: codbex-hestia,ide-branding
       packages-build: codbex-hestia
       release-version: ${{ inputs.release-version }}
       release-content-enabled: false
