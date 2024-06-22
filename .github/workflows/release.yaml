@@ -11,10 +11,20 @@ on:
 run-name: 'version set to ${{ inputs.release-version }} for release'
 
 jobs:
-  main:
+  modules:
+    uses: codbex/codbex-infra/.github/workflows/module-release.yaml@main
+    with:
+      packages: codbex-hestia
+      packages-build: codbex-hestia
+      release-version: ${{ inputs.release-version }}
+      release-content-enabled: false
+    secrets: inherit
+  application:
+    needs: modules
     uses: codbex/codbex-infra/.github/workflows/application-release.yaml@main
     with:
       application-name: codbex-hestia
+      install-dependencies: true
       release-version: ${{ inputs.release-version }}
       release-content: |
         ## codbex-hestia - ${{ inputs.release-version }}
@@ -25,11 +35,11 @@ jobs:
   
         ```
         docker run --name codbex-hestia \
-        --rm -p 80:80 -p 8081:8081 \
+        --rm -p 80:80 \
         ghcr.io/codbex/codbex-hestia:${{ inputs.release-version }}
         ```
   
         ## Access points:
   
-        - [/services/web/codbex-hestia/gen/](http://localhost:8080/services/web/codbex-hestia/gen/) - Admin Panel
+        - [/services/web/codbex-hestia/gen/](http://localhost:80/services/web/codbex-hestia/gen/) - Admin Panel
     secrets: inherit

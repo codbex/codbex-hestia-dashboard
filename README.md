@@ -33,4 +33,3 @@ To get started with Hestia, please refer to the [User Guide](https://github.com/
 You can also find test data here:
 
 https://github.com/codbex/codbex-hestia-data-sample/tree/main
-
