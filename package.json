@@ -1,5 +1,6 @@
 {
     "dependencies": {
+        "@codbex/codbex-hestia": "0.1.0",
         "@codbex/codbex-inventory": "0.1.0",
         "@codbex/codbex-inventory-data": "0.1.0",
         "@codbex/codbex-orders": "0.1.0",
