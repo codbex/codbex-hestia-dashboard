@@ -1,6 +1,6 @@
 {
     "name": "@codbex/codbex-hestia-branding",
-    "version": "0.1.1",
+    "version": "0.1.3",
     "repository": {
         "url": "https://github.com/codbex/codbex-hestia.git",
         "type": "git"
