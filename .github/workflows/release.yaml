@@ -11,7 +11,16 @@ on:
 run-name: 'version set to ${{ inputs.release-version }} for release'
 
 jobs:
-  main:
+  modules:
+    uses: codbex/codbex-infra/.github/workflows/module-release.yaml@main
+    with:
+      packages: codbex-hestia
+      packages-build: codbex-hestia
+      release-version: ${{ inputs.release-version }}
+      release-content-enabled: false
+    secrets: inherit
+  application:
+    needs: modules
     uses: codbex/codbex-infra/.github/workflows/application-release.yaml@main
     with:
       application-name: codbex-hestia

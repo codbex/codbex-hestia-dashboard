@@ -6,7 +6,13 @@ on:
       - main
 
 jobs:
-  main:
+  modules:
+    uses: codbex/codbex-infra/.github/workflows/module-pull-request.yaml@main
+    with:
+      packages-build: codbex-hestia
+    secrets: inherit
+  application:
+    needs: modules
     uses: codbex/codbex-infra/.github/workflows/application-pull-request.yaml@main
     with:
       application-name: codbex-hestia
