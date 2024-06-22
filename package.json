@@ -2,11 +2,11 @@
     "dependencies": {
         "@codbex/codbex-inventory": "0.1.0",
         "@codbex/codbex-inventory-data": "0.1.0",
-        "@codbex/codbex-orders": "0.1.1",
-        "@codbex/codbex-orders-data": "0.1.1",
-        "@codbex/codbex-invoices": "0.1.1",
-        "@codbex/codbex-invoices-data": "0.1.1",
-        "@codbex/codbex-products": "0.1.1",
-        "@codbex/codbex-products-data": "0.1.1"
+        "@codbex/codbex-orders": "0.1.0",
+        "@codbex/codbex-orders-data": "0.1.0",
+        "@codbex/codbex-invoices": "0.1.0",
+        "@codbex/codbex-invoices-data": "0.1.0",
+        "@codbex/codbex-products": "0.1.0",
+        "@codbex/codbex-products-data": "0.1.0"
     }
 }
