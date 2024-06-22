@@ -24,6 +24,7 @@ jobs:
     uses: codbex/codbex-infra/.github/workflows/application-release.yaml@main
     with:
       application-name: codbex-hestia
+      install-dependencies: true
       release-version: ${{ inputs.release-version }}
       release-content: |
         ## codbex-hestia - ${{ inputs.release-version }}

@@ -16,4 +16,5 @@ jobs:
     uses: codbex/codbex-infra/.github/workflows/application-build.yaml@main
     with:
       application-name: codbex-hestia
+      install-dependencies: true
     secrets: inherit
