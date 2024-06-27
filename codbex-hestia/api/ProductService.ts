@@ -1,6 +1,6 @@
-import { ProductRepository as ProductDao } from "codbex-products/gen/dao/Products/ProductRepository";
-import { ProductCategoryRepository as CategoryDao } from "codbex-products/gen/dao/Categories/ProductCategoryRepository";
-import { SalesInvoiceItemRepository as SalesInvoiceItemDao } from "codbex-invoices/gen/dao/salesinvoice/SalesInvoiceItemRepository";
+import { ProductRepository as ProductDao } from "codbex-products/gen/codbex-products/dao/Products/ProductRepository";
+import { ProductCategoryRepository as CategoryDao } from "codbex-products/gen/codbex-products/dao/Categories/ProductCategoryRepository";
+import { SalesInvoiceItemRepository as SalesInvoiceItemDao } from "codbex-invoices/gen/codbex-invoices/dao/salesinvoice/SalesInvoiceItemRepository";
 
 import { Controller, Get } from "sdk/http";
 import { query } from "sdk/db";
