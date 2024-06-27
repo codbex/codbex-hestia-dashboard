@@ -78,7 +78,7 @@ class OrderService {
             "ReceivableCurrent": salesOrderDueCalculations.salesTotalNotDue,
             'ReceivableOverdue': salesOrderDueCalculations.salesTotalDue,
             "PayablesCurrent": purchaseOrderDueCalculations.purchaseTotalNotDue,
-            'PayablesOverdue': purchaseOrderDueCalculations.purchaseTotalDue,
+            "PayablesOverdue": purchaseOrderDueCalculations.purchaseTotalDue,
             "PaidSalesOrders": paidSalesOrders,
             "NewSalesOrders": newSalesOrders,
             "AverageSalesOrderPrice": avgSalesOrderPrice,
