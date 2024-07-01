@@ -252,26 +252,30 @@
                                 <fd-card-content>
                                     <svg height="20" width="100%" style="margin-top:.25rem">
                                         <rect
-                                            width="{{ (OrderData.PayablesCurrent / (OrderData.PayablesCurrent + OrderData.PayablesOverdue)) * 100 }}%"
+                                            ng-if="OrderData.PayablesCurrent != null && OrderData.PayablesOverdue != null && (OrderData.PayablesCurrent + OrderData.PayablesOverdue) > 0"
+                                            ng-attr-width="{{ (OrderData.PayablesCurrent / (OrderData.PayablesCurrent + OrderData.PayablesOverdue)) * 100 + '%' }}"
                                             height="20" style="fill: #2c8ff6;"></rect>
                                         <rect
-                                            x="{{ (OrderData.PayablesCurrent / (OrderData.PayablesCurrent + OrderData.PayablesOverdue)) * 100 }}%"
-                                            width="{{ (OrderData.PayablesOverdue / (OrderData.PayablesCurrent + OrderData.PayablesOverdue)) * 100 }}%"
+                                            ng-if="OrderData.PayablesCurrent != null && OrderData.PayablesOverdue != null && (OrderData.PayablesCurrent + OrderData.PayablesOverdue) > 0"
+                                            ng-attr-x="{{ (OrderData.PayablesCurrent / (OrderData.PayablesCurrent + OrderData.PayablesOverdue)) * 100 + '%' }}"
+                                            ng-attr-width="{{ (OrderData.PayablesOverdue / (OrderData.PayablesCurrent + OrderData.PayablesOverdue)) * 100 + '%' }}"
                                             height="20" style="fill: #ff6347;"></rect>
                                     </svg>
                                     <div class="dg-hbox dg-stretch dg-box--stretch-items dg-border-top">
                                         <div class="dg-vbox dg-center__vertical dg-border-right fd-padding">
                                             <h6 fd-title header-size="6" style="color: #2c8ff6;">
-                                                CURRENT</h6>
+                                                CURRENT
+                                            </h6>
                                             <h4 fd-title header-size="6">
-                                                {{OrderData.PayablesCurrent | number:2 }}
+                                                {{ OrderData.PayablesCurrent | number:2 }}
                                             </h4>
                                         </div>
                                         <div class="dg-vbox dg-center__vertical fd-padding">
                                             <h6 fd-title header-size="6" style="color: #ff6347;">
-                                                OVERDUE</h6>
+                                                OVERDUE
+                                            </h6>
                                             <h4 fd-title header-size="6">
-                                                {{OrderData.PayablesOverdue | number:2 }}
+                                                {{ OrderData.PayablesOverdue | number:2 }}
                                             </h4>
                                         </div>
                                     </div>
@@ -288,26 +292,30 @@
                                 <fd-card-content>
                                     <svg height="20" width="100%" style="margin-top:.25rem">
                                         <rect
-                                            width="{{ (OrderData.ReceivableCurrent / (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue)) * 100 }}%"
+                                            ng-if="OrderData.ReceivableCurrent != null && OrderData.ReceivableOverdue != null && (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue) > 0"
+                                            ng-attr-width="{{ (OrderData.ReceivableCurrent / (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue)) * 100 + '%' }}"
                                             height="20" style="fill: #2c8ff6;"></rect>
                                         <rect
-                                            x="{{ (OrderData.ReceivableCurrent / (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue)) * 100 }}%"
-                                            width="{{ (OrderData.ReceivableOverdue / (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue)) * 100 }}%"
+                                            ng-if="OrderData.ReceivableCurrent != null && OrderData.ReceivableOverdue != null && (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue) > 0"
+                                            ng-attr-x="{{ (OrderData.ReceivableCurrent / (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue)) * 100 + '%' }}"
+                                            ng-attr-width="{{ (OrderData.ReceivableOverdue / (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue)) * 100 + '%' }}"
                                             height="20" style="fill: #ff6347;"></rect>
                                     </svg>
                                     <div class="dg-hbox dg-stretch dg-box--stretch-items dg-border-top">
                                         <div class="dg-vbox dg-center__vertical dg-border-right fd-padding">
                                             <h6 fd-title header-size="6" style="color: #2c8ff6;">
-                                                CURRENT</h6>
+                                                CURRENT
+                                            </h6>
                                             <h4 fd-title header-size="6">
-                                                {{OrderData.ReceivableCurrent | number:2 }}
+                                                {{ OrderData.ReceivableCurrent | number:2 }}
                                             </h4>
                                         </div>
                                         <div class="dg-vbox dg-center__vertical fd-padding">
                                             <h6 fd-title header-size="6" style="color: #ff6347;">
-                                                OVERDUE</h6>
+                                                OVERDUE
+                                            </h6>
                                             <h4 fd-title header-size="6">
-                                                {{OrderData.ReceivableOverdue | number:2 }}
+                                                {{ OrderData.ReceivableOverdue | number:2 }}
                                             </h4>
                                         </div>
                                     </div>
