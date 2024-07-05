@@ -1,8 +1,0 @@
-{
-	"guid": "codbex-hestia-branding",
-	"repository": {
-		"type": "git",
-		"branch": "main",
-		"url": "https://github.com/codbex/codbex-hestia.git"
-	}
-}
