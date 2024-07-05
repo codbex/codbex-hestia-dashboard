@@ -11,10 +11,3 @@ jobs:
     with:
       packages-build: codbex-hestia
     secrets: inherit
-  application:
-    needs: modules
-    uses: codbex/codbex-infra/.github/workflows/application-pull-request.yaml@main
-    with:
-      application-name: codbex-hestia
-      install-dependencies: true
-    secrets: inherit

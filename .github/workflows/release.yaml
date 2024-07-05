@@ -17,27 +17,15 @@ jobs:
       packages: codbex-hestia
       packages-build: codbex-hestia
       release-version: ${{ inputs.release-version }}
-      release-content-enabled: false
-    secrets: inherit
-  application:
-    needs: modules
-    uses: codbex/codbex-infra/.github/workflows/application-release.yaml@main
-    with:
-      application-name: codbex-hestia
-      install-dependencies: true
-      release-create-branch: false
-      release-version: ${{ inputs.release-version }}
       release-content: |
         ## codbex-hestia - ${{ inputs.release-version }}
   
-        Property Management Application
+        Warehouse Management - Dashboard
   
-        ## Deployment
+        ## Installation
   
         ```
-        docker run --name codbex-hestia \
-        --rm -p 80:80 \
-        ghcr.io/codbex/codbex-hestia:${{ inputs.release-version }}
+        npm install @codbex/codbex-hestia@${{ inputs.release-version }}
         ```
   
         ## Access points:
