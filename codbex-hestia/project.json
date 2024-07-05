@@ -29,6 +29,12 @@
             "type": "git",
             "url": "https://github.com/codbex/codbex-products.git",
             "branch": "main"
+        },
+        {
+            "guid": "ide-branding",
+            "type": "git",
+            "url": "https://github.com/codbex/codbex-branding.git",
+            "branch": "main"
         }
     ],
     "actions": [

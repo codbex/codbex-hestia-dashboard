@@ -1,7 +1,6 @@
 {
     "dependencies": {
         "@codbex/codbex-hestia": "0.1.0",
-        "@codbex/codbex-hestia-branding": "0.1.3",
         "@codbex/codbex-inventory": "0.1.0",
         "@codbex/codbex-inventory-data": "0.1.0",
         "@codbex/codbex-orders": "0.1.0",
@@ -9,6 +8,7 @@
         "@codbex/codbex-invoices": "0.1.0",
         "@codbex/codbex-invoices-data": "0.1.0",
         "@codbex/codbex-products": "0.1.0",
-        "@codbex/codbex-products-data": "0.1.0"
+        "@codbex/codbex-products-data": "0.1.0",
+        "@codbex/ide-branding": "0.1.0"
     }
 }
