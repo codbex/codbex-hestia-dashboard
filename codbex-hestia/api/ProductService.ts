@@ -42,7 +42,22 @@ class ProductService {
 
         const activeCategories: number = this.categoryDao.count();
 
-        const sqlUnits = "SELECT p.PRODUCT_NAME as NAME, SUM(si.SALESINVOICEITEM_QUANTITY) AS UNIT_COUNT, SUM(si.SALESINVOICEITEM_GROSS) AS REVENUE_SUM FROM CODBEX_PRODUCT p JOIN CODBEX_SALESINVOICEITEM si ON p.PRODUCT_ID = si.SALESINVOICEITEM_PRODUCT GROUP BY p.PRODUCT_ID, p.PRODUCT_NAME ORDER BY UNIT_COUNT DESC LIMIT 5";
+        const sqlUnits = `
+            SELECT
+                p."PRODUCT_NAME" as "NAME",
+                SUM(si."SALESINVOICEITEM_QUANTITY") AS "UNIT_COUNT",
+                SUM(si."SALESINVOICEITEM_GROSS") AS "REVENUE_SUM"
+            FROM
+                "CODBEX_PRODUCT" p
+            JOIN
+                "CODBEX_SALESINVOICEITEM" si ON p."PRODUCT_ID" = si."SALESINVOICEITEM_PRODUCT"
+            GROUP BY
+                p."PRODUCT_ID", p."PRODUCT_NAME"
+            ORDER BY
+                "UNIT_COUNT"
+            DESC
+            LIMIT 5
+        `;
         let resultset = query.execute(sqlUnits);
 
         const topProductsByUnits = resultset.map(row => ({
@@ -51,7 +66,23 @@ class ProductService {
             revenue: row.REVENUE_SUM
         }));
 
-        const sqlRevenue = "SELECT p.PRODUCT_NAME as NAME, SUM(si.SALESINVOICEITEM_QUANTITY) AS UNIT_COUNT, SUM(si.SALESINVOICEITEM_GROSS) AS REVENUE_SUM FROM CODBEX_PRODUCT p JOIN CODBEX_SALESINVOICEITEM si ON p.PRODUCT_ID = si.SALESINVOICEITEM_PRODUCT GROUP BY p.PRODUCT_ID, p.PRODUCT_NAME ORDER BY REVENUE_SUM DESC LIMIT 5";
+        const sqlRevenue = `
+            SELECT
+                p."PRODUCT_NAME" as "NAME",
+                SUM(si."SALESINVOICEITEM_QUANTITY") AS "UNIT_COUNT",
+                SUM(si."SALESINVOICEITEM_GROSS") AS "REVENUE_SUM"
+            FROM
+                "CODBEX_PRODUCT" p
+            JOIN
+                "CODBEX_SALESINVOICEITEM" si ON p."PRODUCT_ID" = si."SALESINVOICEITEM_PRODUCT"
+            GROUP BY
+                p."PRODUCT_ID",
+                p."PRODUCT_NAME"
+            ORDER BY
+                "REVENUE_SUM"
+            DESC
+            LIMIT 5
+        `;
         resultset = query.execute(sqlRevenue);
 
         const topProductsByRevenue = resultset.map(row => ({
