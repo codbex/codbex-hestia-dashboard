@@ -254,7 +254,23 @@ class OrderService {
     }
 
     private topCustomers(limit: number) {
-        const sql = "SELECT c.CUSTOMER_NAME AS CUSTOMER, COUNT(so.SALESORDER_ID) AS ORDER_COUNT, SUM(so.SALESORDER_GROSS) AS REVENUE_SUM FROM CODBEX_CUSTOMER c LEFT JOIN CODBEX_SALESORDER so ON c.CUSTOMER_ID = so.SALESORDER_CUSTOMER GROUP BY c.CUSTOMER_ID, c.CUSTOMER_NAME ORDER BY ORDER_COUNT DESC LIMIT ?";
+        const sql = `
+            SELECT
+                c."CUSTOMER_NAME" AS "CUSTOMER",
+                COUNT(so."SALESORDER_ID") AS "ORDER_COUNT",
+                SUM(so."SALESORDER_GROSS") AS "REVENUE_SUM"
+            FROM
+                "CODBEX_CUSTOMER" c
+            LEFT JOIN
+                "CODBEX_SALESORDER" so ON c."CUSTOMER_ID" = so."SALESORDER_CUSTOMER"
+            GROUP BY
+                c."CUSTOMER_ID",
+                c."CUSTOMER_NAME"
+            ORDER BY
+                "ORDER_COUNT"
+            DESC
+            LIMIT ?
+            `;
         let resultset = query.execute(sql, [limit]);
 
         const topCustomers = resultset.map(row => ({
