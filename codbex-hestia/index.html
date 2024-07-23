@@ -95,6 +95,11 @@
 								</fd-list-navigation-item>
 							</fd-list>
 							<fd-list>
+								<fd-list-navigation-item ng-click="switchView('delivery-note', $event)">
+									<span fd-list-navigation-item-text>Delivery Note</span>
+								</fd-list-navigation-item>
+							</fd-list>
+							<fd-list>
 								<fd-list-navigation-item ng-click="switchView('stock-adjustments', $event)">
 									<span fd-list-navigation-item-text>Stock Adjustments</span>
 								</fd-list-navigation-item>
@@ -323,6 +328,9 @@
 			</embedded-view>
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-goods-issues" dg-type="subview"
 				ng-show="currentViewId === 'goods-issues'">
+			</embedded-view>
+			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-delivery-note" dg-type="subview"
+				ng-show="currentViewId === 'delivery-note'">
 			</embedded-view>
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-stock-adjustments" dg-type="subview"
 				ng-show="currentViewId === 'stock-adjustments'">
