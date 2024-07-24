@@ -35,6 +35,12 @@
             "type": "git",
             "url": "https://github.com/codbex/codbex-branding.git",
             "branch": "main"
+        },
+        {
+            "guid": "codbex-hestia-print",
+            "type": "git",
+            "url": "https://github.com/codbex/codbex-hestia-data-sample.git",
+            "branch": "main"
         }
     ],
     "actions": [
