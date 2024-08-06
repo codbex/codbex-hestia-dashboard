@@ -28,7 +28,7 @@ Hestia is a powerful inventory management system designed to streamline your bus
 - Unit of Measures and Dimensions: Define and add unit of measures and dimensions individually or import them from codbex-uoms-data. 
 
 ## Getting Started 
-To get started with Hestia, please refer to the [User Guide](https://github.com/codbex/codbex-hestia/wiki/User-Guide) usage guidelines.
+To get started with Hestia, please refer to the [User Guide](https://github.com/codbex/codbex-hestia-dashboard/wiki/User-Guide) usage guidelines.
 
 You can also find test data here:
 
