@@ -23,7 +23,8 @@ navigation.controller("LaunchpadViewController", ["$scope", "messageHub", "$http
                     "items": [
                         { "name": "Purchase Orders", "view": "purchase-orders" },
                         { "name": "Purchase Invoices", "view": "purchase-invoices" },
-                        { "name": "Supplier Payments", "view": "supplier-payments" }
+                        { "name": "Supplier Payments", "view": "supplier-payments" },
+                        { "name": "Debit Note", "view": "debit-note" }
                     ]
                 },
                 {
@@ -31,7 +32,8 @@ navigation.controller("LaunchpadViewController", ["$scope", "messageHub", "$http
                     "items": [
                         { "name": "Sales Orders", "view": "sales-orders" },
                         { "name": "Sales Invoices", "view": "sales-invoices" },
-                        { "name": "Customer Payments", "view": "customer-payments" }
+                        { "name": "Customer Payments", "view": "customer-payments" },
+                        { "name": "Credit Note", "view": "credit-note" }
                     ]
                 },
                 {
