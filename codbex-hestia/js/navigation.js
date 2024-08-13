@@ -40,7 +40,8 @@ navigation.controller("LaunchpadViewController", ["$scope", "messageHub", "$http
                         { "name": "Goods Receipts", "view": "goods-receipts" },
                         { "name": "Goods Issues", "view": "goods-issues" },
                         { "name": "Delivery Note", "view": "delivery-note" },
-                        { "name": "Stock Adjustments", "view": "stock-adjustments" }
+                        { "name": "Stock Adjustments", "view": "stock-adjustments" },
+                        { "name": "Waste", "view": "waste" }
                     ]
                 }
             ]

@@ -1,0 +1,5 @@
+{
+    "module": "codbex-hestia/services/waste.js",
+    "extensionPoint": "ide-subview",
+    "description": "Waste Subview"
+}
