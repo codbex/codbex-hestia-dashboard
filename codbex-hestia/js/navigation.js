@@ -31,7 +31,9 @@ navigation.controller("LaunchpadViewController", ["$scope", "messageHub", "$http
                     "items": [
                         { "name": "Sales Orders", "view": "sales-orders" },
                         { "name": "Sales Invoices", "view": "sales-invoices" },
-                        { "name": "Customer Payments", "view": "customer-payments" }
+                        { "name": "Customer Payments", "view": "customer-payments" },
+                        { "name": "Debit Note", "view": "debit-note" },
+                        { "name": "Credit Note", "view": "credit-note" }
                     ]
                 },
                 {

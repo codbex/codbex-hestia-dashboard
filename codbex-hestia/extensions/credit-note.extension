@@ -1,0 +1,5 @@
+{
+    "module": "codbex-hestia/services/credit-note.js",
+    "extensionPoint": "ide-subview",
+    "description": "Credit Note Subview"
+}
