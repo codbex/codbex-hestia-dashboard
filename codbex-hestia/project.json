@@ -7,6 +7,24 @@
     },
     "dependencies": [
         {
+            "guid": "codbex-invoices-widgets",
+            "type": "git",
+            "url": "https://github.com/codbex/codbex-invoices-widgets.git",
+            "branch": "main"
+        },
+        {
+            "guid": "codbex-orders-widgets",
+            "type": "git",
+            "url": "https://github.com/codbex/codbex-orders-widgets.git",
+            "branch": "main"
+        },
+        {
+            "guid": "codbex-products-widgets",
+            "type": "git",
+            "url": "https://github.com/codbex/codbex-products-widgets.git",
+            "branch": "main"
+        },
+        {
             "guid": "codbex-inventory",
             "type": "git",
             "url": "https://github.com/codbex/codbex-inventory.git",
