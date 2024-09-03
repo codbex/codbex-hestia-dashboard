@@ -11,59 +11,45 @@ dashboard.controller('DashboardController', ['$scope', '$http', 'messageHub', fu
         busyText: "Loading...",
     };
 
-    // $scope.openPerspective = function (perspective) {
-    //     if (perspective === 'sales-orders') {
-    //         messageHub.postMessage('launchpad.switch.perspective', { perspectiveId: 'sales-orders' }, true);
-    //     } else if (perspective === 'products') {
-    //         messageHub.postMessage('launchpad.switch.perspective', { perspectiveId: 'products' }, true);
-    //     } else if (perspective === 'sales-invoices') {
-    //         messageHub.postMessage('launchpad.switch.perspective', { perspectiveId: 'sales-invoices' }, true);
-    //     } else {
-    //         $http.get("google.com")
-    //     }
-    //     ;
-    // }
-
     $http.get("http://localhost:8080/services/js/codbex-hestia/api/WidgetsExtension/WidgetService.js")
         .then(function (response) {
-            debugger; // Check the response content
             $scope.widgetList = response.data;
 
             $scope.widgetList.forEach(e => createWidget(e));
             $scope.state.isBusy = false;
         })
         .catch(function (error) {
-            debugger; // Check what went wrong if the request fails
             console.error('Error fetching widget list:', error);
-            $scope.state.error = true; // Set error state if needed
-            $scope.errorMessage = 'Failed to load widget list'; // Set an error message
+            $scope.state.error = true;
+            $scope.errorMessage = 'Failed to load widget list';
         });
 
     function createWidget(widgetData) {
-        // Ensure widgetData is valid
         if (!widgetData || !widgetData.id || !widgetData.link) {
             console.error('Invalid widget data:', widgetData);
             return;
         }
 
-        // Create a container for the new widget
         const widgetContainer = document.createElement('div');
-        widgetContainer.className = 'fd-col fd-col--12 fd-col-md--6 fd-col-lg--6 fd-col-xl--6';
+        widgetContainer.className = widgetData.cssSize || 'fd-col fd-col--12 fd-col-md--6 fd-col-lg--6 fd-col-xl--6';
 
-        // Create an iframe element for the widget
         const iframe = document.createElement('iframe');
         iframe.src = widgetData.link;
         iframe.title = widgetData.label;
-        iframe.className = 'tile-auto-layout'; // Apply styles
-        // iframe.loading = widgetData.lazyLoad ? 'lazy' : 'eager'; // Lazy load if specified
+        iframe.className = 'tile-auto-layout';
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.border = 'none';
+        iframe.style.overflow = 'hidden';
+        iframe.style.display = 'block';
 
-        // Append the iframe to the container
+        iframe.setAttribute('scrolling', 'no');
+        // iframe.loading = widgetData.lazyLoad ? 'lazy' : 'eager'; 
+
         widgetContainer.appendChild(iframe);
 
-        // Find the container element where widgets are inserted
         const widgetRow = document.querySelector('.fd-row');
 
-        // Insert the new widget into the container
         if (widgetRow) {
             widgetRow.appendChild(widgetContainer);
         } else {
