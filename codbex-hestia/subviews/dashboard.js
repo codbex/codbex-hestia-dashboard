@@ -31,7 +31,13 @@ dashboard.controller('DashboardController', ['$scope', '$http', 'messageHub', fu
         }
 
         const widgetContainer = document.createElement('div');
-        widgetContainer.className = widgetData.cssSize || 'fd-col fd-col--12 fd-col-md--6 fd-col-lg--6 fd-col-xl--6';
+        if (widgetData.size == "small") {
+            widgetContainer.className = 'fd-col fd-col--6 fd-col-md--3 fd-col-lg--3 fd-col-xl--3';
+        } else if (widgetData.size == "medium") {
+            widgetContainer.className = 'fd-col fd-col--12 fd-col-md--6 fd-col-lg--6 fd-col-xl--6';
+        } else { // large - TODO: needs to be made higher.
+            widgetContainer.className = 'fd-col fd-col--12 fd-col-md--6 fd-col-lg--6 fd-col-xl--6';
+        }
 
         const iframe = document.createElement('iframe');
         iframe.src = widgetData.link;
