@@ -2,7 +2,7 @@ import { extensions } from "sdk/extensions";
 import { response } from "sdk/http";
 
 const navigationList = [];
-const navigationExtensions = extensions.getExtensions("portal-navigations");
+const navigationExtensions = extensions.getExtensions("dashboard-navigations");
 
 for (let i = 0; i < navigationExtensions.length; i++) {
     const extensionPath = navigationExtensions[i];
