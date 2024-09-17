@@ -11,10 +11,6 @@ for (let i = 0; i < widgetExtensions.length; i++) {
 
     const { getWidget } = await import(path);
 
-    console.log("test " + path)
-
-    console.log("test " + typeof getWidget)
-
     const widget = getWidget();
     widgetList.push(widget);
 }
