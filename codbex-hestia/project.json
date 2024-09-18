@@ -65,6 +65,18 @@
             "type": "git",
             "url": "https://github.com/codbex/codbex-order-payment-ext.git",
             "branch": "main"
+        },
+        {
+            "guid": "codbex-payment-invoice-ext",
+            "type": "git",
+            "url": "https://github.com/codbex/codbex-payment-invoice-ext.git",
+            "branch": "main"
+        },
+        {
+            "guid": "codbex-payment-order-ext",
+            "type": "git",
+            "url": "https://github.com/codbex/codbex-payment-order-ext.git",
+            "branch": "main"
         }
     ],
     "actions": [
