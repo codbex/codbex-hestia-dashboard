@@ -246,19 +246,20 @@
                             <fd-card>
                                 <fd-card-header interactive="false">
                                     <fd-card-title>Total Payables</fd-card-title>
-                                    <fd-card-subtitle>Total Unpaid Purchase Orders: {{OrderData.UnpaidPurchaseOrders}}
+                                    <fd-card-subtitle>Total Unpaid Purchase Invoices:
+                                        {{InvoiceData.UnpaidPurchaseInvoiceTotal}}
                                     </fd-card-subtitle>
                                 </fd-card-header>
                                 <fd-card-content>
                                     <svg height="20" width="100%" style="margin-top:.25rem">
                                         <rect
-                                            ng-if="OrderData.PayablesCurrent != null && OrderData.PayablesOverdue != null && (OrderData.PayablesCurrent + OrderData.PayablesOverdue) > 0"
-                                            ng-attr-width="{{ (OrderData.PayablesCurrent / (OrderData.PayablesCurrent + OrderData.PayablesOverdue)) * 100 + '%' }}"
+                                            ng-if="InvoiceData.PayablesOverdue != null && InvoiceData.PayablesCurrent != null && InvoiceData.UnpaidPurchaseInvoiceTotal > 0"
+                                            ng-attr-width="{{ (InvoiceData.PayablesCurrent / InvoiceData.UnpaidPurchaseInvoiceTotal) * 100 + '%' }}"
                                             height="20" style="fill: #2c8ff6;"></rect>
                                         <rect
-                                            ng-if="OrderData.PayablesCurrent != null && OrderData.PayablesOverdue != null && (OrderData.PayablesCurrent + OrderData.PayablesOverdue) > 0"
-                                            ng-attr-x="{{ (OrderData.PayablesCurrent / (OrderData.PayablesCurrent + OrderData.PayablesOverdue)) * 100 + '%' }}"
-                                            ng-attr-width="{{ (OrderData.PayablesOverdue / (OrderData.PayablesCurrent + OrderData.PayablesOverdue)) * 100 + '%' }}"
+                                            ng-if="InvoiceData.PayablesOverdue != null && InvoiceData.PayablesCurrent != null && InvoiceData.UnpaidPurchaseInvoiceTotal > 0"
+                                            ng-attr-x="{{ (InvoiceData.PayablesCurrent / InvoiceData.UnpaidPurchaseInvoiceTotal) * 100 + '%' }}"
+                                            ng-attr-width="{{ (InvoiceData.PayablesOverdue / InvoiceData.UnpaidPurchaseInvoiceTotal) * 100 + '%' }}"
                                             height="20" style="fill: #ff6347;"></rect>
                                     </svg>
                                     <div class="dg-hbox dg-stretch dg-box--stretch-items dg-border-top">
@@ -267,7 +268,7 @@
                                                 CURRENT
                                             </h6>
                                             <h4 fd-title header-size="6">
-                                                {{ OrderData.PayablesCurrent | number:2 }}
+                                                {{ InvoiceData.PayablesCurrent | number:2 }}
                                             </h4>
                                         </div>
                                         <div class="dg-vbox dg-center__vertical fd-padding">
@@ -275,7 +276,7 @@
                                                 OVERDUE
                                             </h6>
                                             <h4 fd-title header-size="6">
-                                                {{ OrderData.PayablesOverdue | number:2 }}
+                                                {{ InvoiceData.PayablesOverdue | number:2 }}
                                             </h4>
                                         </div>
                                     </div>
@@ -286,19 +287,19 @@
                             <fd-card>
                                 <fd-card-header interactive="false">
                                     <fd-card-title>Total Receivables</fd-card-title>
-                                    <fd-card-subtitle>Total Unpaid Sales Orders: {{OrderData.UnpaidSalesOrders}}
+                                    <fd-card-subtitle>Total Unpaid Sales Orders: {{InvoiceData.UnpaidSalesInvoiceTotal}}
                                     </fd-card-subtitle>
                                 </fd-card-header>
                                 <fd-card-content>
                                     <svg height="20" width="100%" style="margin-top:.25rem">
                                         <rect
-                                            ng-if="OrderData.ReceivableCurrent != null && OrderData.ReceivableOverdue != null && (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue) > 0"
-                                            ng-attr-width="{{ (OrderData.ReceivableCurrent / (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue)) * 100 + '%' }}"
+                                            ng-if="InvoiceData.ReceivableCurrent != null && InvoiceData.ReceivableOverdue != null && InvoiceData.UnpaidSalesInvoiceTotal > 0"
+                                            ng-attr-width="{{ (InvoiceData.ReceivableCurrent / InvoiceData.UnpaidSalesInvoiceTotal) * 100 + '%' }}"
                                             height="20" style="fill: #2c8ff6;"></rect>
                                         <rect
-                                            ng-if="OrderData.ReceivableCurrent != null && OrderData.ReceivableOverdue != null && (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue) > 0"
-                                            ng-attr-x="{{ (OrderData.ReceivableCurrent / (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue)) * 100 + '%' }}"
-                                            ng-attr-width="{{ (OrderData.ReceivableOverdue / (OrderData.ReceivableCurrent + OrderData.ReceivableOverdue)) * 100 + '%' }}"
+                                            ng-if="InvoiceData.ReceivableCurrent != null && InvoiceData.ReceivableOverdue != null && InvoiceData.UnpaidSalesInvoiceTotal > 0"
+                                            ng-attr-x="{{ (InvoiceData.ReceivableCurrent / InvoiceData.UnpaidSalesInvoiceTotal) * 100 + '%' }}"
+                                            ng-attr-width="{{ (InvoiceData.ReceivableOverdue / InvoiceData.UnpaidSalesInvoiceTotal) * 100 + '%' }}"
                                             height="20" style="fill: #ff6347;"></rect>
                                     </svg>
                                     <div class="dg-hbox dg-stretch dg-box--stretch-items dg-border-top">
@@ -307,7 +308,7 @@
                                                 CURRENT
                                             </h6>
                                             <h4 fd-title header-size="6">
-                                                {{ OrderData.ReceivableCurrent | number:2 }}
+                                                {{ InvoiceData.ReceivableCurrent | number:2 }}
                                             </h4>
                                         </div>
                                         <div class="dg-vbox dg-center__vertical fd-padding">
@@ -315,7 +316,7 @@
                                                 OVERDUE
                                             </h6>
                                             <h4 fd-title header-size="6">
-                                                {{ OrderData.ReceivableOverdue | number:2 }}
+                                                {{ InvoiceData.ReceivableOverdue | number:2 }}
                                             </h4>
                                         </div>
                                     </div>

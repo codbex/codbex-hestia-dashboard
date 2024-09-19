@@ -89,8 +89,8 @@ dashboard.controller('DashboardController', ['$scope', '$document', '$http', 'me
     }
 
     function calculateGrossProfit() {
-        if ($scope.InvoiceData && $scope.OrderData) {
-            $scope.GrossProfit = (($scope.InvoiceData.SalesInvoiceTotal + $scope.OrderData.SalesOrderTotal) - ($scope.InvoiceData.PurchaseInvoiceTotal + $scope.OrderData.PurchaseOrderTotal)).toFixed(2);
+        if ($scope.InvoiceData) {
+            $scope.GrossProfit = (($scope.InvoiceData.SalesInvoiceTotal) - ($scope.InvoiceData.PurchaseInvoiceTotal)).toFixed(2);
         }
     }
 
