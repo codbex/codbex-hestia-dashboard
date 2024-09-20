@@ -108,6 +108,9 @@ navigation.controller("LaunchpadViewController", ["$scope", "messageHub", "$http
             $scope.navigationList = response.data;
 
             $scope.navigationList.forEach(e => addNavigationItem(e));
+
+            $scope.groupItems.forEach(e => e.sort((a, b) => a.orderNumber - b.orderNumber));
+
         })
         .catch(function (error) {
             console.error('Error fetching navigation list:', error);
@@ -116,7 +119,7 @@ navigation.controller("LaunchpadViewController", ["$scope", "messageHub", "$http
         });
 
     function addNavigationItem(itemData) {
-        if (!itemData || !itemData.label || !itemData.view || !itemData.group) {
+        if (!itemData || !itemData.label || !itemData.view || !itemData.group || !itemData.orderNumber) {
             console.error('Invalid item data:', itemData);
             return;
         }
