@@ -30,17 +30,17 @@
 							</fd-list-navigation-item-icon>
 							<span fd-list-navigation-item-text>Dashboard</span>
 						</fd-list-navigation-item>
-						<div ng-repeat="group in groups" ng-show="groupItems[group.name.toLowerCase()].length > 0">
+						<div ng-repeat="group in groups" ng-show="groupItems[group.label.toLowerCase()].length > 0">
 							<fd-list-navigation-item ng-init="group.expanded = false" expandable="true"
 								ng-click="group.expanded = !group.expanded" is-expanded="group.expanded">
 								<fd-list-navigation-item-icon glyph="sap-icon--{{group.icon}}">
 								</fd-list-navigation-item-icon>
-								<span fd-list-navigation-item-text>{{group.name}}</span>
+								<span fd-list-navigation-item-text>{{group.label}}</span>
 								<fd-list-navigation-item-arrow aria-label="expand submenu" is-expanded="group.expanded">
 								</fd-list-navigation-item-arrow>
-								<fd-list ng-repeat="item in groupItems[group.name]">
+								<fd-list ng-repeat="item in groupItems[group.label.toLowerCase()]">
 									<fd-list-navigation-item ng-click="switchView(item.view, $event)">
-										<span fd-list-navigation-item-text>{{item.name}}</span>
+										<span fd-list-navigation-item-text>{{item.label}}</span>
 									</fd-list-navigation-item>
 								</fd-list>
 							</fd-list-navigation-item>

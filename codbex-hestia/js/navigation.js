@@ -26,83 +26,84 @@ navigation.controller("LaunchpadViewController", ["$scope", "messageHub", "$http
     $scope.groupItems["partners"] = [];
     $scope.groupItems["configurations"] = [];
 
+
     $scope.groups = [
         {
-            "name": "Purchasing", "expanded": "purchasingExpanded", "icon": "credit-card",
+            "label": "Purchasing", "expanded": "purchasingExpanded", "icon": "credit-card",
             // "items": [
-            //     // { "name": "Purchase Orders", "view": "purchase-orders" },
-            //     // { "name": "Purchase Invoices", "view": "purchase-invoices" },
-            //     // { "name": "Supplier Payments", "view": "supplier-payments" }
+            // ready     // { "label": "Purchase Orders", "view": "purchase-orders" },
+            //     // { "label": "Purchase Invoices", "view": "purchase-invoices" },
+            //     // { "label": "Supplier Payments", "view": "supplier-payments" }
             // ]
         },
         {
-            "name": "Sales", "expanded": "salesExpanded", "icon": "currency",
+            "label": "Sales", "expanded": "salesExpanded", "icon": "currency",
             // "items": [
-            //     // { "name": "Sales Orders", "view": "sales-orders" },
-            //     // { "name": "Sales Invoices", "view": "sales-invoices" },
-            //     // { "name": "Customer Payments", "view": "customer-payments" },
-            //     // { "name": "Debit Note", "view": "debit-note" },
-            //     // { "name": "Credit Note", "view": "credit-note" }
+            //     // { "label": "Sales Orders", "view": "sales-orders" },
+            //     // { "label": "Sales Invoices", "view": "sales-invoices" },
+            //     // { "label": "Customer Payments", "view": "customer-payments" },
+            //     // { "label": "Debit Note", "view": "debit-note" },
+            //     // { "label": "Credit Note", "view": "credit-note" }
             // ]
         },
         {
-            "name": "Inventory", "expanded": "inventoryExpanded", "icon": "retail-store",
+            "label": "Inventory", "expanded": "inventoryExpanded", "icon": "retail-store",
             // "items": [
-            //     //     { "name": "Goods Receipts", "view": "goods-receipts" },
-            //     //     { "name": "Goods Issues", "view": "goods-issues" },
-            //     //     { "name": "Delivery Note", "view": "delivery-note" },
-            //     //     { "name": "Stock Adjustments", "view": "stock-adjustments" },
-            //     //     { "name": "Waste", "view": "waste" }
+            //     //     { "label": "Goods Receipts", "view": "goods-receipts" },
+            //     //     { "label": "Goods Issues", "view": "goods-issues" },
+            //     //     { "label": "Delivery Note", "view": "delivery-note" },
+            //     //     { "label": "Stock Adjustments", "view": "stock-adjustments" },
+            //     //     { "label": "Waste", "view": "waste" }
             // ]
         },
         {
-            "name": "Finance", "expanded": "financeReportsExpanded", "icon": "area-chart",
+            "label": "Finance", "expanded": "financeReportsExpanded", "icon": "area-chart",
             // "items": [
-            //     // { "name": "Sales Orders", "view": "sales-orders-report" },
-            //     // { "name": "Sales Orders Total", "view": "sales-orders-total-report" },
-            //     // { "name": "Purchase Orders", "view": "purchase-orders-report" },
-            //     // { "name": "Purchase Orders Total", "view": "purchase-orders-total-report" }
+            //     // { "label": "Sales Orders", "view": "sales-orders-report" },
+            //     // { "label": "Sales Orders Total", "view": "sales-orders-total-report" },
+            //     // { "label": "Purchase Orders", "view": "purchase-orders-report" },
+            //     // { "label": "Purchase Orders Total", "view": "purchase-orders-total-report" }
             // ]
         },
         {
-            "name": "Products", "expanded": "productExpanded", "icon": "product",
+            "label": "Products", "expanded": "productExpanded", "icon": "product",
             // "items": [
-            //     // { "name": "Products", "view": "products" },
-            //     // { "name": "Categories", "view": "categories" },
-            //     // { "name": "Catalogue", "view": "catalogues" }
+            //     // { "label": "Products", "view": "products" },
+            //     // { "label": "Categories", "view": "categories" },
+            //     // { "label": "Catalogue", "view": "catalogues" }
             // ]
         },
         {
-            "name": "Employees", "expanded": "peopleExpanded", "icon": "company-view",
+            "label": "Employees", "expanded": "peopleExpanded", "icon": "company-view",
             // "items": [
-            //     // { "name": "Organisations", "view": "organisations" },
-            //     // { "name": "Employees", "view": "employees" }
+            //     // { "label": "Organisations", "view": "organisations" },
+            //     // { "label": "Employees", "view": "employees" }
             // ]
         },
         {
-            "name": "Partners", "expanded": "partnersExpanded", "icon": "customer-and-contacts",
+            "label": "Partners", "expanded": "partnersExpanded", "icon": "customer-and-contacts",
             // "items": [
-            //     // { "name": "Customers", "view": "customers" },
-            //     // { "name": "Suppliers", "view": "suppliers" },
-            //     // { "name": "Manufacturers", "view": "manufacturers" }
+            //     // { "label": "Customers", "view": "customers" },
+            //     // { "label": "Suppliers", "view": "suppliers" },
+            //     // { "label": "Manufacturers", "view": "manufacturers" }
             // ]
         },
         {
-            "name": "Configurations", "expanded": "configurationsExpanded", "icon": "wrench",
+            "label": "Configurations", "expanded": "configurationsExpanded", "icon": "wrench",
             // "items": [
-            //     // { "name": "Countries", "view": "countries" },
-            //     // { "name": "Cities", "view": "cities" },
-            //     // { "name": "Companies", "view": "companies" },
-            //     // { "name": "Stores", "view": "stores" },
-            //     // { "name": "Companies", "view": "companies" },
-            //     // { "name": "Currencies", "view": "currencies" },
-            //     // { "name": "Dimensions", "view": "dimensions" },
-            //     // { "name": "Units of Measures", "view": "uoms" },
-            //     // { "name": "Methods", "view": "methods" }
+            //     // { "label": "Countries", "view": "countries" },
+            //     // { "label": "Cities", "view": "cities" },
+            //     // { "label": "Companies", "view": "companies" },
+            //     // { "label": "Stores", "view": "stores" },
+            //     // { "label": "Companies", "view": "companies" },
+            //     // { "label": "Currencies", "view": "currencies" },
+            //     // { "label": "Dimensions", "view": "dimensions" },
+            //     // { "label": "Units of Measures", "view": "uoms" },
+            //     // { "label": "Methods", "view": "methods" }
             // ]
         }
     ]
-    $http.get("http://localhost:8080/services/js/codbex-hestia/api/NavigationService/NavigationService.js")
+    $http.get("http://localhost:8080/services/ts/codbex-hestia/api/NavigationExtension/NavigationService.ts")
         .then(function (response) {
             $scope.navigationList = response.data;
 
@@ -115,7 +116,7 @@ navigation.controller("LaunchpadViewController", ["$scope", "messageHub", "$http
         });
 
     function addNavigationItem(itemData) {
-        if (!itemData || !itemData.name || !itemData.view || !itemData.group) {
+        if (!itemData || !itemData.label || !itemData.view || !itemData.group) {
             console.error('Invalid item data:', itemData);
             return;
         }
@@ -127,7 +128,7 @@ navigation.controller("LaunchpadViewController", ["$scope", "messageHub", "$http
         }
 
         $scope.groupItems[itemData.group.toLowerCase()].push({
-            "name": itemData.name,
+            "label": itemData.label,
             "view": itemData.view
         });
     }
