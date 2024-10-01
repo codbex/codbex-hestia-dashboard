@@ -1,5 +1,0 @@
-{
-    "module": "codbex-hestia/services/organisations.js",
-    "extensionPoint": "ide-subview",
-    "description": "Organisations Subview"
-}

@@ -1,5 +1,0 @@
-{
-    "module": "codbex-hestia/services/companies.js",
-    "extensionPoint": "ide-subview",
-    "description": "Companies Subview"
-}

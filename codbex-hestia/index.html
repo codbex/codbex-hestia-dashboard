@@ -13,7 +13,7 @@
 		</script>
 		<link type="text/css" rel="stylesheet"
 			href="/services/js/resources-core/services/loader.js?id=application-perspective-css" />
-		<script type="text/javascript" src="js/navigation.js"></script>
+		<script type="text/javascript" src="js/navigation-controller.js"></script>
 
 	</head>
 
@@ -53,7 +53,16 @@
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-dashboard" dg-type="normal"
 				ng-show="currentViewId === 'dashboard'">
 			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-customers" dg-type="subview"
+
+			<div ng-repeat="group in groups">
+				<div ng-repeat="item in groupItems[group.label.toLowerCase()]">
+					<iframe class="dg-fill-parent" ng-src="{{item.link}}" dg-type="normal"
+						ng-show="currentViewId === '{{item.view}}'">
+					</iframe>
+				</div>
+			</div>
+
+			<!-- <embedded-view class="dg-fill-parent" view-id="codbex-hestia-customers" dg-type="subview"
 				ng-show="currentViewId === 'customers'">
 			</embedded-view>
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-suppliers" dg-type="subview"
@@ -139,9 +148,9 @@
 			</embedded-view>
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-waste" dg-type="subview"
 				ng-show="currentViewId === 'waste'">
-			</embedded-view>
+			</embedded-view> -->
 			<!-- Reports -->
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-sales-orders-report" dg-type="subview"
+			<!-- <embedded-view class="dg-fill-parent" view-id="codbex-hestia-sales-orders-report" dg-type="subview"
 				ng-show="currentViewId === 'sales-orders-report'">
 			</embedded-view>
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-sales-orders-total-report" dg-type="subview"
@@ -152,7 +161,7 @@
 			</embedded-view>
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-purchase-orders-total-report" dg-type="subview"
 				ng-show="currentViewId === 'purchase-orders-total-report'">
-			</embedded-view>
+			</embedded-view> -->
 
 		</div>
 
