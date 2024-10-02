@@ -29,78 +29,28 @@ navigation.controller("LaunchpadViewController", ["$scope", "messageHub", "$http
 
     $scope.groups = [
         {
-            "label": "Purchasing", "expanded": "purchasingExpanded", "icon": "credit-card",
-            // "items": [
-            // ready     // { "label": "Purchase Orders", "view": "purchase-orders" },
-            //     // { "label": "Purchase Invoices", "view": "purchase-invoices" },
-            //     // { "label": "Supplier Payments", "view": "supplier-payments" }
-            // ]
+            "label": "Purchasing", "expanded": "purchasingExpanded", "icon": "credit-card"
         },
         {
-            "label": "Sales", "expanded": "salesExpanded", "icon": "currency",
-            // "items": [
-            //     // { "label": "Sales Orders", "view": "sales-orders" },
-            //     // { "label": "Sales Invoices", "view": "sales-invoices" },
-            //     // { "label": "Customer Payments", "view": "customer-payments" },
-            //     // { "label": "Debit Note", "view": "debit-note" },
-            //     // { "label": "Credit Note", "view": "credit-note" }
-            // ]
+            "label": "Sales", "expanded": "salesExpanded", "icon": "currency"
         },
         {
-            "label": "Inventory", "expanded": "inventoryExpanded", "icon": "retail-store",
-            // "items": [
-            //     //     { "label": "Goods Receipts", "view": "goods-receipts" },
-            //     //     { "label": "Goods Issues", "view": "goods-issues" },
-            //     //     { "label": "Delivery Note", "view": "delivery-note" },
-            //     //     { "label": "Stock Adjustments", "view": "stock-adjustments" },
-            //     //     { "label": "Waste", "view": "waste" }
-            // ]
+            "label": "Inventory", "expanded": "inventoryExpanded", "icon": "retail-store"
         },
         {
-            "label": "Finance", "expanded": "financeReportsExpanded", "icon": "area-chart",
-            // "items": [
-            //     // { "label": "Sales Orders", "view": "sales-orders-report" },
-            //     // { "label": "Sales Orders Total", "view": "sales-orders-total-report" },
-            //     // { "label": "Purchase Orders", "view": "purchase-orders-report" },
-            //     // { "label": "Purchase Orders Total", "view": "purchase-orders-total-report" }
-            // ]
+            "label": "Finance", "expanded": "financeReportsExpanded", "icon": "area-chart"
         },
         {
-            "label": "Products", "expanded": "productExpanded", "icon": "product",
-            // "items": [
-            //     // { "label": "Products", "view": "products" },
-            //     // { "label": "Categories", "view": "categories" },
-            //     // { "label": "Catalogue", "view": "catalogues" }
-            // ]
+            "label": "Products", "expanded": "productExpanded", "icon": "product"
         },
         {
-            "label": "Employees", "expanded": "peopleExpanded", "icon": "company-view",
-            // "items": [
-            //     // { "label": "Organisations", "view": "organisations" },
-            //     // { "label": "Employees", "view": "employees" }
-            // ]
+            "label": "Employees", "expanded": "peopleExpanded", "icon": "company-view"
         },
         {
-            "label": "Partners", "expanded": "partnersExpanded", "icon": "customer-and-contacts",
-            // "items": [
-            //     // { "label": "Customers", "view": "customers" },
-            //     // { "label": "Suppliers", "view": "suppliers" },
-            //     // { "label": "Manufacturers", "view": "manufacturers" }
-            // ]
+            "label": "Partners", "expanded": "partnersExpanded", "icon": "customer-and-contacts"
         },
         {
-            "label": "Configurations", "expanded": "configurationsExpanded", "icon": "wrench",
-            // "items": [
-            //     // { "label": "Countries", "view": "countries" },
-            //     // { "label": "Cities", "view": "cities" },
-            //     // { "label": "Companies", "view": "companies" },
-            //     // { "label": "Stores", "view": "stores" },
-            //     // { "label": "Companies", "view": "companies" },
-            //     // { "label": "Currencies", "view": "currencies" },
-            //     // { "label": "Dimensions", "view": "dimensions" },
-            //     // { "label": "Units of Measures", "view": "uoms" },
-            //     // { "label": "Methods", "view": "methods" }
-            // ]
+            "label": "Configurations", "expanded": "configurationsExpanded", "icon": "wrench"
         }
     ]
     $http.get("http://localhost:8080/services/ts/codbex-hestia/api/NavigationExtension/NavigationService.ts")
@@ -119,7 +69,7 @@ navigation.controller("LaunchpadViewController", ["$scope", "messageHub", "$http
         });
 
     function addNavigationItem(itemData) {
-        if (!itemData || !itemData.label || !itemData.view || !itemData.group || !itemData.orderNumber) {
+        if (!itemData || !itemData.label || !itemData.view || !itemData.group || !itemData.orderNumber || !itemData.link) {
             console.error('Invalid item data:', itemData);
             return;
         }
@@ -132,7 +82,8 @@ navigation.controller("LaunchpadViewController", ["$scope", "messageHub", "$http
 
         $scope.groupItems[itemData.group.toLowerCase()].push({
             "label": itemData.label,
-            "view": itemData.view
+            "view": itemData.view,
+            "link": itemData.link
         });
     }
 }]);
