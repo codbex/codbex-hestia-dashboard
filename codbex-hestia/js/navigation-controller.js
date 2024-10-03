@@ -2,12 +2,19 @@ const navigation = angular.module("launchpad", ["ngResource", "ideLayout", "ideU
 navigation.controller("LaunchpadViewController", ["$scope", "messageHub", "$http", function ($scope, messageHub, $http) {
     $scope.currentViewId = 'dashboard';
 
-    $scope.extraExtensionPoints = ['codbex-orders-dialog-window'];
+    $scope.extraExtensionPoints = ['app'];
     $scope.groups = [];
 
     $scope.switchView = function (id, event) {
         if (event) event.stopPropagation();
         $scope.currentViewId = id;
+    };
+
+    $scope.isGroupVisible = function (group) {
+        const items = $scope.groupItems[group.label.toLowerCase()];
+        return items.some(function (item) {
+            return $scope.currentViewId === item.view;
+        });
     };
 
     messageHub.onDidReceiveMessage('launchpad.switch.perspective', function (msg) {

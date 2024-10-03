@@ -55,8 +55,7 @@
 			</embedded-view>
 
 			<div ng-show="currentViewId !== 'dashboard'" class="dg-fill-parent">
-				<div class="dg-fill-parent" ng-repeat="group in groups"
-					ng-show="groupItems[group.label.toLowerCase()].some(item => currentViewId === item.view)">
+				<div class="dg-fill-parent" ng-repeat="group in groups" ng-show="isGroupVisible(group)">
 					<div class="dg-fill-parent" ng-repeat="item in groupItems[group.label.toLowerCase()]"
 						ng-show="currentViewId === '{{item.view}}'">
 						<iframe class="dg-fill-parent" ng-src="{{item.link}}" dg-type="normal"
