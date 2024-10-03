@@ -48,8 +48,9 @@ dashboard.controller('DashboardController', ['$scope', '$http', 'messageHub', fu
         iframe.style.border = 'none';
         iframe.style.overflow = 'hidden';
         iframe.style.display = 'block';
+        iframe.loading = "lazy";
 
-        iframe.setAttribute('scrolling', 'no');
+        // iframe.setAttribute('scrolling', 'no');
         // iframe.loading = widgetData.lazyLoad ? 'lazy' : 'eager'; 
 
         widgetContainer.appendChild(iframe);

@@ -60,7 +60,7 @@
 					<div class="dg-fill-parent" ng-repeat="item in groupItems[group.label.toLowerCase()]"
 						ng-show="currentViewId === '{{item.view}}'">
 						<iframe class="dg-fill-parent" ng-src="{{item.link}}" dg-type="normal"
-							ng-show="currentViewId === '{{item.view}}'">
+							ng-show="currentViewId === '{{item.view}}'" loading="lazy">
 						</iframe>
 					</div>
 				</div>
