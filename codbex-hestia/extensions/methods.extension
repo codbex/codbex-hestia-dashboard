@@ -1,5 +1,0 @@
-{
-    "extensionPoint": "ide-subview",
-    "module": "codbex-hestia/services/methods.js",
-    "description": "Methods Subview"
-}

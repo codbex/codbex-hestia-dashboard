@@ -1,5 +1,0 @@
-{
-    "module": "codbex-hestia/services/goods-issues.js",
-    "extensionPoint": "ide-subview",
-    "description": "Goods Issues Subview"
-}

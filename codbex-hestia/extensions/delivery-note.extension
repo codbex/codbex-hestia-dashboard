@@ -1,5 +1,0 @@
-{
-    "module": "codbex-hestia/services/delivery-note.js",
-    "extensionPoint": "ide-subview",
-    "description": "Delivery Note Subview"
-}

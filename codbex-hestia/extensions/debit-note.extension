@@ -1,5 +1,0 @@
-{
-    "module": "codbex-hestia/services/debit-note.js",
-    "extensionPoint": "ide-subview",
-    "description": "Debit Note Subview"
-}
