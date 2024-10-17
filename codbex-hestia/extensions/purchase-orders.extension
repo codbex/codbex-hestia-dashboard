@@ -1,5 +1,0 @@
-{
-    "module": "codbex-hestia/services/purchase-orders.js",
-    "extensionPoint": "ide-subview",
-    "description": "Purchase Orders Subview"
-}

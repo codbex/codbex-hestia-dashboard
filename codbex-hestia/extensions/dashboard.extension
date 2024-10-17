@@ -1,5 +1,5 @@
 {
-    "module": "codbex-hestia/services/dashboard.js",
     "extensionPoint": "ide-view",
-    "description": "Dashboard View"
+    "module": "codbex-hestia/services/dashboard.js",
+    "description": "Dashboard Loaded by Application"
 }

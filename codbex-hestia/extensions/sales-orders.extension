@@ -1,5 +1,0 @@
-{
-    "module": "codbex-hestia/services/sales-orders.js",
-    "extensionPoint": "ide-subview",
-    "description": "Sales Orders Subview"
-}
