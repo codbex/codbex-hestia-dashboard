@@ -2,7 +2,7 @@
     "name": "@codbex/codbex-hestia",
     "version": "0.3.0",
     "repository": {
-        "url": "https://github.com/codbex/codbex-hestia.git",
+        "url": "https://github.com/codbex/codbex-hestia-dashboard.git",
         "type": "git"
     },
     "publishConfig": {
