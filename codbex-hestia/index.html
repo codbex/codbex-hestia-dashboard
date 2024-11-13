@@ -13,7 +13,7 @@
 		</script>
 		<link type="text/css" rel="stylesheet"
 			href="/services/js/resources-core/services/loader.js?id=application-perspective-css" />
-		<script type="text/javascript" src="js/navigation.js"></script>
+		<script type="text/javascript" src="js/navigation-controller.js"></script>
 
 	</head>
 
@@ -30,24 +30,20 @@
 							</fd-list-navigation-item-icon>
 							<span fd-list-navigation-item-text>Dashboard</span>
 						</fd-list-navigation-item>
-						<div ng-repeat="section in sections">
-							<fd-list-navigation-group-header>{{section.name}}</fd-list-navigation-group-header>
-							<div ng-repeat="group in section.groups">
-								<fd-list-navigation-item ng-init="group.expanded = false" expandable="true"
-									ng-click="group.expanded = !group.expanded" is-expanded="group.expanded">
-									<fd-list-navigation-item-icon glyph="sap-icon--{{group.icon}}">
-									</fd-list-navigation-item-icon>
-									<span fd-list-navigation-item-text>{{group.name}}</span>
-									<fd-list-navigation-item-arrow aria-label="expand submenu"
-										is-expanded="group.expanded">
-									</fd-list-navigation-item-arrow>
-									<fd-list ng-repeat="item in group.items">
-										<fd-list-navigation-item ng-click="switchView(item.view, $event)">
-											<span fd-list-navigation-item-text>{{item.name}}</span>
-										</fd-list-navigation-item>
-									</fd-list>
-								</fd-list-navigation-item>
-							</div>
+						<div ng-repeat="group in groups" ng-show="groupItems[group.label.toLowerCase()].length > 0">
+							<fd-list-navigation-item ng-init="group.expanded = false" expandable="true"
+								ng-click="group.expanded = !group.expanded" is-expanded="group.expanded">
+								<fd-list-navigation-item-icon glyph="sap-icon--{{group.icon}}">
+								</fd-list-navigation-item-icon>
+								<span fd-list-navigation-item-text>{{group.label}}</span>
+								<fd-list-navigation-item-arrow aria-label="expand submenu" is-expanded="group.expanded">
+								</fd-list-navigation-item-arrow>
+								<fd-list ng-repeat="item in groupItems[group.label.toLowerCase()]">
+									<fd-list-navigation-item ng-click="switchView(item.view, $event)">
+										<span fd-list-navigation-item-text>{{item.label}}</span>
+									</fd-list-navigation-item>
+								</fd-list>
+							</fd-list-navigation-item>
 						</div>
 
 					</fd-list>
@@ -57,106 +53,17 @@
 			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-dashboard" dg-type="normal"
 				ng-show="currentViewId === 'dashboard'">
 			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-customers" dg-type="subview"
-				ng-show="currentViewId === 'customers'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-suppliers" dg-type="subview"
-				ng-show="currentViewId === 'suppliers'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-manufacturers" dg-type="subview"
-				ng-show="currentViewId === 'manufacturers'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-countries" dg-type="subview"
-				ng-show="currentViewId === 'countries'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-cities" dg-type="subview"
-				ng-show="currentViewId === 'cities'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-companies" dg-type="subview"
-				ng-show="currentViewId === 'companies'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-stores" dg-type="subview"
-				ng-show="currentViewId === 'stores'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-currencies" dg-type="subview"
-				ng-show="currentViewId === 'currencies'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-dimensions" dg-type="subview"
-				ng-show="currentViewId === 'dimensions'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-uoms" dg-type="subview"
-				ng-show="currentViewId === 'uoms'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-organisations" dg-type="subview"
-				ng-show="currentViewId === 'organisations'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-employees" dg-type="subview"
-				ng-show="currentViewId === 'employees'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-purchase-orders" dg-type="subview"
-				ng-show="currentViewId === 'purchase-orders'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-purchase-invoices" dg-type="subview"
-				ng-show="currentViewId === 'purchase-invoices'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-debit-note" dg-type="subview"
-				ng-show="currentViewId === 'debit-note'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-sales-orders" dg-type="subview"
-				ng-show="currentViewId === 'sales-orders'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-sales-invoices" dg-type="subview"
-				ng-show="currentViewId === 'sales-invoices'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-credit-note" dg-type="subview"
-				ng-show="currentViewId === 'credit-note'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-goods-receipts" dg-type="subview"
-				ng-show="currentViewId === 'goods-receipts'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-goods-issues" dg-type="subview"
-				ng-show="currentViewId === 'goods-issues'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-delivery-note" dg-type="subview"
-				ng-show="currentViewId === 'delivery-note'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-stock-adjustments" dg-type="subview"
-				ng-show="currentViewId === 'stock-adjustments'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-methods" dg-type="subview"
-				ng-show="currentViewId === 'methods'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-products" dg-type="subview"
-				ng-show="currentViewId === 'products'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-categories" dg-type="subview"
-				ng-show="currentViewId === 'categories'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-catalogues" dg-type="subview"
-				ng-show="currentViewId === 'catalogues'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-customer-payments" dg-type="subview"
-				ng-show="currentViewId === 'customer-payments'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-supplier-payments" dg-type="subview"
-				ng-show="currentViewId === 'supplier-payments'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-waste" dg-type="subview"
-				ng-show="currentViewId === 'waste'">
-			</embedded-view>
-			<!-- Reports -->
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-sales-orders-report" dg-type="subview"
-				ng-show="currentViewId === 'sales-orders-report'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-sales-orders-total-report" dg-type="subview"
-				ng-show="currentViewId === 'sales-orders-total-report'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-purchase-orders-report" dg-type="subview"
-				ng-show="currentViewId === 'purchase-orders-report'">
-			</embedded-view>
-			<embedded-view class="dg-fill-parent" view-id="codbex-hestia-purchase-orders-total-report" dg-type="subview"
-				ng-show="currentViewId === 'purchase-orders-total-report'">
-			</embedded-view>
+
+			<div ng-show="currentViewId !== 'dashboard'" class="dg-fill-parent">
+				<div class="dg-fill-parent" ng-repeat="group in groups" ng-show="isGroupVisible(group)">
+					<div class="dg-fill-parent" ng-repeat="item in groupItems[group.label.toLowerCase()]"
+						ng-show="currentViewId === '{{item.view}}'">
+						<iframe class="dg-fill-parent" ng-src="{{item.link}}" dg-type="normal"
+							ng-show="currentViewId === '{{item.view}}'" loading="lazy">
+						</iframe>
+					</div>
+				</div>
+			</div>
 
 		</div>
 

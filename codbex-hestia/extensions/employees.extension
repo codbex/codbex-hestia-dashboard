@@ -1,5 +1,0 @@
-{
-    "module": "codbex-hestia/services/employees.js",
-    "extensionPoint": "ide-subview",
-    "description": "Employees Subview"
-}

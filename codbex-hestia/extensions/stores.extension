@@ -1,5 +1,0 @@
-{
-    "module": "codbex-hestia/services/stores.js",
-    "extensionPoint": "ide-subview",
-    "description": "Stores Subview"
-}
